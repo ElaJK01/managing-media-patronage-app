@@ -1,0 +1,12 @@
+This is application for managing PR activities during process of organizing conferences and afterwards.
+It is used to manage contacts of various thematic portals (media patronages).
+It also allows you to generate short reports on PR activities at a given conference
+(what was done before and after the conference, what rules of cooperation were agreed with the portal).
+Storing information about portals and about published articles.
+
+It aims to facilitate the work on the overall process of acquiring media patrons and their service,
+by eliminating "keeping" contact details, information about the terms of cooperation in various xls tables
+and scattered directories on the server.
+
+Keeping all information in one place will also allow you to quickly prepare a report on PR activities
+without digging through hundreds of emails and creating separate txt documents.
