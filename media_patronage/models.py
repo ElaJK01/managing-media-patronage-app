@@ -26,8 +26,8 @@ class Person(models.Model):
 
 
 class Event(models.Model):
-    title = models.CharField(max_length=250)
-    date = models.DateField
+    title = models.CharField(max_length=250, verbose_name='Tytuł')
+    date = models.DateField(verbose_name='Data')
     portals_cooperating = models.ManyToManyField(Portal)
 
     def __str__(self):

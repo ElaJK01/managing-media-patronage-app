@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<table>
+    <tr>
+        <th>data</th>
+        <th>Konferencja/ szkolenie</th>
+    </tr>
+    <tr>
+        {%for event in object_list%}
+        <td>{{event.date}}</td>
+        <td>{{event.title}}</td>
+    </tr>
+        {%empty%}
+        Nie ma jeszcze konferencji do wyświetlenia
+        {%endfor%}
+    </tr>
+</table>
+</br>
+<a href="{% url 'event_form'%}"><button>Dodaj nowe wydarzenie</button></a>
+{%endblock%}
