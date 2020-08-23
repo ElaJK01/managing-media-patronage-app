@@ -12,6 +12,9 @@ class Portal(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def get_absolute_url(self):
+        return f"/portal_details/{self.pk}/"
+
 
 class Person(models.Model):
     first_name = models.CharField(max_length=20, verbose_name='Imię')

@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h2>Informacje o portalu: {{object.name}}</h2>
+<table>
+    <thead>
+        <tr>
+            <td>nazwa</td>
+            <td>kategoria</td>
+            <td>Adres do korespondencji</td>
+            <td>email</td>
+            <td>logo</td>
+            <td>Komentarze</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{object.name}}</td>
+            <td>{{object.category}}</td>
+            <td>{{object.address}}</td>
+            <td>{{object.email}}</td>
+            <td>{%if object.logotype%}
+                <img src="{{object.logotype.url}}" alt="logo portalu" style="width: 80px">
+            {%else%} <span text="muted"> Brak logotypu</span>
+            {%endif%}</td>
+            <td>{{object.comments}}</td>
+            <td><a href="{%url 'portal_update' pk=object.pk %}"><button>Zaktualizuj</button></a></td>
+        </tr>
+    </tbody>
+</table>
+{%endblock%}

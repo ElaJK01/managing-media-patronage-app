@@ -13,10 +13,11 @@
     <tbody>
         <tr>{%for portal in object_list%}
             <td>{%if portal.logotype%}
-                <img src="{{portal.logotype.url}}" alt="logo portalu">
+                <img src="{{portal.logotype.url}}" alt="logo portalu" style="width: 80px">
             {%else%} <span text="muted"> Brak logotypu</span>
             {%endif%}</td>
             <td>{{portal.name}}</td>
+            <td><a href="{{portal.get_absolute_url}}"><button>Szczegóły</button></a></td>
         </tr>
     </tbody>
 {%empty%}
@@ -25,6 +26,6 @@ Nie ma Portali do wyświetlenia
 
 </table>
 </br>
-<button>Dodaj nowy portal</button>
+<a href="{% url 'portal_form' %}"><button>Dodaj nowy portal</button></a>
 
 {%endblock%}

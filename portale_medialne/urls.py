@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.urls import re_path
 
-from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView
+from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView,\
+                            PortalUpdateView, PortalDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +31,8 @@ urlpatterns = [
     path('add_portal/', AddPortal.as_view(), name='portal_form'),
     path('add_person/', AddPerson.as_view(), name='person_form'),
     path('search/', SearchFormView.as_view(), name='search'),
+    path('portal_details/<int:pk>/', PortalDetailView.as_view(), name='portal_detail'),
+    path('portal_details/<int:pk>/update/', PortalUpdateView.as_view(), name='portal_update'),
 ]
 
 if settings.DEBUG:

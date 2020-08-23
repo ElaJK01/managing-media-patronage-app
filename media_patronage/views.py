@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, UpdateView
+from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 # from django.core.files.storage import FileSystemStorage
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm
@@ -54,21 +55,21 @@ class PersonList(ListView):
     model = Person
 
 
-class AddPortal(FormView):
+class AddPortal(CreateView):
     template_name = 'portal_form.html'
     form_class = AddPortalForm
     success_url = reverse_lazy("portal_list")
 
-    def form_valid(self, form):
-        name = form.cleaned_data['name']
-        category = form.cleaned_data['category']
-        address = form.cleaned_data['address']
-        email = form.cleaned_data['email']
-        logo = form.cleaned_data['logotype']
-        comments = form.cleaned_data['comments']
-        new_portal = Portal.objects.create(name=name, category=category, address=address, email=email, logotype=logo, comments=comments)
-        new_portal.save()
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     name = form.cleaned_data['name']
+    #     category = form.cleaned_data['category']
+    #     address = form.cleaned_data['address']
+    #     email = form.cleaned_data['email']
+    #     logo = form.cleaned_data['logotype']
+    #     comments = form.cleaned_data['comments']
+    #     new_portal = Portal.objects.create(name=name, category=category, address=address, email=email, logotype=logo, comments=comments)
+    #     new_portal.save()
+    #     return super().form_valid(form)
 
 
 class AddPerson(CreateView):
@@ -76,3 +77,15 @@ class AddPerson(CreateView):
     model = Person
     fields = '__all__'
     success_url = reverse_lazy("person_list")
+
+
+class PortalUpdateView(UpdateView):
+    model = Portal
+    fields = '__all__'
+    success_url = reverse_lazy('portal_list')
+    template_name = 'portal_form.html'
+
+
+class PortalDetailView(DetailView):
+    model = Portal
+
