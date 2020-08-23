@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%for person in object_list%}
+{{person.first_name}} {{person.last_name}} - {%for portal in portals%}{{portal.name}} {%endfor%}
+{%empty%}
+Nie ma osób w bazie
+{%endfor%}
+</br>
+<a href="{% url 'person_form'%}"><button>Dodaj nową osobę</button></a>
+{%endblock%}

@@ -18,12 +18,17 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 
-from media_patronage.views import EventList, AddEvent
+from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('events/', EventList.as_view(), name='event_list'),
     path('add_event/', AddEvent.as_view(), name='event_form'),
+    path('portals/', PortalList.as_view(), name='portal_list'),
+    path('persons/', PersonList.as_view(), name='person_list'),
+    path('add_portal/', AddPortal.as_view(), name='portal_form'),
+    path('add_person/', AddPerson.as_view(), name='person_form'),
+    path('search/', SearchFormView.as_view(), name='search'),
 ]
 
 if settings.DEBUG:

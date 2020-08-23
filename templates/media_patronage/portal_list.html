@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<table>
+    <thead>
+    <tr>
+        <td>logo</td>
+        <td>nazwa</td>
+        <td>Szczegóły</td>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>{%for portal in object_list%}
+            <td>{%if portal.logotype%}
+                <img src="{{portal.logotype.url}}" alt="logo portalu">
+            {%else%} <span text="muted"> Brak logotypu</span>
+            {%endif%}</td>
+            <td>{{portal.name}}</td>
+        </tr>
+    </tbody>
+{%empty%}
+Nie ma Portali do wyświetlenia
+{%endfor%}
+
+</table>
+</br>
+<button>Dodaj nowy portal</button>
+
+{%endblock%}

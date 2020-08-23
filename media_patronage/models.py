@@ -2,24 +2,24 @@ from django.db import models
 from phone_field import PhoneField
 
 class Portal(models.Model):
-    name = models.CharField(max_length=100)
-    category = models.CharField(max_length=60)
-    address = models.CharField(max_length=250)
+    name = models.CharField(max_length=100, verbose_name='Nazwa')
+    category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')
+    address = models.CharField(max_length=250, verbose_name='Adres redakcji')
     email = models.EmailField()
-    logotype = models.ImageField(upload_to='logo/')
-    comments = models.TextField()
+    logotype = models.ImageField(upload_to='logo/', verbose_name='Logo', null=True, blank=True)
+    comments = models.TextField(verbose_name='Inne informacje', blank=True)
 
     def __str__(self):
-        return {self.name}
+        return f'{self.name}'
 
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20, verbose_name='Imię')
+    last_name = models.CharField(max_length=20, verbose_name='Nazwisko')
     email = models.EmailField()
     phone_number = PhoneField()
-    portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
-    comments = models.TextField()
+    portal = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Portal')
+    comments = models.TextField(verbose_name='Komentarz', blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

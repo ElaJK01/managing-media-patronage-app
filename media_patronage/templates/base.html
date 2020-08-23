@@ -7,6 +7,12 @@
 </head>
 <header class="header">
     Aplikacja do Zarządzania współpracą z patronami medialnymi
+    <div class="main-menu">
+        <a href="{%url 'portal_list'%}"><button>Portale</button></a>
+        <a href="{%url 'person_list'%}"><button>Osoby do kontaktu</button></a>
+        <button>Artykuły</button>
+        <a href="{%url 'search'%}"><button>Wyszukaj</button></a>
+    </div>
 </header>
 <body>
 {% block content %} {% endblock content %}
