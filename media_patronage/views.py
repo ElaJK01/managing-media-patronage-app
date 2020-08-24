@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
-from django.views.generic import FormView, CreateView, UpdateView
+from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 # from django.core.files.storage import FileSystemStorage
@@ -14,6 +14,7 @@ from django.db.models import Q
 class EventList(ListView):
     model = Event
 
+
 class AddEvent(FormView):
     template_name = "event_form.html"
     form_class = AddEventForm
@@ -22,6 +23,7 @@ class AddEvent(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
 
 class PortalList(ListView):
     model = Portal
@@ -79,6 +81,23 @@ class AddPerson(CreateView):
     success_url = reverse_lazy("person_list")
 
 
+class PersonDetailView(DetailView):
+    model = Person
+
+
+class PersonUpdateView(UpdateView):
+    model = Person
+    fields = '__all__'
+    success_url = reverse_lazy('person_list')
+    template_name = 'person_form.html'
+
+
+class PersonDeleteView(DeleteView):
+    model = Person
+    success_url = reverse_lazy('person_list')
+    template_name = 'person_delete.html'
+
+
 class PortalUpdateView(UpdateView):
     model = Portal
     fields = '__all__'
@@ -88,4 +107,10 @@ class PortalUpdateView(UpdateView):
 
 class PortalDetailView(DetailView):
     model = Portal
+
+
+class PortalDeleteView(DeleteView):
+    model = Portal
+    success_url = reverse_lazy('portal_list')
+    template_name = 'portal_delete.html'
 

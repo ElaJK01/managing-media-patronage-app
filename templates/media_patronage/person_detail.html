@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+
+{%block content%}
+<h2>Informacje o: {{object.first_name}} {{object.last_name}}</h2>
+
+<table class="table-big">
+    <thead>
+        <tr>
+            <td>Numer telefonu</td>
+            <td>email</td>
+            <td>Portal</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{object.phone_number}}</td>
+            <td>{{object.email}}</td>
+            <td>{{object.portal}}</td>
+            <td>{{object.comments}}</td>
+            <td><a href="{%url 'person_update' pk=object.pk %}"><button>Zaktualizuj</button></a></td>
+            <td><a href="{%url 'person_delete' pk=object.pk%}"><button>Usuń</button></a></td>
+        </tr>
+    </tbody>
+</table>
+
+{%endblock%}

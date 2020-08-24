@@ -2,7 +2,7 @@
 
 {%block content%}
 <h2>Informacje o portalu: {{object.name}}</h2>
-<table>
+<table class="table-big">
     <thead>
         <tr>
             <td>nazwa</td>
@@ -25,6 +25,7 @@
             {%endif%}</td>
             <td>{{object.comments}}</td>
             <td><a href="{%url 'portal_update' pk=object.pk %}"><button>Zaktualizuj</button></a></td>
+            <td><a href="{%url 'portal_delete' pk=object.pk%}"><button>Usuń</button></a></td>
         </tr>
     </tbody>
 </table>

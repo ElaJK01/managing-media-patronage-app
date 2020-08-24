@@ -20,7 +20,8 @@ from django.conf import settings
 from django.urls import re_path
 
 from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView,\
-                            PortalUpdateView, PortalDetailView
+                            PortalUpdateView, PortalDetailView, PortalDeleteView, PersonDetailView, PersonUpdateView,\
+                            PersonDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,10 @@ urlpatterns = [
     path('search/', SearchFormView.as_view(), name='search'),
     path('portal_details/<int:pk>/', PortalDetailView.as_view(), name='portal_detail'),
     path('portal_details/<int:pk>/update/', PortalUpdateView.as_view(), name='portal_update'),
+    path('portal_details/<int:pk>/delete/', PortalDeleteView.as_view(), name='portal_delete'),
+    path('person_details/<int:pk>/', PersonDetailView.as_view(), name='person_detail'),
+    path('person_details/<int:pk>/update/', PersonUpdateView.as_view(), name='person_update'),
+    path('person_details/<int:pk>/delete/', PersonDeleteView.as_view(), name='person_delete'),
 ]
 
 if settings.DEBUG:

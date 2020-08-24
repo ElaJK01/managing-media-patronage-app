@@ -1,6 +1,7 @@
 from django.db import models
 from phone_field import PhoneField
 
+
 class Portal(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nazwa')
     category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')
@@ -26,6 +27,9 @@ class Person(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return f"/person_details/{self.pk}/"
 
 
 class Event(models.Model):
