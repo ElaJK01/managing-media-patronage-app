@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
@@ -23,6 +23,25 @@ class AddEvent(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class EventDetailsView(DetailView):
+    model = Event
+
+#FIXME Dopisać informacje o zadaniach przed i po wydarzeniu
+
+class EventDeleteView(DeleteView):
+    model = Event
+    success_url = reverse_lazy('event_list')
+    template_name = 'event_delete.html'
+
+
+
+class EventUpdateView(UpdateView): #FIXME
+    model = Event
+    fields= '__all__'
+    success_url = reverse_lazy('event_list')
+    template_name = 'event_form.html'
 
 
 class PortalList(ListView):
@@ -61,17 +80,6 @@ class AddPortal(CreateView):
     template_name = 'portal_form.html'
     form_class = AddPortalForm
     success_url = reverse_lazy("portal_list")
-
-    # def form_valid(self, form):
-    #     name = form.cleaned_data['name']
-    #     category = form.cleaned_data['category']
-    #     address = form.cleaned_data['address']
-    #     email = form.cleaned_data['email']
-    #     logo = form.cleaned_data['logotype']
-    #     comments = form.cleaned_data['comments']
-    #     new_portal = Portal.objects.create(name=name, category=category, address=address, email=email, logotype=logo, comments=comments)
-    #     new_portal.save()
-    #     return super().form_valid(form)
 
 
 class AddPerson(CreateView):
