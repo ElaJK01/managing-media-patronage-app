@@ -141,7 +141,7 @@ class PortalDeleteView(DeleteView):
     template_name = 'portal_delete.html'
 
 
-class TaskAfterEventView(View): #FIXME
+class TaskAfterEventView(View):
     def get(self, request, pk):
         event = Event.objects.get(pk=pk)
         if event:
@@ -176,7 +176,11 @@ class TaskBeforeEventView(CreateView): #FIXME
 
 
 class ArticleAddView(CreateView):
-    model=Article
+    model = Article
     template_name = 'article_form.html'
     fields = '__all__'
     success_url = reverse_lazy('article_list')
+
+
+class ArticleList(ListView):
+    model = Article

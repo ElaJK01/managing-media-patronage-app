@@ -2,12 +2,13 @@
 
 {%block content%}
 
-<table>
+<table border="1">
     <thead>
     <tr>
         <td>logo</td>
         <td>nazwa</td>
         <td>Szczegóły</td>
+        <td>Pobierz logo</td>
     </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
             {%endif%}</td>
             <td>{{portal.name}}</td>
             <td><a href="{{portal.get_absolute_url}}"><button>Więcej</button></a></td>
+            <td><a href="{{portal.logotype.url}}" target="_blank"><button>Pobierz logo</button></a> </td>
         </tr>
     </tbody>
 {%empty%}

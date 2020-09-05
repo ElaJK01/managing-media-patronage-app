@@ -45,11 +45,11 @@ class Event(models.Model):
 
 
 class Article(models.Model):
-    title = models.CharField(max_length=250)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
-    published_date = models.DateField()
-    pdf_article = models.FileField(upload_to='articles/', null=True)
+    title = models.CharField(max_length=250, verbose_name='Tytuł')
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie', help_text='Wydarzenie, którego dotyczy')
+    portal = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Na jakim portalu opublikowane')
+    published_date = models.DateField(verbose_name='Data publikacji')
+    pdf_article = models.FileField(upload_to='articles/', null=True, verbose_name='PDF')
 
     def __str__(self):
         return {self.title}

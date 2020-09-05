@@ -42,3 +42,4 @@ class TaskAfterForm(ModelForm):
         model = TaskAfterEvent
         fields = ['event', 'portal', 'send_materials_after_event', 'date_when_send', 'comments']
 
+

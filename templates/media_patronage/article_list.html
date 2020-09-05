@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<table border="1">
+    <thead>
+        <tr>
+            <td>Tytuł</td>
+            <td>Opublikowane na portalu</td>
+            <td>Dotyczy wydarzenia</td>
+            <td>Data publikacji</td>
+            <td>PDF</td>
+        </tr>
+    </thead>
+    <tbody>
+        {%for article in object_list%}
+        <td>{{article.title}}</td>
+        <td>{{article.portal}}</td>
+        <td>{{article.event}}</td>
+        <td>{{article.published_date}}</td>
+        <td><a href="{{article.pdf_article.url}}" target="_blank"><button>Pobierz artykuł</button></a></td>
+        {%endfor%}
+    </tbody>
+</table>
+
+{%endblock%}
