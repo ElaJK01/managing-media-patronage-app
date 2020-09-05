@@ -5,9 +5,13 @@ from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Arti
 
 
 class AddEventForm(ModelForm):
+    portals_cooperating = forms.ModelMultipleChoiceField(
+        queryset=Portal.objects.all(),
+        widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = Event
-        fields = ['title', 'date']
+        fields = ['title', 'date', 'portals_cooperating']
 
 
 class AddPortalForm(ModelForm):

@@ -1,0 +1,23 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%if msg%}
+{{msg}}
+{%endif%}
+
+Dodaj patrona do: "{{event.title}}" - {{event.date}}
+
+<form method="POST">
+    {%csrf_token%}
+    <label>Wybierz portal</label>
+    <select name="portal">
+        {%for p in portals%}
+        <option value="{{p}}">{{p}}</option>
+        {%endfor%}
+    </select>
+    <input type="submit" value="Dodaj nowego patrona">
+
+</form>
+
+
+{%endblock%}

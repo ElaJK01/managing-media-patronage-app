@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
@@ -37,11 +38,23 @@ class EventDeleteView(DeleteView):
 
 
 
-class EventUpdateView(UpdateView): #FIXME
-    model = Event
-    fields= '__all__'
-    success_url = reverse_lazy('event_list')
-    template_name = 'event_form.html'
+class EventUpdateView(View):
+    def get(self, request, pk):
+        event_to_update = Event.objects.get(pk=pk)
+        if event_to_update:
+            ctx = {'event': event_to_update}
+            return render(request, 'event_update.html', ctx)
+        else:
+            msg = {'msg': 'Nie ma takiego wydarzenia!'}
+            return render(request, 'event_update.html', msg)
+
+    def post(self, request, pk):
+        event_to_update = Event.objects.get(pk=pk)
+        portal= request.POST.get('portal')
+        portal_to_add = Portal.objects.get(name=portal)
+        event_to_update.portals_cooperating.add(portal_to_add)
+        event_to_update.save()
+        return redirect(f'/event_details/{event_to_update.pk}')
 
 
 class PortalList(ListView):

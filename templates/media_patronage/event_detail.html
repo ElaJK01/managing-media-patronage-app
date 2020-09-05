@@ -4,7 +4,7 @@
 <h3>Konferencja:</h3>
 <h4>{{object.title}}</h4>
 <h5>Dnia: {{object.date}}</h5>
-<p>Patroni medialni wydarzenia: {% for portal in object.portals_cooperating.all%}{{portal}}{%endfor%}</p>
+<p>Patroni medialni wydarzenia: </br>{% for portal in object.portals_cooperating.all%}{{portal}},</br>{%endfor%}</p>
 
 <a href="{%url 'event_update' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
 

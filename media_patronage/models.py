@@ -35,7 +35,7 @@ class Person(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=250, verbose_name='Tytuł')
     date = models.DateField(verbose_name='Data')
-    portals_cooperating = models.ManyToManyField(Portal, verbose_name='Portale współpracujące')
+    portals_cooperating = models.ManyToManyField(Portal, verbose_name='Portale współpracujące', )
 
     def __str__(self):
         return {self.title}
