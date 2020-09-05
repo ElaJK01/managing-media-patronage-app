@@ -152,16 +152,17 @@ class TaskAfterEventView(View): #FIXME
         else:
             return HttpResponse("Nie ma takiego wydarzenia!")
 
+
     def post(self, request, pk):
         event = Event.objects.get(pk=pk)
-        event_portal = request.POST.get('portal')
+        event_portal_name = request.POST.get('portal')
+        event_portal = Portal.objects.get(name=event_portal_name)
         send_materials_after = request.POST.get('send')
         when_send_materials = request.POST.get('date')
         comments = request.POST.get('comments')
         if event and event_portal and send_materials_after and when_send_materials:
-            task = TaskAfterEvent.objects.create(event=event, send_materials_after_event=send_materials_after,
+            task = TaskAfterEvent.objects.create(event=event, portal = event_portal, send_materials_after_event=send_materials_after,
                                           date_when_send=when_send_materials, comments=comments)
-            task.portal = event_portal.pk
             task.save()
             return redirect('event_list')
         else:
