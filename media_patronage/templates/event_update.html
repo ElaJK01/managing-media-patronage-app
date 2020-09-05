@@ -5,17 +5,24 @@
 {{msg}}
 {%endif%}
 
-Dodaj patrona do: "{{event.title}}" - {{event.date}}
+Aktualizacja informacji o: "{{event.title}}" - {{event.date}}
 
 <form method="POST">
     {%csrf_token%}
-    <label>Wybierz portal</label>
+    <label>Tytuł konferencji
+    <input type="text" name="title" value="{{event.title}}">
+    </label></br>
+    <label>Data
+        <input type="date" name="date" value="{{event.date}}"></label></br>
+    <label>Wybierz portal
     <select name="portal">
         {%for p in portals%}
         <option value="{{p}}">{{p}}</option>
         {%endfor%}
     </select>
-    <input type="submit" value="Dodaj nowego patrona">
+        </label></br>
+
+    <input type="submit" value="Zaktualizuj">
 
 </form>
 

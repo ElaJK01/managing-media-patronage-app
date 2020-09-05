@@ -35,10 +35,10 @@ class Person(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=250, verbose_name='Tytuł')
     date = models.DateField(verbose_name='Data')
-    portals_cooperating = models.ManyToManyField(Portal, verbose_name='Portale współpracujące', )
+    portals_cooperating = models.ManyToManyField(Portal, verbose_name='Portale współpracujące')
 
     def __str__(self):
-        return {self.title}
+        return f'{self.title} - {self.date}'
 
     def get_absolute_url(self):
         return f"/event_details/{self.pk}/"
@@ -56,19 +56,25 @@ class Article(models.Model):
 
 
 class TaskBeforeEvent(models.Model):
-    event = models.OneToOneField(Event, on_delete=models.CASCADE)
-    send_invitation_to_portals = models.BooleanField(default=False)
-    when_send_invitation = models.DateField()
-    portals_invited = models.ForeignKey(Portal, on_delete=models.CASCADE)
-    comments = models.TextField()
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
+    send_invitation_to_portals = models.BooleanField(default=False, verbose_name='czy wysłane zaproszenie do portali tematynych')
+    when_send_invitation = models.DateField(verbose_name='Kiedy zostało wysłane zaproszenie', null=True, blank=True)
+    portals_invited = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Zaproszone do współpracy portale')
+    comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
+
+    # def __str__(self):
+    #     return {self.pk}
 
 
 class TaskAfterEvent(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
-    send_materials_after_event = models.BooleanField(default=False)
-    date_when_send = models.DateField
-    comments = models.TextField()
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
+    portal = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Portal', null=True)
+    send_materials_after_event = models.BooleanField(default=False, verbose_name='Wysłane materiały pokonferencyjne')
+    date_when_send = models.DateField(verbose_name='Data', null=True)
+    comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
+
+    # def __str__(self):
+    #     return self.pk
 
 
 class CooperationTerms(models.Model):

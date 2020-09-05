@@ -6,6 +6,14 @@
 <h5>Dnia: {{object.date}}</h5>
 <p>Patroni medialni wydarzenia: </br>{% for portal in object.portals_cooperating.all%}{{portal}},</br>{%endfor%}</p>
 
-<a href="{%url 'event_update' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
+<div class="aligned">
+    <h4>Zadania wykonane przed Konferencją:</h4>
+    {%for task_before in task_before_event%}
+    {{task_before.comments}}
+
+    {%endfor%}
+</div>
+
+<a href="{%url 'event_update' pk=event.pk%}"><button>Zaktualizuj informacje</button></a>
 
 {%endblock%}

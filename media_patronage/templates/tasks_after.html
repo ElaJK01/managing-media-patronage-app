@@ -1,0 +1,28 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<form method="post">
+    {%csrf_token%}
+    <label>Konferencja</label>
+    <input type="text" name="event" value="{{event.title}}"></br>
+    <label>Portale współpracujące
+    <select name="portal">
+        {%for portal in event_portals%}
+        <option>{{portal}}</option>
+        {%endfor%}
+    </select>
+    </label></br>
+    <label>Wysłane materiały pokonferencyjne TAK
+        <input type="checkbox" name="send" value="0">
+    </label></br>
+    <label>Kiedy wysłane materiały:
+        <input type="date" name="date">
+    </label></br>
+    <label>Dodatkowe informacje:
+        <textarea name="comments"></textarea>
+    </label></br>
+    <input type="submit">
+
+</form>
+
+{%endblock%}

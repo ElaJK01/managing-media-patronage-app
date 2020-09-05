@@ -3,7 +3,7 @@
 {%block content%}
 {%for person in object_list%}
 {{person.first_name}} {{person.last_name}} - {{person.portal}}
-<a href="{{person.get_absolute_url}}"><button>Więcej</button></a>
+<a href="{{person.get_absolute_url}}"><button>Więcej</button></a></br>
 {%empty%}
 Nie ma osób w bazie
 {%endfor%}

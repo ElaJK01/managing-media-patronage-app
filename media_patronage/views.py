@@ -7,7 +7,7 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 # from django.core.files.storage import FileSystemStorage
-from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm
+from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms
 from django.db.models import Q
 
@@ -29,7 +29,11 @@ class AddEvent(FormView):
 class EventDetailsView(DetailView):
     model = Event
 
+    # def get_context_data(self, **kwargs):
+    #     ...
+
 #FIXME Dopisać informacje o zadaniach przed i po wydarzeniu
+
 
 class EventDeleteView(DeleteView):
     model = Event
@@ -37,8 +41,7 @@ class EventDeleteView(DeleteView):
     template_name = 'event_delete.html'
 
 
-
-class EventUpdateView(View):
+class EventUpdateView(View): #FIXME dopisać możliwość usuwania portali, zmiany daty i tytułu konf.
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         if event_to_update:
@@ -72,9 +75,11 @@ class SearchFormView(TemplateView):
                 portals = Portal.objects.filter(Q(name__icontains = search_que)|Q(category__icontains = search_que)\
                                              | Q(address__icontains = search_que) |Q(email__icontains=search_que))
                 persons = Person.objects.filter(Q(first_name__icontains = search_que) | Q(last_name__icontains=search_que))
+                events = Event.objects.filter(Q(title__icontains = search_que) | Q(date__icontains = search_que))
                 result_portal = [portal for portal in portals]
                 result_person = [person for person in persons]
-                result = result_portal+result_person
+                result_event = [event for event in events]
+                result = result_portal+result_person+result_event
             else:
                 result = []
         else:
@@ -135,3 +140,42 @@ class PortalDeleteView(DeleteView):
     success_url = reverse_lazy('portal_list')
     template_name = 'portal_delete.html'
 
+
+class TaskAfterEventView(View): #FIXME
+    def get(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        if event:
+            event_portals = event.portals_cooperating.all()
+            ctx = {'event': event,
+               'event_portals': event_portals}
+            return render(request, 'tasks_after.html', ctx)
+        else:
+            return HttpResponse("Nie ma takiego wydarzenia!")
+
+    def post(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        event_portal = request.POST.get('portal')
+        send_materials_after = request.POST.get('send')
+        when_send_materials = request.POST.get('date')
+        comments = request.POST.get('comments')
+        if event and event_portal and send_materials_after and when_send_materials:
+            task = TaskAfterEvent.objects.create(event=event, send_materials_after_event=send_materials_after,
+                                          date_when_send=when_send_materials, comments=comments)
+            task.portal = event_portal.pk
+            task.save()
+            return redirect('event_list')
+        else:
+            return HttpResponse('Błędnie wypełniony formularz!')
+
+
+class TaskBeforeEventView(CreateView): #FIXME
+    template_name = 'tasks_before.html'
+    form_class = TaskBeforeForm
+    success_url = reverse_lazy("events")
+
+
+class ArticleAddView(CreateView):
+    model=Article
+    template_name = 'article_form.html'
+    fields = '__all__'
+    success_url = reverse_lazy('article_list')
