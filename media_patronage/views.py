@@ -32,7 +32,7 @@ class EventDetailsView(DetailView):
     # def get_context_data(self, **kwargs):
     #     ...
 
-#FIXME Dopisać informacje o zadaniach przed i po wydarzeniu
+#FIXME Dopisać informacje o zadaniach przed i po wydarzeniu, warunki współpracy
 
 
 class EventDeleteView(DeleteView):
@@ -169,10 +169,10 @@ class TaskAfterEventView(View):
             return HttpResponse('Błędnie wypełniony formularz!')
 
 
-class TaskBeforeEventView(CreateView): #FIXME
+class TaskBeforeEventView(CreateView): #FIXME wybór portali do wysyłki, zwalidować datę wysłania zaproszeń nie może być po terminie konferencji
     template_name = 'tasks_before.html'
     form_class = TaskBeforeForm
-    success_url = reverse_lazy("events")
+    success_url = reverse_lazy("event_list")
 
 
 class ArticleAddView(CreateView):

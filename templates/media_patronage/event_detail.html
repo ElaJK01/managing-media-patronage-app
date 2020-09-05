@@ -4,7 +4,9 @@
 <h3>Konferencja:</h3>
 <h4>{{object.title}}</h4>
 <h5>Dnia: {{object.date}}</h5>
-<p>Patroni medialni wydarzenia: </br>{% for portal in object.portals_cooperating.all%}{{portal}},</br>{%endfor%}</p>
+<p>Patroni medialni wydarzenia: </br>{% for portal in object.portals_cooperating.all%}
+<ul>{{portal}}</ul>
+{%endfor%}</p>
 
 <div class="aligned">
     <h4>Zadania wykonane przed Konferencją:</h4>
@@ -14,6 +16,9 @@
     {%endfor%}
 </div>
 
-<a href="{%url 'event_update' pk=event.pk%}"><button>Zaktualizuj informacje</button></a>
+<div><a href="{%url 'event_update' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a></div></br>
+<div><a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a></div></br>
+<a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a></br>
+
 
 {%endblock%}

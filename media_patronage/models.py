@@ -76,7 +76,6 @@ class TaskAfterEvent(models.Model):
     # def __str__(self):
     #     return self.pk
 
-
 class CooperationTerms(models.Model):
     portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
