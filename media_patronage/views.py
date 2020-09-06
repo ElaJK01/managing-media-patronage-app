@@ -152,7 +152,6 @@ class TaskAfterEventView(View):
         else:
             return HttpResponse("Nie ma takiego wydarzenia!")
 
-
     def post(self, request, pk):
         event = Event.objects.get(pk=pk)
         event_portal_name = request.POST.get('portal')
@@ -184,3 +183,30 @@ class ArticleAddView(CreateView):
 
 class ArticleList(ListView):
     model = Article
+
+
+class AddCooperationTerms(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        if event:
+            ctx = {'event':event,
+                 }
+            return render(request, "add_cooperation_terms.html", ctx)
+
+    def post(self, request, pk):
+        event=get_object_or_404(Event, pk=pk)
+        portal_name = request.POST.get('portal')
+        portal= Portal.objects.get(name=portal_name)
+        services_for_p = request.POST.get('services_for_p')
+        services_by_p = request.POST.get('services_by_p')
+        comments = request.POST.get('comments')
+        if event and portal and services_for_p and services_by_p:
+            terms = CooperationTerms.objects.create(event=event, portal=portal, services_for_portal=services_for_p,
+                                            services_provided_by_portal=services_by_p, comments=comments)
+            terms.save()
+            return redirect('event_list')
+        else:
+            ctx = {'msg': 'Niepoprawnie wykonany formularz!',
+                   'event': event}
+            return render(request, "add_cooperation_terms.html", ctx)
+

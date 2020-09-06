@@ -20,5 +20,7 @@
 <div><a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a></div></br>
 <a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a></br>
 
+<a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
+
 
 {%endblock%}
