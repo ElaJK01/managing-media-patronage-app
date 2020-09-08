@@ -6,7 +6,6 @@ from django.views.generic.list import ListView
 from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-# from django.core.files.storage import FileSystemStorage
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms
 from django.db.models import Q
@@ -29,8 +28,15 @@ class AddEvent(FormView):
 class EventDetailsView(DetailView):
     model = Event
 
-    # def get_context_data(self, **kwargs):
-    #     ...
+    def get_context_data(self, **kwargs):
+        context = super(EventDetailsView, self).get_context_data(**kwargs)
+        context['tasks_after'] = TaskAfterEvent.objects.filter(event=int(self.kwargs.get('pk')))
+        tasks_before = TaskBeforeEvent.objects.filter(event=int(self.kwargs.get('pk')))
+
+        cooperation_terms = CooperationTerms.objects.filter(event=int(self.kwargs.get('pk')))
+        context = {'tasks_before': tasks_before,
+               'cooperation_terms': cooperation_terms}
+        return context
 
 #FIXME Dopisać informacje o zadaniach przed i po wydarzeniu, warunki współpracy
 
@@ -168,10 +174,35 @@ class TaskAfterEventView(View):
             return HttpResponse('Błędnie wypełniony formularz!')
 
 
-class TaskBeforeEventView(CreateView): #FIXME wybór portali do wysyłki, zwalidować datę wysłania zaproszeń nie może być po terminie konferencji
+class TaskBeforeEventView(CreateView):
     template_name = 'tasks_before.html'
     form_class = TaskBeforeForm
     success_url = reverse_lazy("event_list")
+
+#FIXME wybór portali do wysyłki, zwalidować datę wysłania zaproszeń nie może być po terminie konferencji
+    # def get(self, request, pk):
+    #     event = get_object_or_404(Event, pk=pk)
+    #     form = TaskBeforeForm()
+    #     ctx = {'form': form,
+    #            'event': event}
+    #     return render(request, 'tasks_before.html', ctx)
+    #
+    # def post(self, request, pk):
+    #     event = Event.objects.get(pk=pk)
+    #     send_invitation_to_portals = request.POST.get('send_invitation')
+    #     when_send_invitation = request.POST.get('when_send_invitation')
+    #     event_date = str(event.date)
+    #     portals_invited = request.POST.get('portals_invited')
+    #     comments = request.POST.get('comments')
+    #     if when_send_invitation < event_date:
+    #         msg = {'msg': 'Podana data wysłania jest niewłaściwa'}
+    #         return render(request, 'tasks_before.html', msg)
+    #     else:
+    #         task_before = TaskBeforeEvent.objects.create(event=event, send_invitation_to_portals=send_invitation_to_portals,
+    #                                                      when_send_invitation=when_send_invitation, portals_invited=portals_invited,
+    #                                                      comments=comments)
+    #         task_before.save()
+    #         return redirect('event_detail')
 
 
 class ArticleAddView(CreateView):
