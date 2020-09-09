@@ -1,0 +1,20 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h4>Usuń portal z konfrencji</h4>
+
+{{event.title}} - {{event.date}}
+
+<form method="post">
+    {%csrf_token%}
+    <select name="portal_to_remove">
+        {%for portal in event.portals_cooperating.all%}>
+        <option value="{{portal}}">{{portal.name}}</option>
+    {%endfor%}
+    </select>
+    <input type="submit" value="Usuń">
+
+</form>
+
+
+{%endblock%}

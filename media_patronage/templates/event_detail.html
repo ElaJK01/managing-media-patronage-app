@@ -87,7 +87,8 @@
 
 </div>
 
-<a href="{%url 'event_update' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
+<a href="{%url 'event_add_portal' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
+<a href="{%url 'event_remove_portal' pk=event.pk%}"><button>Usuń portal z wydarzenia</button></a>
 
 <a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a>
 <a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>

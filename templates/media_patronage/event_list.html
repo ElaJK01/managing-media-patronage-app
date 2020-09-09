@@ -10,7 +10,7 @@
         {%for event in object_list%}
         <td>{{event.date}}</td>
         <td>{{event.title}}</td>
-        <td><a href="{%url 'event_update' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
+        <td><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
         <td><a href="{{event.get_absolute_url}}"><button>Zobacz szczegóły</button></a></td>
         <td><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>
     </tr>

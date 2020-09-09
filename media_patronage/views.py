@@ -44,15 +44,15 @@ class EventDeleteView(DeleteView):
     template_name = 'event_delete.html'
 
 
-class EventUpdateView(View): #FIXME dopisać możliwość usuwania portali, zmiany daty i tytułu konf.
+class EventAddPortalView(View): #FIXME dopisać możliwość usuwania portali, zmiany daty i tytułu konf.
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         if event_to_update:
             ctx = {'event': event_to_update}
-            return render(request, 'event_update.html', ctx)
+            return render(request, 'event_add_portal.html', ctx)
         else:
             msg = {'msg': 'Nie ma takiego wydarzenia!'}
-            return render(request, 'event_update.html', msg)
+            return render(request, 'event_add_portal.html', msg)
 
     def post(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
@@ -61,6 +61,21 @@ class EventUpdateView(View): #FIXME dopisać możliwość usuwania portali, zmia
         event_to_update.portals_cooperating.add(portal_to_add)
         event_to_update.save()
         return redirect(f'/event_details/{event_to_update.pk}')
+
+
+class EventRemovePortalView(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        ctx = {'event': event}
+        return render(request, "event_remove_portal.html", ctx)
+
+    def post(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        portal_to_remove_name = request.POST.get('portal_to_remove')
+        portal_to_remove = Portal.objects.get(name=portal_to_remove_name)
+        event.portals_cooperating.remove(portal_to_remove)
+        event.save()
+        return redirect('event_list')
 
 
 class PortalList(ListView):
