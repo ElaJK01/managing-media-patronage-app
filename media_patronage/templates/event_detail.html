@@ -1,0 +1,99 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h3>Konferencja:</h3>
+<h4>{{event.title}}</h4>
+<h5>Dnia: {{event.date}}</h5>
+<p>Patroni medialni wydarzenia: </br>{% for portal in event.portals_cooperating.all%}
+<ul>{{portal}}</ul>
+{%endfor%}</p>
+
+<div class="aligned">
+    <h4>Zadania wykonane przed Konferencją:</h4>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <td>Wysłanie zaproszeń</td>
+                <td>Kiedy wysłane zaproszenia</td>
+                <td>zaproszone portale</td>
+                <td>komentarze</td>
+            </tr>
+        </thead>
+        <tbody>
+        {%for tasks_before in tasks_before%}
+            <tr>
+                <td>{{tasks_before.send_invitation_to_portals|yesno:"Tak,Nie"}}</td>
+                <td>{{tasks_before.when_send_invitation}}</td>
+                <td>{{tasks_before.portals_invited}}</td>
+                <td>{{tasks_before.comments}}</td>
+
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+
+</div>
+
+<div class="aligned">
+    <h4>Zadania wykonane po konferencji:</h4>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <td>Portal</td>
+                <td>Czy wysłane materiały pokonferencyjne</td>
+                <td>data wysłania materiałów</td>
+                <td>Komentarze</td>
+            </tr>
+        </thead>
+        <tbody>{%for tasks_after in tasks_after%}
+            <tr>
+                <td>{{tasks_after.portal}}</td>
+                <td>{{tasks_after.send_materials_after_event|yesno:"Tak,Nie"}}</td>
+                <td>{{tasks_after.date_when_send}}</td>
+                <td>{{tasks_after.comments}}</td>
+
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+</div>
+
+<div class="aligned">
+    <h4>Ustalone warunki współpracy:</h4>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <td>Portal</td>
+                <td>Usługi dla portalu</td>
+                <td>Usług świadczone przez portal</td>
+                <td>Komentarze</td>
+            </tr>
+        </thead>
+        <tbody>{%for coo_terms in cooperation_terms%}
+            <tr>
+                <td>{{coo_terms.portal}}</td>
+                <td>{{coo_terms.services_for_portal}}</td>
+                <td>{{coo_terms.services_provided_by_portal}}</td>
+                <td>{{coo_terms.comments}}</td>
+            </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+</div>
+
+<a href="{%url 'event_update' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
+
+<a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a>
+<a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>
+
+
+<a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
+
+
+{%endblock%}

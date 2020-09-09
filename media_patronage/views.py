@@ -25,20 +25,17 @@ class AddEvent(FormView):
         return super().form_valid(form)
 
 
-class EventDetailsView(DetailView):
-    model = Event
-
-    def get_context_data(self, **kwargs):
-        context = super(EventDetailsView, self).get_context_data(**kwargs)
-        context['tasks_after'] = TaskAfterEvent.objects.filter(event=int(self.kwargs.get('pk')))
-        tasks_before = TaskBeforeEvent.objects.filter(event=int(self.kwargs.get('pk')))
-
-        cooperation_terms = CooperationTerms.objects.filter(event=int(self.kwargs.get('pk')))
-        context = {'tasks_before': tasks_before,
-               'cooperation_terms': cooperation_terms}
-        return context
-
-#FIXME Dopisać informacje o zadaniach przed i po wydarzeniu, warunki współpracy
+class EventDetailsView(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        tasks_after = TaskAfterEvent.objects.filter(event=event)
+        tasks_before = TaskBeforeEvent.objects.filter(event=event)
+        cooperation_terms = CooperationTerms.objects.filter(event=event)
+        context = { 'event': event,
+                    'tasks_after': tasks_after,
+                    'tasks_before': tasks_before,
+                     'cooperation_terms': cooperation_terms}
+        return render(request, 'event_detail.html', context)
 
 
 class EventDeleteView(DeleteView):
@@ -162,7 +159,7 @@ class TaskAfterEventView(View):
         event = Event.objects.get(pk=pk)
         event_portal_name = request.POST.get('portal')
         event_portal = Portal.objects.get(name=event_portal_name)
-        send_materials_after = request.POST.get('send')
+        send_materials_after = "send" in request.POST
         when_send_materials = request.POST.get('date')
         comments = request.POST.get('comments')
         if event and event_portal and send_materials_after and when_send_materials:
