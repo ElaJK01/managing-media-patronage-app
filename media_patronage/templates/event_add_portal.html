@@ -5,15 +5,10 @@
 {{msg}}
 {%endif%}
 
-Aktualizacja informacji o: "{{event.title}}" - {{event.date}}
+Dodaj portal do: <b>"{{event.title}}" - {{event.date}}</b>
 
 <form method="POST">
     {%csrf_token%}
-    <label>Tytuł konferencji
-    <input type="text" name="title" value="{{event.title}}">
-    </label></br>
-    <label>Data
-        <input type="date" name="date" value="{{event.date}}"></label></br>
     <label>Wybierz portal
     <select name="portal">
         {%for p in portals%}

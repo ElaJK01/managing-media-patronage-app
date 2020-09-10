@@ -44,7 +44,7 @@ class EventDeleteView(DeleteView):
     template_name = 'event_delete.html'
 
 
-class EventAddPortalView(View): #FIXME dopisać możliwość usuwania portali, zmiany daty i tytułu konf.
+class EventAddPortalView(View):
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         if event_to_update:
@@ -63,6 +63,22 @@ class EventAddPortalView(View): #FIXME dopisać możliwość usuwania portali, z
         return redirect(f'/event_details/{event_to_update.pk}')
 
 
+class EventUpdateView(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        ctx = {'event': event}
+        return render(request, 'event_update.html', ctx)
+
+    def post(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        date_updated = request.POST.get('date')
+        title_updated = request.POST.get('title')
+        event.date = date_updated
+        event.title = title_updated
+        event.save()
+        return redirect(f'event_details/{event.pk}')
+
+
 class EventRemovePortalView(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
@@ -75,7 +91,7 @@ class EventRemovePortalView(View):
         portal_to_remove = Portal.objects.get(name=portal_to_remove_name)
         event.portals_cooperating.remove(portal_to_remove)
         event.save()
-        return redirect('event_list')
+        return redirect(f'/event_details/{event.pk}')
 
 
 class PortalList(ListView):
@@ -247,7 +263,7 @@ class AddCooperationTerms(View):
             terms = CooperationTerms.objects.create(event=event, portal=portal, services_for_portal=services_for_p,
                                             services_provided_by_portal=services_by_p, comments=comments)
             terms.save()
-            return redirect('event_list')
+            return redirect(f'/event_details/{event.pk}')
         else:
             ctx = {'msg': 'Niepoprawnie wykonany formularz!',
                    'event': event}

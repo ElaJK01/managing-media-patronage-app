@@ -22,7 +22,8 @@ from django.urls import re_path
 from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView,\
                             PortalUpdateView, PortalDetailView, PortalDeleteView, PersonDetailView, PersonUpdateView,\
                             PersonDeleteView, EventDetailsView, EventAddPortalView, EventRemovePortalView,\
-                            EventDeleteView, TaskAfterEventView,TaskBeforeEventView, ArticleAddView, ArticleList, AddCooperationTerms
+                            EventDeleteView, TaskAfterEventView,TaskBeforeEventView, ArticleAddView, ArticleList, \
+                            AddCooperationTerms, EventUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -48,6 +49,7 @@ urlpatterns = [
     path('add_article/', ArticleAddView.as_view(), name='article_form'),
     path('articles/', ArticleList.as_view(), name='article_list'),
     path('add_terms/<int:pk>/', AddCooperationTerms.as_view(), name="add_terms"),
+    path('event_details/<int:pk>/update/', EventUpdateView.as_view(), name='event_update'),
 
 ]
 

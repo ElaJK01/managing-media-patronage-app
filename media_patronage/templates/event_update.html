@@ -1,0 +1,19 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+Zmień informacje o: <b>{{event}}</b>
+
+<form method="post">
+    {%csrf_token%}
+    <label>Tytuł konferencji
+    <input type="text" value="{{event.title}}" name="title">
+    </label>
+    <label>Data
+    <input type="date" name="date">
+    </label>
+    <input type="submit" value="Zaktualizuj">
+
+</form>
+
+{%endblock%}

@@ -8,6 +8,8 @@
 <ul>{{portal}}</ul>
 {%endfor%}</p>
 
+<a href="{% url 'event_update' pk=event.pk%}"><button>Edytuj tytuł/datę</button></a>
+
 <div class="aligned">
     <h4>Zadania wykonane przed Konferencją:</h4>
 
