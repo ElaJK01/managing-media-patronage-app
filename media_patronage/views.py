@@ -7,8 +7,9 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm
-from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms
+from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
+from django.core.mail import send_mail, send_mass_mail, BadHeaderError
 
 
 class EventList(ListView):
@@ -268,4 +269,52 @@ class AddCooperationTerms(View):
             ctx = {'msg': 'Niepoprawnie wykonany formularz!',
                    'event': event}
             return render(request, "add_cooperation_terms.html", ctx)
+
+
+class MailingView(View): #Fixme dokończyć ustawienia settings i url
+    def get(self, request):
+        return render(request, 'mailing.html')
+
+    def post(self, request):
+        event_it_concernse_title = request.POST.get('event')
+        event_it_concernse = get_object_or_404(Event, title=event_it_concernse_title)
+        message_title = request.POST.get('message_title')
+        who_send = request.POST.get('who_send')
+        category = request.POST.get('category')
+        message = request.POST.get('message')
+        if message_title and who_send and category:
+            try:
+                portals_with_this_category = Portal.objects.filter(category=category)
+                persons_addressee_emails = [] #pusta lista adresów email osób
+                for portal in portals_with_this_category:#wybranie osób z każdego portalu
+                    portal_persons = portal.person_set.all()
+                    persons_list = [p for p in portal_persons]
+
+                    for person in persons_list: #wybranie adresów email osób
+                        persons_addressee_emails.append(person.email)
+                        return persons_addressee_emails
+                    email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
+                    email.to_who.set(persons_list)
+                    email.save()
+
+                    send_mass_mail(message_title,
+                                    message,
+                                    who_send,
+                                    persons_addressee_emails,
+                                    )
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+        else:
+            return HttpResponse('Upewnij się, że wszystkie pola są wypełnione!')
+
+        msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
+        return render(request, 'mailing.html', msg)
+
+
+
+
+
+
+
+
 

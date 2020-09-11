@@ -5,7 +5,7 @@
 <h4>{{event.title}}</h4>
 <h5>Dnia: {{event.date}}</h5>
 <p>Patroni medialni wydarzenia: </br>{% for portal in event.portals_cooperating.all%}
-<ul>{{portal}}</ul>
+    <a href="{% url 'portal_detail' pk=portal.pk %}"><ul><li>{{portal}}</li></ul></a>
 {%endfor%}</p>
 
 <a href="{% url 'event_update' pk=event.pk%}"><button>Edytuj tytuł/datę</button></a>

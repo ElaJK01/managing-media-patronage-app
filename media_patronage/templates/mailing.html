@@ -1,0 +1,40 @@
+{%extends 'base.html'%}
+
+{%block content%}
+{%load crispy_forms_tags%}
+
+<div class="form">
+
+<form method="post">
+    {%csrf_token%}
+    <label>Dotyczy konferencji:
+        <select name="event">{%for event in events%}
+            <option>{{event.title}}</option>
+            {%endfor%}
+        </select>
+    </label></br>
+    </br>
+    <label>Tytuł wiadomości:
+        <input type="text" name="message_title">
+    </label></br>
+    </br>
+    <label>Nadawca
+    <input type="email" name="who_send">
+    </label></br>
+    </br>
+    <label>Kategoria portalu:
+        {%for category in categories%}
+    <input type="checkbox" name="category" value="{{category}}">
+        <label>{{category}}</label>
+        {%endfor%}
+    </input>
+    </label></br>
+    </br>
+    <textarea name="message">Treść wiadomości</textarea></br>
+    </br>
+    <input type="submit" value="Wyslij">
+</form>
+</div>
+
+
+{%endblock%}

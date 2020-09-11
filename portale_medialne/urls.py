@@ -23,7 +23,7 @@ from media_patronage.views import EventList, AddEvent, PortalList, PersonList, A
                             PortalUpdateView, PortalDetailView, PortalDeleteView, PersonDetailView, PersonUpdateView,\
                             PersonDeleteView, EventDetailsView, EventAddPortalView, EventRemovePortalView,\
                             EventDeleteView, TaskAfterEventView,TaskBeforeEventView, ArticleAddView, ArticleList, \
-                            AddCooperationTerms, EventUpdateView
+                            AddCooperationTerms, EventUpdateView, MailingView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,6 +50,7 @@ urlpatterns = [
     path('articles/', ArticleList.as_view(), name='article_list'),
     path('add_terms/<int:pk>/', AddCooperationTerms.as_view(), name="add_terms"),
     path('event_details/<int:pk>/update/', EventUpdateView.as_view(), name='event_update'),
+    path('mailing/', MailingView.as_view(), name='mailing'),
 
 ]
 

@@ -26,7 +26,7 @@ class Person(models.Model):
     comments = models.TextField(verbose_name='Komentarz', blank=True)
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name} {self.last_name} - {self.portal}"
 
     def get_absolute_url(self):
         return f"/person_details/{self.pk}/"
@@ -82,6 +82,13 @@ class CooperationTerms(models.Model):
     services_for_portal = models.TextField()
     services_provided_by_portal = models.TextField()
     comments = models.TextField()
+
+
+class Email(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    message = models.TextField()
+    to_who = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='addressee')
+    send_from_email = models.EmailField()
 
 
 
