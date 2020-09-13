@@ -271,44 +271,61 @@ class AddCooperationTerms(View):
             return render(request, "add_cooperation_terms.html", ctx)
 
 
-class MailingView(View): #Fixme dokończyć ustawienia settings i url
+class MailingView(View): #Fixme
     def get(self, request):
         return render(request, 'mailing.html')
 
     def post(self, request):
         event_it_concernse_title = request.POST.get('event')
-        event_it_concernse = get_object_or_404(Event, title=event_it_concernse_title)
+        event_it_concernse =Event.objects.get(title=event_it_concernse_title)
         message_title = request.POST.get('message_title')
         who_send = request.POST.get('who_send')
-        category = request.POST.get('category')
+        category = request.POST.getlist('category') #lista wybranych kategorii
+        print(category)
         message = request.POST.get('message')
         if message_title and who_send and category:
             try:
-                portals_with_this_category = Portal.objects.filter(category=category)
-                persons_addressee_emails = [] #pusta lista adresów email osób
-                for portal in portals_with_this_category:#wybranie osób z każdego portalu
+                #wybranie z bazy portali należących do podanych kategorii
+                portals_c = []
+                for i in range(0, len(category)):
+                    portals = Portal.objects.filter(category=category[i]) #otrzymujemy queryset portali do 1 z kategorii
+                    i =+ 1 #zwiększamy indeks listy category
+                    for p in portals: #iteruje po querysecie składającym się z portali(obiektów) jednej kategorii
+                        portals_c.append(p) #dodajemy każdy portal do listy portali wskazanych przez użytkownika kategorii
+                        p =+1 #zwiększamy indeks
+                print(portals_c)
+                persons =[] #pusta lista osób
+                persons_addressee_emails = []  # pusta lista adresów email osób
+                for portal in portals_c:#wybranie osób z każdego portalu
                     portal_persons = portal.person_set.all()
-                    persons_list = [p for p in portal_persons]
+                    persons_list = [person for person in portal_persons]
+                    persons = persons+persons_list
+                print(persons)
+                # return persons
+                for person in persons: #wybranie adresów email osób
+                    persons_addressee_emails.append(person.email)
+                        # return persons_addressee_emails
 
-                    for person in persons_list: #wybranie adresów email osób
-                        persons_addressee_emails.append(person.email)
-                        return persons_addressee_emails
-                    email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
-                    email.to_who.set(persons_list)
-                    email.save()
+                    #Fixme gdzięś poniżej błąd nie dodaje do bazy. Do poprawy:
+                email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
+                email.addressee.set(persons)
+                email.save()
+                print(persons_addressee_emails)
 
-                    send_mass_mail(message_title,
+                send_mass_mail(message_title,
                                     message,
                                     who_send,
                                     persons_addressee_emails,
                                     )
+                msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
+                return render(request, 'mailing.html', msg)
+
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
         else:
             return HttpResponse('Upewnij się, że wszystkie pola są wypełnione!')
 
-        msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
-        return render(request, 'mailing.html', msg)
+
 
 
 

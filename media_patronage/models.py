@@ -87,8 +87,11 @@ class CooperationTerms(models.Model):
 class Email(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     message = models.TextField()
-    to_who = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='addressee')
+    to_who = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='addressee', null=True)
     send_from_email = models.EmailField()
+
+    def __str__(self):
+        return f'{self.event} - {self.to_who}'
 
 
 
