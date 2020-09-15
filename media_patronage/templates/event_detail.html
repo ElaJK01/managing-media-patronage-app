@@ -89,6 +89,12 @@
 
 </div>
 
+<div>
+    <a href="{% url 'pdf'  pk=event.pk %}" target="_blank"><button>Pobierz raport Pdf</button></a>
+</div>
+
+<div id="btn">
+
 <a href="{%url 'event_add_portal' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
 <a href="{%url 'event_remove_portal' pk=event.pk%}"><button>Usuń portal z wydarzenia</button></a>
 
@@ -97,6 +103,6 @@
 
 
 <a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
-
+</div>
 
 {%endblock%}

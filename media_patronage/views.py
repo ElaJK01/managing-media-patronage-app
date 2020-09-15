@@ -10,7 +10,8 @@ from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskA
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
 from django.core.mail import send_mail, send_mass_mail, BadHeaderError
-
+from .render import Render
+from django.utils import timezone
 
 class EventList(ListView):
     model = Event
@@ -233,6 +234,21 @@ class TaskBeforeEventView(CreateView):
     #         task_before.save()
     #         return redirect('event_detail')
 
+class PdfView(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        today = timezone.now()
+        tasks_after = TaskAfterEvent.objects.filter(event=event)
+        tasks_before = TaskBeforeEvent.objects.filter(event=event)
+        cooperation_terms = CooperationTerms.objects.filter(event=event)
+        params = {'event': event,
+                   'tasks_after': tasks_after,
+                   'tasks_before': tasks_before,
+                   'cooperation_terms': cooperation_terms,
+                  'today': today}
+
+        return Render.render('pdf.html', params)
+
 
 class ArticleAddView(CreateView):
     model = Article
@@ -300,17 +316,18 @@ class MailingView(View): #Fixme
                     portal_persons = portal.person_set.all()
                     persons_list = [person for person in portal_persons]
                     persons = persons+persons_list
+
                 print(persons)
-                # return persons
                 for person in persons: #wybranie adresów email osób
                     persons_addressee_emails.append(person.email)
-                        # return persons_addressee_emails
+
+                print(persons_addressee_emails)
 
                     #Fixme gdzięś poniżej błąd nie dodaje do bazy. Do poprawy:
                 email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
-                email.addressee.set(persons)
+                email.to_who.set(persons)
                 email.save()
-                print(persons_addressee_emails)
+
 
                 send_mass_mail(message_title,
                                     message,
