@@ -1,26 +1,32 @@
 
 <html lang="en">
+{% load bootstrap4 %}
 {% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Patronat Medialny</title>
+    <link rel="stylesheet" href="{% static 'base.css' %}"/>
+
 </head>
 <header class="header">
-    Aplikacja do Zarządzania współpracą z patronami medialnymi
+    <h1>Aplikacja do Zarządzania współpracą z patronami medialnymi</h1>
     <div class="main-menu">
-        <a href="{%url 'event_list'%}"><button>Home</button></a>
-        <a href="{%url 'portal_list'%}"><button>Portale</button></a>
-        <a href="{%url 'person_list'%}"><button>Osoby do kontaktu</button></a>
-        <a href="{%url 'article_list'%}"><button>Artykuły</button></a>
-        <a href="{%url 'search'%}"><button>Wyszukaj</button></a>
-        <a href="{%url 'mailing'%}"><button>Przygotuj mailing</button></a>
+        {%buttons%}
+        <a href="{%url 'event_list'%}"><button class="btn-menu">Home</button></a>
+        <a href="{%url 'portal_list'%}"><button class="btn-menu">Portale</button></a>
+        <a href="{%url 'person_list'%}"><button class="btn-menu">Osoby do kontaktu</button></a>
+        <a href="{%url 'article_list'%}"><button class="btn-menu">Artykuły</button></a>
+        <a href="{%url 'search'%}"><button class="btn-menu">Wyszukaj</button></a>
+        <a href="{%url 'mailing'%}"><button class="btn-menu">Przygotuj mailing</button></a>
+        {%endbuttons%}
     </div>
 </header>
 <body>
-{% block content %} {% endblock content %}
+<div class="content">{% block content %} {% endblock content %}</div>
 </body>
-<footer>
-    Copyright by EJK, Dzisiaj: {% now "jS F Y" %}
+</br>
+<footer class="footer">
+    Copyright by EJK, Dzisiaj: {% now "d-m-Y" %}
 
 </footer>
 </html>

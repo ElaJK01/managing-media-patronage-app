@@ -1,6 +1,9 @@
 {%extends 'base.html'%}
 
 {%block content%}
+</br>
+</br>
+</br>
 <table border="1">
     <tr>
         <th>data</th>
@@ -8,7 +11,7 @@
     </tr>
     <tr>
         {%for event in object_list%}
-        <td>{{event.date}}</td>
+        <td>{{event.date|date:"d-m-Y"}}</td>
         <td>{{event.title}}</td>
         <td><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
         <td><a href="{{event.get_absolute_url}}"><button>Zobacz szczegóły</button></a></td>

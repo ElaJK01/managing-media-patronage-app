@@ -91,8 +91,10 @@ class EventRemovePortalView(View):
         event = get_object_or_404(Event, pk=pk)
         portal_to_remove_name = request.POST.get('portal_to_remove')
         portal_to_remove = Portal.objects.get(name=portal_to_remove_name)
+        task_after = TaskAfterEvent.objects.get(event=event)
         event.portals_cooperating.remove(portal_to_remove)
         event.save()
+        task_after.delete()
         return redirect(f'/event_details/{event.pk}')
 
 
@@ -305,10 +307,10 @@ class MailingView(View): #Fixme
                 portals_c = []
                 for i in range(0, len(category)):
                     portals = Portal.objects.filter(category=category[i]) #otrzymujemy queryset portali do 1 z kategorii
-                    i =+ 1 #zwiększamy indeks listy category
-                    for p in portals: #iteruje po querysecie składającym się z portali(obiektów) jednej kategorii
+                    i =+ 1
+                    for p in portals: #iteruje po querysecie składającym się z portali jednej kategorii
                         portals_c.append(p) #dodajemy każdy portal do listy portali wskazanych przez użytkownika kategorii
-                        p =+1 #zwiększamy indeks
+                        p =+1
                 print(portals_c)
                 persons =[] #pusta lista osób
                 persons_addressee_emails = []  # pusta lista adresów email osób
@@ -318,13 +320,16 @@ class MailingView(View): #Fixme
                     persons = persons+persons_list
 
                 print(persons)
+                print(type(persons))
                 for person in persons: #wybranie adresów email osób
                     persons_addressee_emails.append(person.email)
 
                 print(persons_addressee_emails)
 
-                    #Fixme gdzięś poniżej błąd nie dodaje do bazy. Do poprawy:
+
                 email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
+                # Fixme gdzieś poniżej błąd nie dodaje do bazy. Do poprawy:
+                persons=list(persons)
                 email.to_who.set(persons)
                 email.save()
 

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'media_patronage',
     'phone_field',
     'crispy_forms',
+    'bootstrap4',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

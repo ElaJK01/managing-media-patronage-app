@@ -8,7 +8,8 @@ class AddEventForm(ModelForm):
     portals_cooperating = forms.ModelMultipleChoiceField(
         queryset=Portal.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=False)
+        required=False,
+    label= 'Portale współpracujące')
 
     class Meta:
         model = Event

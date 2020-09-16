@@ -1,9 +1,13 @@
 {%extends 'base.html'%}
 
 {%block content%}
+</br>
+</br>
+</br>
 {%for person in object_list%}
+<ul><li>
 {{person.first_name}} {{person.last_name}} - {{person.portal}}
-<a href="{{person.get_absolute_url}}"><button>Więcej</button></a></br>
+<a href="{{person.get_absolute_url}}"><button>Więcej</button></a></li></ul>
 {%empty%}
 Nie ma osób w bazie
 {%endfor%}

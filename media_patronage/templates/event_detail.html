@@ -1,9 +1,10 @@
 {%extends 'base.html'%}
-
+{% load bootstrap4 %}
 {%block content%}
-<h3>Konferencja:</h3>
-<h4>{{event.title}}</h4>
-<h5>Dnia: {{event.date}}</h5>
+</br>
+
+<h3>Konferencja: {{event.title}}</h3>
+<h4>Data: {{event.date|date:'d-m-Y'}}</h4>
 <p>Patroni medialni wydarzenia: </br>{% for portal in event.portals_cooperating.all%}
     <a href="{% url 'portal_detail' pk=portal.pk %}"><ul><li>{{portal}}</li></ul></a>
 {%endfor%}</p>
@@ -26,7 +27,7 @@
         {%for tasks_before in tasks_before%}
             <tr>
                 <td>{{tasks_before.send_invitation_to_portals|yesno:"Tak,Nie"}}</td>
-                <td>{{tasks_before.when_send_invitation}}</td>
+                <td>{{tasks_before.when_send_invitation|date:'d-m-Y'}}</td>
                 <td>{{tasks_before.portals_invited}}</td>
                 <td>{{tasks_before.comments}}</td>
 
@@ -54,7 +55,7 @@
             <tr>
                 <td>{{tasks_after.portal}}</td>
                 <td>{{tasks_after.send_materials_after_event|yesno:"Tak,Nie"}}</td>
-                <td>{{tasks_after.date_when_send}}</td>
+                <td>{{tasks_after.date_when_send|date:'d-m-Y'}}</td>
                 <td>{{tasks_after.comments}}</td>
 
             </tr>
@@ -88,10 +89,11 @@
     </table>
 
 </div>
-
+{%buttons%}
+</br>
 <div>
     <a href="{% url 'pdf'  pk=event.pk %}" target="_blank"><button>Pobierz raport Pdf</button></a>
-</div>
+</div></br>
 
 <div id="btn">
 
@@ -104,5 +106,5 @@
 
 <a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
 </div>
-
+{%endbuttons%}
 {%endblock%}

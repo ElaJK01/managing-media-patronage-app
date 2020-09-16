@@ -1,0 +1,28 @@
+.footer {
+    height: 50px;
+    background: lightsteelblue;
+    font-family: "Arial";
+
+}
+
+.header {
+    height: 50px;
+    background: lightsteelblue;
+    font-family: "Arial";
+
+
+}
+
+.btn-menu {
+    background: steelblue;
+    font-family: "Arial";
+    font-optical-sizing: auto;
+    font-size: large;
+    padding-block: inherit;
+}
+
+.content {
+    background: whitesmoke;
+    font-family: "Arial"
+
+}

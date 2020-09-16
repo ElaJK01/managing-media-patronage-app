@@ -1,11 +1,14 @@
 {%extends 'base.html'%}
 
 {%block content%}
+</br>
+</br>
+</br>
 {%if msg%}
 {{msg}}
 {%endif%}
 
-Dodaj portal do: <b>"{{event.title}}" - {{event.date}}</b>
+<p>Dodaj portal do: <b>"{{event.title}}" - {{event.date|date:'d-m-Y'}}</b></p>
 
 <form method="POST">
     {%csrf_token%}
@@ -16,7 +19,6 @@ Dodaj portal do: <b>"{{event.title}}" - {{event.date}}</b>
         {%endfor%}
     </select>
         </label></br>
-
     <input type="submit" value="Zaktualizuj">
 
 </form>

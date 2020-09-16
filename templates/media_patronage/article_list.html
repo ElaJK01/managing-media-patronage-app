@@ -1,6 +1,9 @@
 {%extends 'base.html'%}
 
 {%block content%}
+</br>
+</br>
+</br>
 <table border="1">
     <thead>
         <tr>
@@ -16,12 +19,12 @@
         <td>{{article.title}}</td>
         <td>{{article.portal}}</td>
         <td>{{article.event}}</td>
-        <td>{{article.published_date}}</td>
+        <td>{{article.published_date|date:"d-m-Y"}}</td>
         <td><a href="{{article.pdf_article.url}}" target="_blank"><button>Pobierz artykuł</button></a></td>
         {%endfor%}
     </tbody>
 </table>
-
-<a href="{% url 'article_form'%}"><button>Dodaj nwy artykuł</button></a>
+</br>
+<a href="{% url 'article_form'%}"><button>Dodaj nowy artykuł</button></a>
 
 {%endblock%}
