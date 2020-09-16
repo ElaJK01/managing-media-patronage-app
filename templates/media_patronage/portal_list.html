@@ -7,8 +7,8 @@
 <table border="1">
     <thead>
     <tr>
-        <td>logo</td>
-        <td>nazwa</td>
+        <td>Logo</td>
+        <td>Nazwa</td>
         <td>Szczegóły</td>
         <td>Pobierz logo</td>
     </tr>
@@ -29,6 +29,24 @@ Nie ma Portali do wyświetlenia
 {%endfor%}
 
 </table>
+</br>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pierwsza</a>
+            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">następna</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 </br>
 <a href="{% url 'portal_form' %}"><button>Dodaj nowy portal</button></a>
 

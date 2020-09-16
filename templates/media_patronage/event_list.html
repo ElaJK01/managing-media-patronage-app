@@ -5,24 +5,36 @@
 </br>
 </br>
 </br>
-<table border="1" class="center">
-    <tr>
-        <th>data</th>
-        <th>Konferencja/ szkolenie</th>
-    </tr>
-    <tr>
-        {%for event in object_list|sort_by:'date'%}
-        <td>{{event.date|date:"d-m-Y"}}</td>
-        <td>{{event.title}}</td>
-        <td><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
-        <td><a href="{{event.get_absolute_url}}"><button>Zobacz szczegóły</button></a></td>
-        <td><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>
-    </tr>
+<ul class="center">
+
+        {%for event in object_list%}
+        <li>{{event.date|date:"d-m-Y"}} - {{event.title}} <a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a>
+        <a href="{{event.get_absolute_url}}"><button>Zobacz szczegóły</button></a> <a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></li>
+
         {%empty%}
         Nie ma jeszcze konferencji do wyświetlenia
         {%endfor%}
-    </tr>
-</table>
+
+</ul>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pierwsza</a>
+            <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">następna</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 </br>
 <a href="{% url 'event_form'%}"><button>Dodaj nowe wydarzenie</button></a>
 {%endblock%}

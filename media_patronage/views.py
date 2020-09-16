@@ -12,9 +12,12 @@ from django.db.models import Q
 from django.core.mail import send_mail, send_mass_mail, BadHeaderError
 from .render import Render
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 class EventList(ListView):
+    paginate_by = 20
     model = Event
+    ordering = ['date']
 
 
 class AddEvent(FormView):
@@ -99,7 +102,10 @@ class EventRemovePortalView(View):
 
 
 class PortalList(ListView):
+    paginate_by = 10
     model = Portal
+    ordering = ['name']
+
 
 
 class SearchFormView(TemplateView):
@@ -129,7 +135,9 @@ class SearchFormView(TemplateView):
 
 
 class PersonList(ListView):
+    paginate_by = 20
     model = Person
+    ordering = ['last_name']
 
 
 class AddPortal(CreateView):
@@ -260,7 +268,9 @@ class ArticleAddView(CreateView):
 
 
 class ArticleList(ListView):
+    paginate_by = 20
     model = Article
+    ordering = ['title']
 
 
 class AddCooperationTerms(View):
