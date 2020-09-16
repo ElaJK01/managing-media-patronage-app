@@ -2,6 +2,9 @@
     height: 50px;
     background: lightsteelblue;
     font-family: "Arial";
+    text-align: center;
+    font-size: medium;
+    justify-content: center;
 
 }
 
@@ -19,6 +22,14 @@
     font-optical-sizing: auto;
     font-size: large;
     padding-block: inherit;
+    border-radius: 5px;
+    font-size: 20px;
+    width: 250px;
+}
+
+.btn-menu:hover {
+    background-color: lightsteelblue;
+    color: center;
 }
 
 .content {
