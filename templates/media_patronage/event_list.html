@@ -1,16 +1,17 @@
 {%extends 'base.html'%}
-
+{% load custom_tags %}
 {%block content%}
+
 </br>
 </br>
 </br>
-<table border="1">
+<table border="1" class="center">
     <tr>
         <th>data</th>
         <th>Konferencja/ szkolenie</th>
     </tr>
     <tr>
-        {%for event in object_list%}
+        {%for event in object_list|sort_by:'date'%}
         <td>{{event.date|date:"d-m-Y"}}</td>
         <td>{{event.title}}</td>
         <td><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
