@@ -40,5 +40,13 @@
 </form>
 </div>
 
+<div class="msg">
+{%if msg%}
+{{msg}}
+{%for email in emails%}
+{{email}},
+{%endfor%}
+{%endif%}
+</div>
 
 {%endblock%}

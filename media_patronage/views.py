@@ -341,7 +341,8 @@ class MailingView(View):
 
                 message1 = (message_title, message, who_send, persons_addressee_emails)
                 send_mass_mail((message1,))
-                msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
+                msg = {'msg': f'Email został wysłany do:',
+                       'emails': persons_addressee_emails}
                 return render(request, 'mailing.html', msg)
 
             except BadHeaderError:
