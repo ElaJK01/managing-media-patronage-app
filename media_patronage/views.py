@@ -317,10 +317,9 @@ class MailingView(View): #Fixme
                 portals_c = []
                 for i in range(0, len(category)):
                     portals = Portal.objects.filter(category=category[i]) #otrzymujemy queryset portali do 1 z kategorii
-                    i =+ 1
+                    i += 1
                     for p in portals: #iteruje po querysecie składającym się z portali jednej kategorii
                         portals_c.append(p) #dodajemy każdy portal do listy portali wskazanych przez użytkownika kategorii
-                        p =+1
                 print(portals_c)
                 persons =[] #pusta lista osób
                 persons_addressee_emails = []  # pusta lista adresów email osób
@@ -338,7 +337,6 @@ class MailingView(View): #Fixme
 
 
                 email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
-                # Fixme gdzieś poniżej błąd nie dodaje do bazy. Do poprawy:
                 persons=list(persons)
                 email.to_who.set(persons)
                 email.save()
@@ -347,8 +345,7 @@ class MailingView(View): #Fixme
                 send_mass_mail(message_title,
                                     message,
                                     who_send,
-                                    persons_addressee_emails,
-                                    )
+                                    persons_addressee_emails)
                 msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
                 return render(request, 'mailing.html', msg)
 
