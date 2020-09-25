@@ -299,7 +299,7 @@ class AddCooperationTerms(View):
             return render(request, "add_cooperation_terms.html", ctx)
 
 
-class MailingView(View): #Fixme
+class MailingView(View):
     def get(self, request):
         return render(request, 'mailing.html')
 
@@ -332,20 +332,15 @@ class MailingView(View): #Fixme
                 print(type(persons))
                 for person in persons: #wybranie adresów email osób
                     persons_addressee_emails.append(person.email)
-
                 print(persons_addressee_emails)
-
 
                 email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
                 persons=list(persons)
                 email.to_who.set(persons)
                 email.save()
 
-
-                send_mass_mail(message_title,
-                                    message,
-                                    who_send,
-                                    persons_addressee_emails)
+                message1 = (message_title, message, who_send, persons_addressee_emails)
+                send_mass_mail((message1,))
                 msg = {'msg': f'Email został wysłany do: {persons_addressee_emails}'}
                 return render(request, 'mailing.html', msg)
 
