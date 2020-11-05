@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
-from django.core.mail import send_mail, send_mass_mail, BadHeaderError
+from django.core.mail import send_mass_mail, BadHeaderError
 from .render import Render
 from django.utils import timezone
 from django.core.paginator import Paginator

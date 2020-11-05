@@ -1,5 +1,6 @@
 {%extends 'base.html'%}
 
+
 {%block content%}
 <div>
 {%if msg%}
@@ -11,27 +12,33 @@
 Warunki współpracy przy konferencji: {{event.title}}
 </div>
 
+
 <div>
 <form method="post">
     {%csrf_token%}
-    <label>Portal współpracujący
-        <select name="portal">
+    <table>
+        <tr>
+            <td><label>Portal współpracujący</label></td>
+            <td><select name="portal">
             {%for p in event.portals_cooperating.all%}
             <option>{{p.name}}</option>
             {%endfor%}
-        </select>
-    </label>
-    <label>Usługi świadczone dla Portalu
-        <input type="text" name="services_for_p">
-    </label>
-    <label>Usługi zapewnione przez Portal
-        <input type="text" name="services_by_p">
-    </label>
-    <label>Komentarz
-    <textarea name="comments"></textarea>
-        </label>
-    <input type="submit" value="Dodaj">
-
+        </select></td>
+        </tr>
+        <tr>
+            <td><label>Usługi świadczone dla Portalu</label></td>
+            <td><input type="text" name="services_for_p"></td>
+        </tr>
+        <tr>
+            <td><label>Usługi zapewnione przez Portal</label></td>
+            <td><input type="text" name="services_by_p"></td>
+        </tr>
+        <tr>
+            <td><label>Komentarz</label></td>
+            <td><textarea name="comments"></textarea></td>
+        </tr>
+     <input type="submit" value="Dodaj">
+    </table>
 </form>
 </div>
 {%endblock%}

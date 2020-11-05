@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="{% static 'base.css' %}"/>
 
 </head>
+
 <header class="header">
-    <h1>Aplikacja do Zarządzania współpracą z patronami medialnymi</h1>
+    <h1>Zarządzaj swoimi patronami medialnymi</h1>
     <div class="topnav-centered">
         {%buttons%}
         <a href="{%url 'event_list'%}"><button class="btn-menu">Home</button></a>
@@ -21,10 +22,14 @@
         {%endbuttons%}
     </div>
 </header>
+
+
+
 <body>
 <div class="content">{% block content %} {% endblock content %}</div>
 </body>
-</br>
+
+
 <footer class="footer">
     Copyright by EJK, Dzisiaj: {% now "d-m-Y" %}
 </footer>
