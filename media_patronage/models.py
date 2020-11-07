@@ -1,5 +1,7 @@
 from django.db import models
 from phone_field import PhoneField
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 
 class Portal(models.Model):
@@ -62,8 +64,12 @@ class TaskBeforeEvent(models.Model):
     portals_invited = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Zaproszone do współpracy portale')
     comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
 
-    # def __str__(self):
-    #     return {self.pk}
+    def clean(self):
+        if self.event.date <= self.when_send_invitation:
+            raise ValidationError(
+                {'when_send_invitation': _("Data wysłania zaproszenia nie może być po dacie konferencji!")}
+                )
+
 
 
 class TaskAfterEvent(models.Model):

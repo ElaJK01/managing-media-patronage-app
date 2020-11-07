@@ -14,6 +14,7 @@ from .render import Render
 from django.utils import timezone
 from django.core.paginator import Paginator
 
+
 class EventList(ListView):
     paginate_by = 20
     model = Event

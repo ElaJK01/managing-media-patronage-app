@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django import forms
+from datetime import date
 
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms
 
@@ -36,6 +37,7 @@ class TaskBeforeForm(ModelForm):
     class Meta:
         model = TaskBeforeEvent
         fields = ['event', 'send_invitation_to_portals', 'when_send_invitation', 'portals_invited', 'comments']
+
 
 
 class TaskAfterForm(ModelForm):
