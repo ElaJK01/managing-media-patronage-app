@@ -1,8 +1,8 @@
 from django.forms import ModelForm
 from django import forms
 from datetime import date
-
-from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms
+from django.forms.widgets import CheckboxSelectMultiple
+from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 
 
 class AddEventForm(ModelForm):
@@ -34,9 +34,12 @@ class SearchForm(forms.Form):
 
 
 class TaskBeforeForm(ModelForm):
+    when_send_invitation = forms.DateField(widget=forms.DateInput)
+
     class Meta:
         model = TaskBeforeEvent
-        fields = ['event', 'send_invitation_to_portals', 'when_send_invitation', 'portals_invited', 'comments']
+        fields = ['send_invitation_to_portals', 'when_send_invitation', 'comments']
+
 
 
 

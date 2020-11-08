@@ -8,10 +8,14 @@
 </br>
 </br>
 
+<h2>{{event}}</h2>
+
 <form method="post">
+    <table>
     {%csrf_token%}
-    {{form.as_p}}
+     {{form.as_p}}
     <input type="submit">
+
 </form>
 
 {%endblock%}

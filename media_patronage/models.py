@@ -63,12 +63,17 @@ class TaskBeforeEvent(models.Model):
     when_send_invitation = models.DateField(verbose_name='Kiedy zostało wysłane zaproszenie', null=True, blank=True)
     portals_invited = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Zaproszone do współpracy portale')
     comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
+    to_who = models.ManyToManyField(Person)
 
     def clean(self):
-        if self.event.date <= self.when_send_invitation:
-            raise ValidationError(
+        if self.send_invitation_to_portals == True:
+            if self.event.date <= self.when_send_invitation:
+                raise ValidationError(
                 {'when_send_invitation': _("Data wysłania zaproszenia nie może być po dacie konferencji!")}
                 )
+        else:
+            if self.send_invitation_to_portals == False and self.when_send_invitation is not None:
+                raise ValidationError({'send_invitation_to_portals': _('Jeśli chcesz podać datę wyslania zaproszenia, zaznacz pole, wysłane zaproszenie!')})
 
 
 

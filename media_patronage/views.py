@@ -215,35 +215,31 @@ class TaskAfterEventView(View):
             return HttpResponse('Błędnie wypełniony formularz!')
 
 
-class TaskBeforeEventView(CreateView):
-    template_name = 'tasks_before.html'
-    form_class = TaskBeforeForm
-    success_url = reverse_lazy("event_list")
+class TaskBeforeEventView(View):
+    def get(self, request, pk):
+        event = get_object_or_404(Event, pk=pk)
+        form = TaskBeforeForm(instance=event)
+        ctx = {'form': form,
+               'event': event}
+        return render(request, 'tasks_before.html', ctx)
 
-#FIXME wybór portali do wysyłki, zwalidować datę wysłania zaproszeń nie może być po terminie konferencji
-    # def get(self, request, pk):
-    #     event = get_object_or_404(Event, pk=pk)
-    #     form = TaskBeforeForm()
-    #     ctx = {'form': form,
-    #            'event': event}
-    #     return render(request, 'tasks_before.html', ctx)
-    #
-    # def post(self, request, pk):
-    #     event = Event.objects.get(pk=pk)
-    #     send_invitation_to_portals = request.POST.get('send_invitation')
-    #     when_send_invitation = request.POST.get('when_send_invitation')
-    #     event_date = str(event.date)
-    #     portals_invited = request.POST.get('portals_invited')
-    #     comments = request.POST.get('comments')
-    #     if when_send_invitation < event_date:
-    #         msg = {'msg': 'Podana data wysłania jest niewłaściwa'}
-    #         return render(request, 'tasks_before.html', msg)
-    #     else:
-    #         task_before = TaskBeforeEvent.objects.create(event=event, send_invitation_to_portals=send_invitation_to_portals,
-    #                                                      when_send_invitation=when_send_invitation, portals_invited=portals_invited,
-    #                                                      comments=comments)
-    #         task_before.save()
-    #         return redirect('event_detail')
+    def post(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        form = TaskBeforeForm(request.POST)
+        email = get_object_or_404(Email, event=event)
+        email_recipients = email.to_who
+        if form.is_valid():
+            send_invitation_to_portals = form.cleaned_data['send_invitation_to_portals']
+            when_send_invitation = form.cleaned_data['when_send_invitation']
+            comments = form.cleaned_data['comments']
+            event_task = TaskBeforeEvent.objects.create(event=event, send_invitation_to_portals=send_invitation_to_portals,
+                                                        when_send_invitation=when_send_invitation, comments=comments)
+            event_task.set(email_recipients)
+            event_task.save()
+            return redirect('event_detail')
+        else:
+            ...
+
 
 class PdfView(View):
     def get(self, request, pk):
