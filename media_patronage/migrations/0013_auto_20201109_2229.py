@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='email',
             name='date',
-            field=models.DateField(default='01-01-2020'),
+            field=models.DateField(default='2020-01-01'),
             preserve_default=False,
         ),
     ]

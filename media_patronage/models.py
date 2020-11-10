@@ -58,8 +58,8 @@ class Article(models.Model):
 
 
 class TaskBeforeEvent(models.Model):
-    event = models.OneToOneField(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
-    comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
+    comments = models.TextField(verbose_name='Dodatkowe informacje', blank=False)
 
 
 class TaskAfterEvent(models.Model):

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views import View
@@ -225,22 +225,17 @@ class TaskBeforeEventView(View):
                'event': event}
         return render(request, 'tasks_before.html', ctx)
 
-    # def post(self, request, pk):#fixme
-    #     event = Event.objects.get(pk=pk)
-    #     form = TaskBeforeForm(request.POST)
-    #     emails = Email.objects.filter(event=event)
-    #     email_recipients = email.to_who #fixme
-    #     if form.is_valid():
-    #         send_invitation_to_portals = form.cleaned_data['send_invitation_to_portals']
-    #         when_send_invitation = form.cleaned_data['when_send_invitation']
-    #         comments = form.cleaned_data['comments']
-    #         event_task = TaskBeforeEvent.objects.create(event=event, send_invitation_to_portals=send_invitation_to_portals,
-    #                                                     when_send_invitation=when_send_invitation, comments=comments)
-    #         event_task.set(email_recipients)
-    #         event_task.save()
-    #         return redirect('event_detail')
-    #     else:
-    #         ...
+    def post(self, request, pk):
+        event = Event.objects.get(pk=pk)
+        form = TaskBeforeForm(request.POST)
+        if form.is_valid():
+            comments = form.cleaned_data['comments']
+            event_task = TaskBeforeEvent.objects.create(event=event, comments=comments)
+            event_task.save()
+            return redirect('event_list')
+        else:
+            msg = {'message': 'Popraw błędy'}
+            return render(request, 'tasks_before.html', msg)
 
 
 class PdfView(View):
@@ -249,12 +244,14 @@ class PdfView(View):
         today = timezone.now()
         tasks_after = TaskAfterEvent.objects.filter(event=event)
         tasks_before = TaskBeforeEvent.objects.filter(event=event)
+        emails = Email.objects.filter(event=event)
         cooperation_terms = CooperationTerms.objects.filter(event=event)
         params = {'event': event,
                    'tasks_after': tasks_after,
                    'tasks_before': tasks_before,
                    'cooperation_terms': cooperation_terms,
-                  'today': today}
+                  'today': today,
+                  'emails': emails}
 
         return Render.render('pdf.html', params)
 

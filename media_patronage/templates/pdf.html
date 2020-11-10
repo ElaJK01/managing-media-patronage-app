@@ -72,26 +72,46 @@
         {%endfor%}
         </div>
 
-        <h3>Zadania wykonane przed konferencją w sprawie patronatu medialnego:</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Czy wysłane zaproszenia do portali tematycznych</th>
-                <th>kiedy wysłane zaproszenia</th>
-                <th>Jakie portale zaproszone do współpracy</th>
-                <th>Uwagi</th>
-            </tr>
-            </thead>
-            <tbody>{% for task_b in tasks_before %}
-                 <tr>
-                    <td>{{ task_b.send_invitation_to_portals }}</td>
-                    <td>{{ task_b.when_send_invitation}}</td>
-                    <td>{{ task_b.portals_invited }}</td>
-                    <td>{{ task_b.comments }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+
+   {%if emails%}
+    <h3>Wysłane emaile z zaproszeniem:</h3>
+
+    <table border="2">
+
+        <tr>
+            <td>adresaci</td>
+            <td>kategoria portali</td>
+            <td>treść wiadomości</td>
+            <td>wysłana z konta</td>
+            <td>data wysłania</td>
+
+        </tr>
+        {%for e in emails%}
+        <tr>
+            <td>{%for person in e.to_who.all%}
+                {{person}}
+            {%endfor%}
+            </td>
+            <td>
+                {%for person in e.to_who.all%}
+                {{person.portal.category}}
+            {%endfor%}
+            </td>
+            <td>{{e.message}}</td>
+            <td>{{e.send_from_email}}</td>
+            <td>{{e.date}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    {% else %}
+    Brak mailingów
+    {%endif%}
+
+        <h4>Uwagi:</h4>
+        <ul>{%for task in tasks_before%}
+            <li>{{task.comments}}</li>
+            {%endfor%}</ul>
+
 
         <h3>Zadania wykonane po konferencji:</h3>
         <table class="table">
