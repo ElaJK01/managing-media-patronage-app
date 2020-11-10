@@ -59,22 +59,7 @@ class Article(models.Model):
 
 class TaskBeforeEvent(models.Model):
     event = models.OneToOneField(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
-    send_invitation_to_portals = models.BooleanField(default=False, verbose_name='czy wysłane zaproszenie do portali tematynych')
-    when_send_invitation = models.DateField(verbose_name='Kiedy zostało wysłane zaproszenie', null=True, blank=True)
-    portals_invited = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Zaproszone do współpracy portale')
     comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
-    to_who = models.ManyToManyField(Person)
-
-    def clean(self):
-        if self.send_invitation_to_portals == True:
-            if self.event.date <= self.when_send_invitation:
-                raise ValidationError(
-                {'when_send_invitation': _("Data wysłania zaproszenia nie może być po dacie konferencji!")}
-                )
-        else:
-            if self.send_invitation_to_portals == False and self.when_send_invitation is not None:
-                raise ValidationError({'send_invitation_to_portals': _('Jeśli chcesz podać datę wyslania zaproszenia, zaznacz pole, wysłane zaproszenie!')})
-
 
 
 class TaskAfterEvent(models.Model):
@@ -84,8 +69,6 @@ class TaskAfterEvent(models.Model):
     date_when_send = models.DateField(verbose_name='Data', null=True)
     comments = models.TextField(verbose_name='Dodatkowe informacje', blank=True)
 
-    # def __str__(self):
-    #     return self.pk
 
 class CooperationTerms(models.Model):
     portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
@@ -100,6 +83,7 @@ class Email(models.Model):
     message = models.TextField()
     to_who = models.ManyToManyField(Person, related_name='person_address')
     send_from_email = models.EmailField()
+    date = models.DateField()
 
     def __str__(self):
         return f'{self.event} - {self.to_who}'

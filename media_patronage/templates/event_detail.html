@@ -14,27 +14,48 @@
 <div class="aligned">
     <h4>Zadania wykonane przed Konferencją:</h4>
 
-    <table border="2">
-        <thead>
-            <tr>
-                <td>Wysłanie zaproszeń</td>
-                <td>Kiedy wysłane zaproszenia</td>
-                <td>zaproszone portale</td>
-                <td>komentarze</td>
-            </tr>
-        </thead>
-        <tbody>
-        {%for tasks_before in tasks_before%}
-            <tr>
-                <td>{{tasks_before.send_invitation_to_portals|yesno:"Tak,Nie"}}</td>
-                <td>{{tasks_before.when_send_invitation|date:'d-m-Y'}}</td>
-                <td>{{tasks_before.portals_invited}}</td>
-                <td>{{tasks_before.comments}}</td>
+    {%if emails%}
+    <h5>Wysłane emaile z zaproszeniem:</h5>
 
-            </tr>
+    <table border="2">
+
+        <tr>
+            <td>adresaci</td>
+            <td>kategoria portali</td>
+            <td>treść wiadomości</td>
+            <td>wysłana z konta</td>
+            <td>data wysłania</td>
+
+        </tr>
+        {%for e in emails%}
+        <tr>
+            <td>{%for person in e.to_who.all%}
+                {{person}}
+            {%endfor%}
+            </td>
+            <td>
+                {%for person in e.to_who.all%}
+                {{person.portal.category}}
+            {%endfor%}
+            </td>
+            <td>{{e.message}}</td>
+            <td>{{e.send_from_email}}</td>
+            <td>{{e.date}}</td>
+        </tr>
         {%endfor%}
-        </tbody>
     </table>
+    {% else %}
+    Brak mailingów
+    {%endif%}
+
+    {%if tasks_before%}
+    <h5>Uwagi:</h5>
+    <ul>
+    {%for task in tasks_before%}
+    <li>{{task.comments}}</li>
+    {%endfor%}
+    </ul>
+    {%endif%}
 
 
 </div>

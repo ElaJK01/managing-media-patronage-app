@@ -34,13 +34,9 @@ class SearchForm(forms.Form):
 
 
 class TaskBeforeForm(ModelForm):
-    when_send_invitation = forms.DateField(widget=forms.DateInput)
-
     class Meta:
         model = TaskBeforeEvent
-        fields = ['send_invitation_to_portals', 'when_send_invitation', 'comments']
-
-
+        fields = ['comments']
 
 
 class TaskAfterForm(ModelForm):
