@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from datetime import date
-from django.forms.widgets import CheckboxSelectMultiple
+from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 
 
@@ -43,5 +43,9 @@ class TaskAfterForm(ModelForm):
     class Meta:
         model = TaskAfterEvent
         fields = ['event', 'portal', 'send_materials_after_event', 'date_when_send', 'comments']
+
+
+class EventAddPortalForm(forms.Form):
+    portal = forms.ModelMultipleChoiceField(widget=CheckboxSelectMultiple, queryset=Portal.objects.all(), label='Portale')
 
 

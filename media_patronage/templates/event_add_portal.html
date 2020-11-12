@@ -12,16 +12,13 @@
 
 <form method="POST">
     {%csrf_token%}
-    <label>Wybierz portal
-    <select name="portal">
-        {%for p in portals%}
-        <option value="{{p}}">{{p}}</option>
-        {%endfor%}
-    </select>
-        </label></br>
+    {{form.as_p}}
     <input type="submit" value="Zaktualizuj">
 
 </form>
 
+{%if msg%}
+{{msg}}
+{%endif%}
 
 {%endblock%}

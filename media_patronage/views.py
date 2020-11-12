@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm
+from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm, EventAddPortalForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
 from django.core.mail import send_mass_mail, BadHeaderError
@@ -55,20 +55,29 @@ class EventDeleteView(DeleteView):
 class EventAddPortalView(View):
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
+        form = EventAddPortalForm()
         if event_to_update:
-            ctx = {'event': event_to_update}
+            ctx = {'event': event_to_update,
+                   'form': form}
             return render(request, 'event_add_portal.html', ctx)
         else:
             msg = {'msg': 'Nie ma takiego wydarzenia!'}
             return render(request, 'event_add_portal.html', msg)
 
-    def post(self, request, pk):
+    def post(self, request, pk):#fixme przy ddawaniu nowego zamienia całą listę
         event_to_update = Event.objects.get(pk=pk)
-        portal= request.POST.get('portal')
-        portal_to_add = Portal.objects.get(name=portal)
-        event_to_update.portals_cooperating.add(portal_to_add)
-        event_to_update.save()
-        return redirect(f'/event_details/{event_to_update.pk}')
+        form = EventAddPortalForm(request.POST)
+        if form.is_valid():
+            portals = form.cleaned_data['portal']
+            if event_to_update.portals_cooperating.all() is None:
+                event_to_update.portals_cooperating.set(portals)
+                event_to_update.save()
+                return redirect(f'/event_details/{event_to_update.pk}')
+            else:
+                ...
+                return redirect(f'/event_details/{event_to_update.pk}')
+        else:
+            return render(request, 'event_add_portal.html', {'msg': 'Błędnie wypełniony formularz'})
 
 
 class EventUpdateView(View):
@@ -108,7 +117,6 @@ class PortalList(ListView):
     paginate_by = 10
     model = Portal
     ordering = ['name']
-
 
 
 class SearchFormView(TemplateView):
@@ -290,7 +298,7 @@ class AddCooperationTerms(View):
             terms.save()
             return redirect(f'/event_details/{event.pk}')
         else:
-            ctx = {'msg': 'Niepoprawnie wykonany formularz!',
+            ctx = {'msg': 'Niepoprawnie wypełniony formularz!',
                    'event': event}
             return render(request, "add_cooperation_terms.html", ctx)
 
