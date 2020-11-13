@@ -64,7 +64,7 @@ class EventAddPortalView(View):
             msg = {'msg': 'Nie ma takiego wydarzenia!'}
             return render(request, 'event_add_portal.html', msg)
 
-    def post(self, request, pk):#fixme przy ddawaniu nowego zamienia całą listę
+    def post(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         form = EventAddPortalForm(request.POST)
         if form.is_valid():
@@ -74,7 +74,8 @@ class EventAddPortalView(View):
                 event_to_update.save()
                 return redirect(f'/event_details/{event_to_update.pk}')
             else:
-                ...
+                for portal in portals:
+                    event_to_update.portals_cooperating.add(portal)
                 return redirect(f'/event_details/{event_to_update.pk}')
         else:
             return render(request, 'event_add_portal.html', {'msg': 'Błędnie wypełniony formularz'})
@@ -106,10 +107,10 @@ class EventRemovePortalView(View):
         event = get_object_or_404(Event, pk=pk)
         portal_to_remove_name = request.POST.get('portal_to_remove')
         portal_to_remove = Portal.objects.get(name=portal_to_remove_name)
-        task_after = TaskAfterEvent.objects.get(event=event)
+        # task_after = TaskAfterEvent.objects.get(event=event)
         event.portals_cooperating.remove(portal_to_remove)
         event.save()
-        task_after.delete()
+        # task_after.delete()
         return redirect(f'/event_details/{event.pk}')
 
 
