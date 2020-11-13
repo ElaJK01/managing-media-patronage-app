@@ -6,7 +6,8 @@ from django.views.generic.list import ListView
 from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
-from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm, EventAddPortalForm
+from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm, \
+    EventAddPortalForm, EventUpdateForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
 from django.core.mail import send_mass_mail, BadHeaderError
@@ -53,6 +54,8 @@ class EventDeleteView(DeleteView):
 
 
 class EventAddPortalView(View):
+
+    """View serves to adding cooperting portals to event"""
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         form = EventAddPortalForm()
@@ -84,17 +87,27 @@ class EventAddPortalView(View):
 class EventUpdateView(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
-        ctx = {'event': event}
+        initial_data = {
+            'event': event.title,
+            'date': event.date
+        }
+        form = EventUpdateForm(initial=initial_data)
+        ctx = {'event': event,
+               'form': form}
         return render(request, 'event_update.html', ctx)
 
     def post(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
-        date_updated = request.POST.get('date')
-        title_updated = request.POST.get('title')
-        event.date = date_updated
-        event.title = title_updated
-        event.save()
-        return redirect(f'event_details/{event.pk}')
+        form = EventUpdateForm(request.POST)
+        if form.is_valid():
+            date_updated = form.cleaned_data['date']
+            title_updated = form.cleaned_data['event']
+            event.date = date_updated
+            event.title = title_updated
+            event.save()
+            return redirect(f'/event_details/{event.pk}')
+        else:
+            return render(request, 'event_update.html')
 
 
 class EventRemovePortalView(View):

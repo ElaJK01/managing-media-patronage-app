@@ -3,16 +3,12 @@
 {%block content%}
 </br>
 </br>
+</br>
 Zmień informacje o: <b>{{event}}</b>
 
 <form method="post">
     {%csrf_token%}
-    <label>Tytuł konferencji
-    <input type="text" value="{{event.title}}" name="title">
-    </label>
-    <label>Data
-    <input type="date" name="date">
-    </label>
+    {{form.as_p}}
     <input type="submit" value="Zaktualizuj">
 
 </form>

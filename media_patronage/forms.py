@@ -49,3 +49,8 @@ class EventAddPortalForm(forms.Form):
     portal = forms.ModelMultipleChoiceField(widget=CheckboxSelectMultiple, queryset=Portal.objects.all(), label='Portale')
 
 
+class EventUpdateForm(forms.Form):
+    event = forms.CharField(label='Tytuł wydarzenia')
+    date = forms.DateField(label='data')
+
+
