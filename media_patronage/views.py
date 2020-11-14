@@ -7,7 +7,7 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm, \
-    EventAddPortalForm, EventUpdateForm
+    EventAddPortalForm, EventUpdateForm, EventRemovePortalForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
 from django.core.mail import send_mass_mail, BadHeaderError
@@ -113,18 +113,25 @@ class EventUpdateView(View):
 class EventRemovePortalView(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
-        ctx = {'event': event}
+
+        form = EventRemovePortalForm(event=event)
+        ctx = {'event': event,
+               'form': form}
         return render(request, "event_remove_portal.html", ctx)
 
     def post(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
-        portal_to_remove_name = request.POST.get('portal_to_remove')
-        portal_to_remove = Portal.objects.get(name=portal_to_remove_name)
-        # task_after = TaskAfterEvent.objects.get(event=event)
-        event.portals_cooperating.remove(portal_to_remove)
-        event.save()
-        # task_after.delete()
-        return redirect(f'/event_details/{event.pk}')
+        form = EventRemovePortalForm(request.POST, event=event)
+        if form.is_valid():
+            portals_to_remove = form.cleaned_data['portals_cooperating']
+            print(portals_to_remove)
+            for portal in portals_to_remove:
+                event.portals_cooperating.remove(portal)
+                event.save()
+            return redirect(f'/event_details/{event.pk}')
+        else:
+            msg = {'msg': 'Niepoprawnie wypełniony formularz!'}
+            return render(request, 'event_remove_portal.html', msg)
 
 
 class PortalList(ListView):

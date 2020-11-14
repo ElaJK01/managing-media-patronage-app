@@ -8,13 +8,13 @@
 
 {{event.title}} - {{event.date}}
 
+{%if msg%}
+<b style="color: red">{{msg}}</b>
+{%endif%}
+
 <form method="post">
     {%csrf_token%}
-    <select name="portal_to_remove">
-        {%for portal in event.portals_cooperating.all%}>
-        <option value="{{portal}}">{{portal.name}}</option>
-    {%endfor%}
-    </select>
+    {{form.as_p}}
     <input type="submit" value="Usuń">
 
 </form>

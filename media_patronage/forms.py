@@ -54,3 +54,16 @@ class EventUpdateForm(forms.Form):
     date = forms.DateField(label='data')
 
 
+class EventRemovePortalForm(forms.Form):
+    portals_cooperating = forms.ModelMultipleChoiceField(widget=CheckboxSelectMultiple, queryset=None)
+
+    class Meta:
+        model = Event
+        fields = ['portals_cooperating']
+
+    def __init__(self, *args, **kwargs):
+        event= kwargs.pop('event', None)
+        super(EventRemovePortalForm, self).__init__(*args, **kwargs)
+        self.fields['portals_cooperating'].queryset = event.portals_cooperating.all()
+
+
