@@ -221,24 +221,25 @@ class PortalDeleteView(DeleteView):
 
 class TaskAfterEventView(View):
     def get(self, request, pk):
-        event = Event.objects.get(pk=pk)
-        if event:
-            event_portals = event.portals_cooperating.all()
-            ctx = {'event': event,
-               'event_portals': event_portals}
-            return render(request, 'tasks_after.html', ctx)
-        else:
-            return HttpResponse("Nie ma takiego wydarzenia!")
+        event = get_object_or_404(Event, pk=pk)
+        event_portals = event.portals_cooperating.all()
+        form = TaskAfterForm(event=event)
+        ctx = {'event': event,
+               'event_portals': event_portals,
+               'form': form}
+        return render(request, 'tasks_after.html', ctx)
+
 
     def post(self, request, pk):
-        event = Event.objects.get(pk=pk)
-        event_portal_name = request.POST.get('portal')
-        event_portal = Portal.objects.get(name=event_portal_name)
-        send_materials_after = "send" in request.POST
-        when_send_materials = request.POST.get('date')
-        comments = request.POST.get('comments')
-        if event and event_portal and send_materials_after and when_send_materials:
-            task = TaskAfterEvent.objects.create(event=event, portal = event_portal, send_materials_after_event=send_materials_after,
+        event = get_object_or_404(Event, pk=pk)
+        form = TaskAfterForm(request.POST, event=event)
+        if form.is_valid():
+            event_portal = form.cleaned_data['portal']
+            send_materials_after = form.cleaned_data['send_materials_after_event']
+            when_send_materials = form.cleaned_data['date_when_send']
+            comments = form.cleaned_data['comments']
+            task = TaskAfterEvent.objects.create(event=event, portal = event_portal,
+                                                 send_materials_after_event=send_materials_after,
                                           date_when_send=when_send_materials, comments=comments)
             task.save()
             return redirect('event_list')

@@ -40,9 +40,17 @@ class TaskBeforeForm(ModelForm):
 
 
 class TaskAfterForm(ModelForm):
+    portal = forms.ModelChoiceField(queryset=None)
+    date_when_send = forms.DateField(widget=forms.DateInput)
+
     class Meta:
         model = TaskAfterEvent
-        fields = ['event', 'portal', 'send_materials_after_event', 'date_when_send', 'comments']
+        fields = ['portal', 'send_materials_after_event', 'date_when_send', 'comments']
+
+    def __init__(self, *args, **kwargs):
+        event = kwargs.pop('event', None)  # 'event' -jest przekazany z widoku w form=Event(..)
+        super(TaskAfterForm, self).__init__(*args, **kwargs)
+        self.fields['portal'].queryset = event.portals_cooperating.all()  # queryset dla pola formularza
 
 
 class EventAddPortalForm(forms.Form):
@@ -62,8 +70,8 @@ class EventRemovePortalForm(forms.Form):
         fields = ['portals_cooperating']
 
     def __init__(self, *args, **kwargs):
-        event= kwargs.pop('event', None)
+        event= kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
         super(EventRemovePortalForm, self).__init__(*args, **kwargs)
-        self.fields['portals_cooperating'].queryset = event.portals_cooperating.all()
+        self.fields['portals_cooperating'].queryset = event.portals_cooperating.all() #queryset dla pola formularza
 
 
