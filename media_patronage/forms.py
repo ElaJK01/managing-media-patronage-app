@@ -75,3 +75,16 @@ class EventRemovePortalForm(forms.Form):
         self.fields['portals_cooperating'].queryset = event.portals_cooperating.all() #queryset dla pola formularza
 
 
+class CooperationTermsForm(ModelForm):
+    portal = forms.ModelChoiceField(queryset=None, widget=forms.RadioSelect)
+    class Meta:
+        model = CooperationTerms
+        fields = ['portal', 'services_for_portal', 'services_provided_by_portal', 'comments']
+
+
+    def __init__(self, *args, **kwargs):
+        event= kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
+        super(CooperationTermsForm, self).__init__(*args, **kwargs)
+        self.fields['portal'].queryset = event.portals_cooperating.all() #queryset dla pola formularza
+
+

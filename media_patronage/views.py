@@ -7,7 +7,7 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.base import TemplateView
 from .forms import AddEventForm, AddPortalForm, AddPersonForm, SearchForm, TaskAfterForm, TaskBeforeForm, \
-    EventAddPortalForm, EventUpdateForm, EventRemovePortalForm
+    EventAddPortalForm, EventUpdateForm, EventRemovePortalForm, CooperationTermsForm
 from .models import Portal, Person, Event, TaskAfterEvent, TaskBeforeEvent, Article, CooperationTerms, Email
 from django.db.models import Q
 from django.core.mail import send_mass_mail, BadHeaderError
@@ -302,19 +302,21 @@ class ArticleList(ListView):
 class AddCooperationTerms(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
+        form = CooperationTermsForm(event=event)
         if event:
             ctx = {'event':event,
+                   'form': form
                  }
             return render(request, "add_cooperation_terms.html", ctx)
 
     def post(self, request, pk):
-        event=get_object_or_404(Event, pk=pk)
-        portal_name = request.POST.get('portal')
-        portal= Portal.objects.get(name=portal_name)
-        services_for_p = request.POST.get('services_for_p')
-        services_by_p = request.POST.get('services_by_p')
-        comments = request.POST.get('comments')
-        if event and portal and services_for_p and services_by_p:
+        event = get_object_or_404(Event, pk=pk)
+        form = CooperationTermsForm(request.POST, event=event)
+        if form.is_valid():
+            portal = form.cleaned_data['portal']
+            services_for_p = form.cleaned_data['services_for_portal']
+            services_by_p = form.cleaned_data['services_provided_by_portal']
+            comments = request.POST.get('comments')
             terms = CooperationTerms.objects.create(event=event, portal=portal, services_for_portal=services_for_p,
                                             services_provided_by_portal=services_by_p, comments=comments)
             terms.save()

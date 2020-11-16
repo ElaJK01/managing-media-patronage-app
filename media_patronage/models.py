@@ -2,6 +2,8 @@ from django.db import models
 from phone_field import PhoneField
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from datetime import datetime
+from django.utils import timezone
 
 
 class Portal(models.Model):
@@ -73,9 +75,10 @@ class TaskAfterEvent(models.Model):
 class CooperationTerms(models.Model):
     portal = models.ForeignKey(Portal, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    services_for_portal = models.TextField()
-    services_provided_by_portal = models.TextField()
-    comments = models.TextField()
+    services_for_portal = models.TextField(verbose_name='Usługi swiadczone dla poortalu')
+    services_provided_by_portal = models.TextField(verbose_name='Usługi świadczone przez portal')
+    comments = models.TextField(verbose_name='Uwagi', blank=True)
+    date_update = models.DateField(verbose_name='Data dodania warunków wspólpracy', default=timezone.now())
 
 
 class Email(models.Model):
