@@ -1,13 +1,18 @@
 {%extends 'base.html'%}
-
+{%load crispy_forms_tags%}
 {%block content%}
 </br>
 </br>
-<p>Zaktualizuj dane o osobie:</p>
-<form method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" value="Zaktualizuj">
+</br>
 
-</form>
+<div class="form">
+    <h3>Zaktualizuj dane o osobie:</h3>
+    <form method="post">
+        {%csrf_token%}
+        {{form|crispy}}
+        <input type="submit" value="Dodaj osobę">
+
+    </form>
+</div>
+</br>
 {%endblock%}

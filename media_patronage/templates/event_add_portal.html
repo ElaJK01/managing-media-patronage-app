@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{%load crispy_forms_tags%}
 {%block content%}
 </br>
 </br>
@@ -8,14 +8,16 @@
 {{msg}}
 {%endif%}
 
-<p>Dodaj portal do: <b>"{{event.title}}" - {{event.date|date:'d-m-Y'}}</b></p>
 
-<form method="POST">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" value="Zaktualizuj">
+<div>
+    <h3>Dodaj portal do: <b>"{{event.title}}" - {{event.date|date:'d-m-Y'}}</b></h3>
+    <form method="POST">
+        {%csrf_token%}
+        {{form|crispy}}
+        <input type="submit" value="Zaktualizuj">
 
-</form>
+    </form>
+</div>
 
 {%if msg%}
 {{msg}}

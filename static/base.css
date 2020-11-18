@@ -1,10 +1,12 @@
 .footer {
-    height: 50px;
     background: lightsteelblue;
-    font-family: "Arial";
     text-align: center;
     font-size: medium;
     justify-content: center;
+    font-family: "Chandas";
+    clear: both;
+    color: darkgrey;
+    position: relative;
 
 }
 
@@ -12,24 +14,22 @@
     height: 50px;
     background: lightsteelblue;
     font-family: "Chilanka";
-
-
 }
 
 .btn-menu {
-    background: steelblue;
-    font-family: "Arial";
+    background: lightsteelblue;
+    font-family: "Chilanka";
     font-optical-sizing: auto;
     font-size: large;
     padding-block: inherit;
     border-radius: 5px;
     font-size: 20px;
-    width: 250px;
+    width: 300px;
 }
 
 .btn-menu:hover {
-    background-color: lightsteelblue;
-    color: center;
+    background-color: steelblue;
+
 }
 
 .content {
@@ -43,6 +43,7 @@
      top: 0;
      left: 0;
      transform: none;
+     background-color: lightsteelblue;
  }
 
  .center {
@@ -53,11 +54,13 @@
  }
 
 table {
-  border: 1px solid black;
+
+  border-color: black;
 }
 
 th, td {
   padding: 10px;
+  border: 1px solid black;
 }
 
 
@@ -65,3 +68,84 @@ table.center {
   margin-left: auto;
   margin-right: auto;
 }
+
+
+
+ button.btn-submit {
+     background-color: white;
+     color: black;
+     border: 2px solid #4CAF50;
+}
+
+ .coop-div {
+     clear: both;
+
+ }
+
+ h2, h3, h4 {
+     font-family: Chandas;
+     padding: 0;
+     margin: 0;
+ }
+
+
+
+ .btn {
+     clear: both;
+     margin: 10px;
+
+ }
+
+ .title {
+     color: black;
+     padding: 10px;
+     font-family: Arial;
+ }
+
+ .details {
+     padding: 10px;
+     margin: 10px;
+     border-style: solid;
+     border-color: lightsteelblue;
+ }
+
+ .left-div {
+     padding: 10px;
+     margin: 10px;
+     border-style: solid;
+     border-color: lightsteelblue;
+ }
+
+ .right-div {
+     padding: 10px;
+     margin: 10px;
+     border-style: solid;
+     border-color: lightsteelblue;
+ }
+
+
+ .table-list {
+     border-style: dot-dash;
+     margin-inside: 0;
+     padding: 0;
+ }
+
+ .search {
+     width: 600px;
+}
+
+.form {
+  margin: auto;
+  width: 50%;
+  border: 3px solid steelblue;
+  padding: 20px;
+
+}
+
+.form input {
+    width: 800px;
+
+}
+
+.phone-field-ext { display: none; }
+#id_phone_number_1 {display: none;}

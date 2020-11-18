@@ -1,133 +1,155 @@
 {%extends 'base.html'%}
-{% load bootstrap4 %}
+
+
 {%block content%}
 </br>
+<span class="title">
+    <h2>Informacje dotyczące konferencji:</h2>
+    <h1>"{{event.title}}"</h1>
+    <h3>Data: {{event.date|date:'d-m-Y'}}</h3>
+</span>
 
-<h3>Konferencja: {{event.title}}</h3>
-<h4>Data: {{event.date|date:'d-m-Y'}}</h4>
-<p>Patroni medialni wydarzenia: </br>{% for portal in event.portals_cooperating.all%}
-    <a href="{% url 'portal_detail' pk=portal.pk %}"><ul><li>{{portal}}</li></ul></a>
-{%endfor%}</p>
+<div class="details">
+    <div class="portals">
+        <h4>Patroni medialni wydarzenia:</h4>
+        {% for portal in event.portals_cooperating.all%}
+        <a href="{% url 'portal_detail' pk=portal.pk %}"><ul><li>{{portal}}</li></ul></a>
+        {%endfor%}
+    </div>
 
-<a href="{% url 'event_update' pk=event.pk%}"><button>Edytuj tytuł/datę</button></a>
+    <div class="coop-div">
+        <h4>Ustalone warunki współpracy z portalami:</h4>
 
-<div class="aligned">
-    <h4>Zadania wykonane przed Konferencją:</h4>
-
-    {%if emails%}
-    <h5>Wysłane emaile z zaproszeniem:</h5>
-
-    <table border="2">
-
-        <tr>
-            <td>adresaci</td>
-            <td>kategoria portali</td>
-            <td>treść wiadomości</td>
-            <td>wysłana z konta</td>
-            <td>data wysłania</td>
-
-        </tr>
-        {%for e in emails%}
-        <tr>
-            <td>{%for person in e.to_who.all%}
-                {{person}}
+        <table>
+            <thead>
+                <tr>
+                    <td>Portal</td>
+                    <td>Usługi dla portalu</td>
+                    <td>Usług świadczone przez portal</td>
+                    <td>Komentarze</td>
+                    <td>data dodania</td>
+                </tr>
+            </thead>
+            <tbody>{%for coo_terms in cooperation_terms%}
+                <tr>
+                    <td>{{coo_terms.portal}}</td>
+                    <td>{{coo_terms.services_for_portal}}</td>
+                    <td>{{coo_terms.services_provided_by_portal}}</td>
+                    <td>{{coo_terms.comments}}</td>
+                    <td>{{coo_terms.date_update|date:"Y-m-d"}}</td>
+                </tr>
             {%endfor%}
-            </td>
-            <td>
-                {%for person in e.to_who.all%}
-                {{person.portal.category}}
+            </tbody>
+        </table>
+    </div>
+
+    <nav class="btn">
+        <a href="{% url 'event_update' pk=event.pk%}"><button>Edytuj tytuł/datę</button></a>
+        <a href="{%url 'event_add_portal' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
+        <a href="{%url 'event_remove_portal' pk=event.pk%}"><button>Usuń portal z wydarzenia</button></a>
+        <a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
+    </nav>
+
+</div>
+
+
+<br class="container">
+        <div class="left-div">
+            <h4>Zadania wykonane przed Konferencją:</h4>
+
+            {%if emails%}
+            <h5>Wysłane emaile z zaproszeniem:</h5>
+
+             <table>
+                 <thead>
+
+                    <tr>
+                        <td>Adresaci</td>
+                        <td>Kategoria portali</td>
+                        <td>Wysłana z konta</td>
+                        <td>data wysłania</td>
+
+                    </tr>
+                </thead>
+            <tbody>
+            {%for e in emails%}
+                <tr>
+                    <td>{%for person in e.to_who.all%}
+                    {{person}}
+                    {%endfor%}
+                    </td>
+                    <td>
+                    {%for person in e.to_who.all%}
+                    {{person.portal.category}}
+                    {%endfor%}
+                    </td>
+                    <td>{{e.send_from_email}}</td>
+                    <td>{{e.date|date:"Y-m-d"}}</td>
+                </tr>
+            </tbody>
             {%endfor%}
-            </td>
-            <td>{{e.message}}</td>
-            <td>{{e.send_from_email}}</td>
-            <td>{{e.date|date:"Y-m-d"}}</td>
-        </tr>
-        {%endfor%}
-    </table>
-    {% else %}
-    Brak mailingów
-    {%endif%}
+            </table>
+            {% else %}
+            <p style="color: steelblue">Brak mailingów</p>
+            {%endif%}
 
-    {%if tasks_before%}
-    <h5>Uwagi:</h5>
-    <ul>
-    {%for task in tasks_before%}
-    <li>{{task.comments}}</li>
-    {%endfor%}
-    </ul>
-    {%endif%}
+            {%if tasks_before%}
+            <h5>Uwagi:</h5>
+            <ul>
+            {%for task in tasks_before%}
+            <li>{{task.comments}}</li>
+            {%endfor%}
+            </ul>
+            {%else%}
+            <p style="color: steelblue">Brak uwag nt. zadań przed konferencją</p>
+            {%endif%}
+            <nav class="btn">
+            <a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a>
+            </nav>
+            </div>
+            </br>
 
 
-</div>
 
-<div class="aligned">
-    <h4>Zadania wykonane po konferencji:</h4>
+        <div class="right-div">
 
-    <table border="2">
-        <thead>
-            <tr>
-                <td>Portal</td>
-                <td>Czy wysłane materiały pokonferencyjne</td>
-                <td>data wysłania materiałów</td>
-                <td>Komentarze</td>
-            </tr>
-        </thead>
-        <tbody>{%for tasks_after in tasks_after%}
-            <tr>
-                <td>{{tasks_after.portal}}</td>
-                <td>{{tasks_after.send_materials_after_event|yesno:"Tak,Nie"}}</td>
-                <td>{{tasks_after.date_when_send|date:"Y-m-d"}}</td>
-                <td>{{tasks_after.comments}}</td>
+            <h4>Zadania wykonane po konferencji:</h4>
+            {%if tasks_after%}
 
-            </tr>
-        {%endfor%}
-        </tbody>
-    </table>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Portal</td>
+                        <td>Czy wysłane materiały pokonferencyjne</td>
+                        <td>data wysłania materiałów</td>
+                        <td>Komentarze</td>
+                    </tr>
+                </thead>
+                <tbody>{%for tasks_after in tasks_after%}
+                    <tr>
+                        <td>{{tasks_after.portal}}</td>
+                        <td>{{tasks_after.send_materials_after_event|yesno:"Tak,Nie"}}</td>
+                        <td>{{tasks_after.date_when_send|date:"Y-m-d"}}</td>
+                        <td>{{tasks_after.comments}}</td>
 
-</div>
-
-<div class="aligned">
-    <h4>Ustalone warunki współpracy:</h4>
-
-    <table border="2">
-        <thead>
-            <tr>
-                <td>Portal</td>
-                <td>Usługi dla portalu</td>
-                <td>Usług świadczone przez portal</td>
-                <td>Komentarze</td>
-                <td>data dodania</td>
-            </tr>
-        </thead>
-        <tbody>{%for coo_terms in cooperation_terms%}
-            <tr>
-                <td>{{coo_terms.portal}}</td>
-                <td>{{coo_terms.services_for_portal}}</td>
-                <td>{{coo_terms.services_provided_by_portal}}</td>
-                <td>{{coo_terms.comments}}</td>
-                <td>{{coo_terms.date_update|date:"Y-m-d"}}</td>
-            </tr>
-        {%endfor%}
-        </tbody>
-    </table>
+                    </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+            {%else%}
+            <p style="color: steelblue">Brak wykonanych działań po konfrencji</p>
+            {%endif%}
+            <nav class="btn">
+                <a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>
+            </nav>
+        </div>
 
 </div>
-{%buttons%}
 </br>
-<div>
+
+</br>
+<nav>
     <a href="{% url 'pdf'  pk=event.pk %}" target="_blank"><button>Pobierz raport Pdf</button></a>
-</div></br>
+</nav></br>
 
-<div id="btn">
-
-<a href="{%url 'event_add_portal' pk=event.pk%}"><button>Dodaj portal do wydarzenia</button></a>
-<a href="{%url 'event_remove_portal' pk=event.pk%}"><button>Usuń portal z wydarzenia</button></a>
-
-<a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a>
-<a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>
-
-
-<a href="{% url 'add_terms' pk=event.pk %}"><button>Dodaj warunki współpracy</button></a>
-</div>
-{%endbuttons%}
 {%endblock%}
