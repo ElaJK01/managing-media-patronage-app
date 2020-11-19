@@ -5,23 +5,27 @@
 </br>
 </br>
 </br>
+<div class="parent">
+    <div class="event-list">
 
+            {%for event in object_list%}
+        <table class="table-list">
+            <tr>
+                <td nowrap style="text-align: center">{{event.date|date:"d-m-Y"}}</td>
+                <td nowrap style="text-align: center"><a href="{{event.get_absolute_url}}">{{event.title}}</a></td>
+                <td nowrap style="text-align: center"><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
+                <td nowrap style="text-align: center"><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>
+            </tr>
+        </table>
+               {%empty%}
+        <p style="color: steelblue">Nie ma jeszcze konferencji do wyświetlenia</p>
+            {%endfor%}
+        <nav>
+            <a href="{% url 'event_form'%}"><button>Dodaj nowe wydarzenie</button></a>
+        </nav>
 
-        {%for event in object_list%}
-    <table class="table-list">
-        <tr>
-            <td>{{event.date|date:"d-m-Y"}}</td>
-            <td>{{event.title}}</td>
-            <td><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
-            <td><a href="{{event.get_absolute_url}}"><button>Zobacz szczegóły</button></a></td>
-            <td><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>
-        </tr>
-    </table>
-           {%empty%}
-        Nie ma jeszcze konferencji do wyświetlenia
-        {%endfor%}
-
-
+    </div>
+</div>
 
 <div class="pagination">
     <span class="step-links">
@@ -42,7 +46,5 @@
 </div>
 
 </br>
-<nav>
-    <a href="{% url 'event_form'%}"><button>Dodaj nowe wydarzenie</button></a>
-</nav>
+
     {%endblock%}

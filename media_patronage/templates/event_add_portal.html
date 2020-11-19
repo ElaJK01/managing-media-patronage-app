@@ -4,23 +4,18 @@
 </br>
 </br>
 </br>
-{%if msg%}
-{{msg}}
-{%endif%}
 
 
-<div>
-    <h3>Dodaj portal do: <b>"{{event.title}}" - {{event.date|date:'d-m-Y'}}</b></h3>
+
+<div class="form-portal">
+    <h3>Dodaj portal do: "{{event.title}}" - {{event.date|date:'d-m-Y'}}</h3>
     <form method="POST">
         {%csrf_token%}
         {{form|crispy}}
-        <input type="submit" value="Zaktualizuj">
-
+        <input id="submit" type="submit" value="Zaktualizuj">
     </form>
+
+    <p style="color: red">{%if msg%}{{msg}}{%endif%}</p>
 </div>
-
-{%if msg%}
-{{msg}}
-{%endif%}
-
+</br>
 {%endblock%}

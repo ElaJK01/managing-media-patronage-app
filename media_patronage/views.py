@@ -19,7 +19,7 @@ from django.core.paginator import Paginator
 class EventList(ListView):
     paginate_by = 20
     model = Event
-    ordering = ['date']
+    ordering = ['-date']
 
 
 class AddEvent(FormView):
@@ -37,13 +37,15 @@ class EventDetailsView(View):
         event = get_object_or_404(Event, pk=pk)
         tasks_after = TaskAfterEvent.objects.filter(event=event)
         tasks_before = TaskBeforeEvent.objects.filter(event=event)
+        articles = Article.objects.filter(event=event)
         emails = Email.objects.filter(event=event)
         cooperation_terms = CooperationTerms.objects.filter(event=event)
         context = { 'event': event,
                     'tasks_after': tasks_after,
                     'tasks_before': tasks_before,
                      'cooperation_terms': cooperation_terms,
-                    'emails': emails}
+                    'emails': emails,
+                    'articles': articles}
         return render(request, 'event_detail.html', context)
 
 
@@ -268,6 +270,13 @@ class TaskBeforeEventView(View):
             return render(request, 'tasks_before.html', msg)
 
 
+class TaskBeforeEventUpdateView(View):
+    model = TaskBeforeEvent
+    fields = '__all__'
+    success_url = reverse_lazy('event_list')
+    template_name = 'tasks_before.html'
+
+
 class PdfView(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
@@ -276,12 +285,14 @@ class PdfView(View):
         tasks_before = TaskBeforeEvent.objects.filter(event=event)
         emails = Email.objects.filter(event=event)
         cooperation_terms = CooperationTerms.objects.filter(event=event)
+        articles = Article.objects.filter(event=event)
         params = {'event': event,
                    'tasks_after': tasks_after,
                    'tasks_before': tasks_before,
                    'cooperation_terms': cooperation_terms,
                   'today': today,
-                  'emails': emails}
+                  'emails': emails,
+                  'articles': articles}
 
         return Render.render('pdf.html', params)
 

@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
+
+    <meta charset="UTF-8">
     <title>Raport działań PR dla konferencji: {{event.title}}</title>
     <style type="text/css">
         @page {
@@ -11,7 +12,7 @@
         }
 
         *{
-            font-family: Arial;
+            font-family: "Arial";
         }
 
         .table {
@@ -86,7 +87,6 @@
         <tr>
             <td>adresaci</td>
             <td>kategoria portali</td>
-            <td>treść wiadomości</td>
             <td>wysłana z konta</td>
             <td>data wysłania</td>
 
@@ -102,7 +102,6 @@
                 {{person.portal.category}}
             {%endfor%}
             </td>
-            <td>{{e.message}}</td>
             <td>{{e.send_from_email}}</td>
             <td>{{e.date}}</td>
         </tr>
@@ -159,7 +158,20 @@
         {%endfor%}
         </tbody>
         </table>
+        <div class="article-list">
+            <h3>Opublikowane artykuły na temat wydarzenia</h3>
+            <ul>
+                {%for article in articles%}
+                <li>{{article.title}} - opublikowane na:{{article.portal}} - data publikacji: {{article.publish_date}}</li>
+                {%empty%}
+                <p>Brak artykułów.</p>
+                {%endfor%}
+            </ul>
+
+        </div>
+
     </div>
+
 </div>
 
 </body>

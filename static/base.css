@@ -1,3 +1,4 @@
+
 .footer {
     background: lightsteelblue;
     text-align: center;
@@ -25,6 +26,7 @@
     border-radius: 5px;
     font-size: 20px;
     width: 300px;
+    height: max-content;
 }
 
 .btn-menu:hover {
@@ -58,10 +60,10 @@ table {
   border-color: black;
 }
 
-th, td {
-  padding: 10px;
-  border: 1px solid black;
-}
+/*th, td {*/
+/*  padding: 10px;*/
+/*  border: 1px solid black;*/
+/*}*/
 
 
 table.center {
@@ -124,10 +126,15 @@ table.center {
  }
 
 
- .table-list {
-     border-style: dot-dash;
-     margin-inside: 0;
-     padding: 0;
+ .table-list tr, td{
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+    text-align: left;
+    -webkit-text-size-adjust: 100%;
+             }
+
+ .table-list{
+     column-width: max-content;
  }
 
  .search {
@@ -149,3 +156,43 @@ table.center {
 
 .phone-field-ext { display: none; }
 #id_phone_number_1 {display: none;}
+
+.form-portal {
+    margin: auto;
+    width: 50%;
+    border: 3px solid steelblue;
+    padding: 20px
+}
+
+.form-portal input {
+    width: 50px;
+    padding: 0px;
+    margin: 5px;
+
+}
+
+.form-portal #submit {
+    width: 200px;
+}
+
+#logotype-clear_id {
+    width: 50px;
+}
+
+html, body {
+  height: 100%;
+}
+
+.parent {
+  height: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+
+}
+
+.event-list {
+  width: max-content;
+  height: 200px;
+}
+

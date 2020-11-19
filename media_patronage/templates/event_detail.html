@@ -18,7 +18,9 @@
     </div>
 
     <div class="coop-div">
+
         <h4>Ustalone warunki współpracy z portalami:</h4>
+        {%if cooperatin_terms%}
 
         <table>
             <thead>
@@ -41,6 +43,10 @@
             {%endfor%}
             </tbody>
         </table>
+
+        {%else%}
+        <p style="color:steelblue">Brak uzgodnień z patronami medialnymi</p>
+        {%endif%}
     </div>
 
     <nav class="btn">
@@ -97,7 +103,7 @@
             <h5>Uwagi:</h5>
             <ul>
             {%for task in tasks_before%}
-            <li>{{task.comments}}</li>
+                <li>{{task.comments}} - <a href="{%url 'task_before_update' pk=task.pk%}"><button>Edytuj</button></a></li>
             {%endfor%}
             </ul>
             {%else%}
@@ -143,9 +149,24 @@
                 <a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>
             </nav>
         </div>
+        <div class="right-div">
+            <h3>Artykuły opublikowane nt. wydarzenia</h3>
+            {%if articles%}
+            {%for article in articles%}
+            <ul>
+                <li>{{article.title}} - {{article.portal}} - data publikacji:{{article.published_date|date:"d/m/Y"}}
+                <a href="{{article.pdf_article.url}}" target="_blank"><button>Pobierz artykuł</button></a></li>
+            </ul>
+            {%endfor%}
+            {%else%}
+            <p style="color: steelblue">Brak opublikowanych artykułów nt. wydarzenia</p>
+            {%endif%}
+        </div>
+
 
 </div>
 </br>
+
 
 </br>
 <nav>
