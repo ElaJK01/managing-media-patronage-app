@@ -104,7 +104,8 @@
             <ul>
             {%for task in tasks_before%}
                 <li>{{task.comments}} - <a href="{%url 'task_before_update' pk=task.pk%}">
-                    <button>Edytuj</button></a></li>
+                    <button>Edytuj</button></a> <a href="{%url 'task_before_delete' pk=task.pk%}">
+                    <button>Usuń</button></a></li>
             {%endfor%}
             </ul>
             {%else%}
@@ -147,7 +148,7 @@
             <p style="color: steelblue">Brak wykonanych działań po konfrencji</p>
             {%endif%}
             <nav class="btn">
-                <a href="{% url 'tasks_after' pk=event.pk%}"><button>Zaktualizuj zadania po wydarzeniu</button></a>
+                <a href="{% url 'tasks_after' pk=event.pk%}"><button>Dodaj zadania po wydarzeniu</button></a>
             </nav>
         </div>
         <div class="right-div">

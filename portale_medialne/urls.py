@@ -23,7 +23,9 @@ from media_patronage.views import EventList, AddEvent, PortalList, PersonList, A
                             PortalUpdateView, PortalDetailView, PortalDeleteView, PersonDetailView, PersonUpdateView,\
                             PersonDeleteView, EventDetailsView, EventAddPortalView, EventRemovePortalView,\
                             EventDeleteView, TaskAfterEventView,TaskBeforeEventView, ArticleAddView, ArticleList, \
-                            AddCooperationTerms, EventUpdateView, MailingView, PdfView, TaskBeforeEventUpdateView
+                            AddCooperationTerms, EventUpdateView, MailingView, PdfView, TaskBeforeEventUpdateView,\
+                            TaskBeforeDeleteView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -53,6 +55,7 @@ urlpatterns = [
     path('mailing/', MailingView.as_view(), name='mailing'),
     path('render/pdf/<int:pk>/', PdfView.as_view(), name='pdf'),
     path('tasks_before/<int:pk>/update/', TaskBeforeEventUpdateView.as_view(), name='task_before_update'),
+    path('tasks_before/<int:pk>/delete/', TaskBeforeDeleteView.as_view(), name='task_before_delete'),
 
 ]
 

@@ -63,6 +63,9 @@ class TaskBeforeEvent(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')
     comments = models.TextField(verbose_name='Dodatkowe informacje', blank=False)
 
+    def __str__(self):
+        return f'{self.comments}'
+
 
 class TaskAfterEvent(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie')

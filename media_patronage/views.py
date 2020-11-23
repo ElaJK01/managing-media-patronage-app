@@ -275,8 +275,21 @@ class TaskBeforeEventView(View):
 class TaskBeforeEventUpdateView(UpdateView):
     model = TaskBeforeEvent
     fields = ['comments']
-    success_url = reverse_lazy('event_list')
     template_name = 'tasks_before.html'
+
+    def get_success_url(self):
+        event = self.object.event
+        return reverse_lazy('event_detail', kwargs={'pk': event.pk})
+
+
+
+class TaskBeforeDeleteView(DeleteView):
+    model = TaskBeforeEvent
+    template_name = 'task_before_delete.html'
+
+    def get_success_url(self):
+        event = self.object.event
+        return reverse_lazy('event_detail', kwargs={'pk': event.pk})
 
 
 class PdfView(View):
