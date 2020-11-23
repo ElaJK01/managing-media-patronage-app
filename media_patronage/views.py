@@ -252,9 +252,11 @@ class TaskAfterEventView(View):
 class TaskBeforeEventView(View):
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
+        task_before = TaskBeforeEvent.objects.filter(event=event)
         form = TaskBeforeForm(instance=event)
         ctx = {'form': form,
-               'event': event}
+               'event': event,
+                   'task_before':task_before}
         return render(request, 'tasks_before.html', ctx)
 
     def post(self, request, pk):
@@ -270,9 +272,9 @@ class TaskBeforeEventView(View):
             return render(request, 'tasks_before.html', msg)
 
 
-class TaskBeforeEventUpdateView(View):
+class TaskBeforeEventUpdateView(UpdateView):
     model = TaskBeforeEvent
-    fields = '__all__'
+    fields = ['comments']
     success_url = reverse_lazy('event_list')
     template_name = 'tasks_before.html'
 

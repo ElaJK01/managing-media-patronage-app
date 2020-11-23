@@ -103,14 +103,15 @@
             <h5>Uwagi:</h5>
             <ul>
             {%for task in tasks_before%}
-                <li>{{task.comments}} - <a href="{%url 'task_before_update' pk=task.pk%}"><button>Edytuj</button></a></li>
+                <li>{{task.comments}} - <a href="{%url 'task_before_update' pk=task.pk%}">
+                    <button>Edytuj</button></a></li>
             {%endfor%}
             </ul>
             {%else%}
             <p style="color: steelblue">Brak uwag nt. zadań przed konferencją</p>
             {%endif%}
             <nav class="btn">
-            <a href="{% url 'tasks_before' pk=event.pk%}"><button>Zaktualizuj zadania przed wydarzeniem</button></a>
+            <a href="{% url 'tasks_before' pk=event.pk%}"><button>Dodaj informacje o działaniach przed wydarzeniem</button></a>
             </nav>
             </div>
             </br>
