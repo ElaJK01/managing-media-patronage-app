@@ -52,6 +52,14 @@ class TaskAfterForm(ModelForm):
         super(TaskAfterForm, self).__init__(*args, **kwargs)
         self.fields['portal'].queryset = event.portals_cooperating.all()  # queryset dla pola formularza
 
+    def clean(self):
+        cleaned_data = super().clean()
+        send_materials_after_event = cleaned_data.get('send_materials_after_event')
+        date_when_send = cleaned_data.get('date_when_send')
+        if date_when_send is not None and send_materials_after_event == False:
+            raise forms.ValidationError('Nie zaznaczyłeś, że materiały zostały wysłane!')
+
+
 
 class EventAddPortalForm(forms.Form):
     portal = forms.ModelMultipleChoiceField(widget=CheckboxSelectMultiple, queryset=Portal.objects.all(), label='Portale')

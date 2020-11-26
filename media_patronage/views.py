@@ -231,8 +231,7 @@ class TaskAfterEventView(View):
                'form': form}
         return render(request, 'tasks_after.html', ctx)
 
-
-    def post(self, request, pk):
+    def post(self, request, pk): #fixme dopisać walidacje daty wysłania materiałów nie może być wczesniej niz data onferencji
         event = get_object_or_404(Event, pk=pk)
         form = TaskAfterForm(request.POST, event=event)
         if form.is_valid():
@@ -240,13 +239,23 @@ class TaskAfterEventView(View):
             send_materials_after = form.cleaned_data['send_materials_after_event']
             when_send_materials = form.cleaned_data['date_when_send']
             comments = form.cleaned_data['comments']
-            task = TaskAfterEvent.objects.create(event=event, portal = event_portal,
+            task = TaskAfterEvent.objects.create(event=event, portal=event_portal,
                                                  send_materials_after_event=send_materials_after,
                                           date_when_send=when_send_materials, comments=comments)
             task.save()
             return redirect('event_list')
         else:
             return HttpResponse('Błędnie wypełniony formularz!')
+
+
+class TaskAfterEventUpdateView(UpdateView):
+    model= TaskAfterEvent
+    fields = '__all__'
+    template_name = 'tasks_after.html'
+
+    def get_success_url(self):
+        event = self.object.event
+        return reverse_lazy('event_detail', kwargs={'pk': event.pk})
 
 
 class TaskBeforeEventView(View):
@@ -266,7 +275,7 @@ class TaskBeforeEventView(View):
             comments = form.cleaned_data['comments']
             event_task = TaskBeforeEvent.objects.create(event=event, comments=comments)
             event_task.save()
-            return redirect('event_list')
+            return reverse_lazy('event_detail', kwargs={'pk': event.pk})
         else:
             msg = {'message': 'Popraw błędy'}
             return render(request, 'tasks_before.html', msg)
