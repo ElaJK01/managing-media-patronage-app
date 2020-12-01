@@ -6,6 +6,19 @@
 </br>
 </br>
 <h3>Zadania wykonane po konferencji: {{event}}</h3>
+{% if form.date_when_send.errors %}
+  <ol>
+  {% for err in form.date_when_send.errors %}
+    <li>
+      <strong>
+        {{ err|escape }}
+      </strong>
+    </li>
+  {% endfor %}
+  </ol>
+{% endif %}
+
+
 <form method="post">
     {%csrf_token%}
     {{form.as_p}}

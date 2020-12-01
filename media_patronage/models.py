@@ -6,6 +6,7 @@ from datetime import datetime
 from django.utils import timezone
 
 
+
 class Portal(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nazwa')
     category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')

@@ -231,19 +231,29 @@ class TaskAfterEventView(View):
                'form': form}
         return render(request, 'tasks_after.html', ctx)
 
-    def post(self, request, pk): #fixme dopisać walidacje daty wysłania materiałów nie może być wczesniej niz data onferencji
+    def post(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         form = TaskAfterForm(request.POST, event=event)
+        tasks_this_event = TaskAfterEvent.objects.filter(event=event)
+        tasks_portals = []
         if form.is_valid():
             event_portal = form.cleaned_data['portal']
             send_materials_after = form.cleaned_data['send_materials_after_event']
             when_send_materials = form.cleaned_data['date_when_send']
             comments = form.cleaned_data['comments']
-            task = TaskAfterEvent.objects.create(event=event, portal=event_portal,
+            for t in tasks_this_event:
+                tasks_portals.append(t.portal)
+            if event_portal in tasks_portals:
+                return HttpResponse('Dla tego portalu już podano zadania po wydarzeniu! Jeśli chcesz poprawić dane wybierz "edytuj"')
+            else:
+                if when_send_materials < event.date:
+                    return HttpResponse('Błędnie wypełniony formularz: data wysłania materiałów nie może być przed data konferencji!!!')
+                else:
+                    task = TaskAfterEvent.objects.create(event=event, portal=event_portal,
                                                  send_materials_after_event=send_materials_after,
                                           date_when_send=when_send_materials, comments=comments)
-            task.save()
-            return redirect('event_list')
+                    task.save()
+                    return redirect('event_list')
         else:
             return HttpResponse('Błędnie wypełniony formularz!')
 
