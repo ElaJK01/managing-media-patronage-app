@@ -5,39 +5,39 @@
 </br>
 </br>
 
-<h3>Przygotuj mailing</h3>
-<div class="form-mailing">
+<div class="form-mailing" xmlns="http://www.w3.org/1999/html">
+    <h3>Przygotuj mailing</h3>
 
-<form method="post">
-    {%csrf_token%}
-    <label>Dotyczy konferencji:
-        <select name="event">{%for event in events%}
-            <option>{{event.title}}</option>
-            {%endfor%}
-        </select>
-    </label></br>
-    </br>
-    <label>Tytuł wiadomości:
-        <input type="text" name="message_title">
-    </label></br>
-    </br>
-    <label>Nadawca
-    <input type="email" name="who_send">
-    </label></br>
-    </br>
-    <label>Kategoria portalu:
-        {%for category in categories%}
-    <input type="checkbox" name="category" value="{{category}}">
-        <label>{{category}}</label>
-        {%endfor%}
-    </input>
-    </label></br>
-    </br>
-    <label>Treść wiadomości:
-    <textarea name="message"></textarea></br>
-    </label></br>
-    <input type="submit" value="Wyślij">
-</form>
+
+    <form class="form-portal" method="post">
+        {%csrf_token%}
+        <label>Dotyczy konferencji:</br>
+            <select name="event">{%for event in events%}
+                <option>{{event.title}}</option>
+                {%endfor%}
+            </select>
+        </label></br>
+        </br>
+        <label>Tytuł wiadomości:</br>
+            <input type="text" name="message_title">
+        </label></br>
+        </br>
+        <label>Nadawca:</br>
+            <input type="email" name="who_send">
+        </label></br>
+        </br>
+        <label>Kategoria portalu:</br>
+            {%for category in categories%}
+        <input id="checkbox" type="checkbox" name="category" value="{{category}}">{{category}}
+            {%endfor%}</label>
+        </br>
+        </br>
+
+        <label>Treść wiadomości:</br>
+            <textarea name="message"></textarea></br>
+        </label></br>
+        <input type="submit" value="Wyślij">
+    </form>
 </div>
 
 <div class="msg">

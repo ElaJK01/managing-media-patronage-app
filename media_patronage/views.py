@@ -57,7 +57,7 @@ class EventDeleteView(DeleteView):
 
 class EventAddPortalView(View):
 
-    """View serves to adding cooperting portals to event"""
+    """View is used to adding cooperting portals to event"""
     def get(self, request, pk):
         event_to_update = Event.objects.get(pk=pk)
         form = EventAddPortalForm()
@@ -299,7 +299,6 @@ class TaskBeforeEventUpdateView(UpdateView):
     def get_success_url(self):
         event = self.object.event
         return reverse_lazy('event_detail', kwargs={'pk': event.pk})
-
 
 
 class TaskBeforeDeleteView(DeleteView):

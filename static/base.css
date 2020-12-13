@@ -145,7 +145,7 @@ table.center {
   margin: auto;
   width: 50%;
   border: 3px solid steelblue;
-  padding: 20px;
+  padding: 10px;
 
 }
 
@@ -165,14 +165,31 @@ table.center {
 }
 
 .form-portal input {
-    width: 50px;
+    width: 800px;
     padding: 0px;
     margin: 5px;
 
 }
 
+.form-portal textarea {
+    width: 800px;
+    margin: 5px;
+}
+
+
+.form-portal select {
+    width: 800px;
+    margin: 5px;
+}
+
 .form-portal #submit {
-    width: 200px;
+    width: 800px;
+}
+
+
+#checkbox {
+    width: 5px;
+    margin: 5px;
 }
 
 #logotype-clear_id {
@@ -196,3 +213,6 @@ html, body {
   height: 200px;
 }
 
+.form-mailing h3 {
+
+}

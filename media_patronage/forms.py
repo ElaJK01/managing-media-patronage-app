@@ -10,7 +10,7 @@ class AddEventForm(ModelForm):
         queryset=Portal.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False,
-    label= 'Portale współpracujące')
+        label='Portale współpracujące')
 
     class Meta:
         model = Event
@@ -71,6 +71,7 @@ class EventUpdateForm(forms.Form):
 
 
 class EventRemovePortalForm(forms.Form):
+    """Form that is used for deleting portals from choosen event"""
     portals_cooperating = forms.ModelMultipleChoiceField(widget=CheckboxSelectMultiple, queryset=None)
 
     class Meta:
@@ -78,21 +79,32 @@ class EventRemovePortalForm(forms.Form):
         fields = ['portals_cooperating']
 
     def __init__(self, *args, **kwargs):
-        event= kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
+        """overriding __init__ function form changing queryset for form's field - portal_cooperating
+        field, this field should have only portals that were assigned to that event
+        not every portal in the database"""
+        event = kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
         super(EventRemovePortalForm, self).__init__(*args, **kwargs)
         self.fields['portals_cooperating'].queryset = event.portals_cooperating.all() #queryset dla pola formularza
 
 
 class CooperationTermsForm(ModelForm):
     portal = forms.ModelChoiceField(queryset=None, widget=forms.RadioSelect)
+
     class Meta:
         model = CooperationTerms
         fields = ['portal', 'services_for_portal', 'services_provided_by_portal', 'comments']
 
 
     def __init__(self, *args, **kwargs):
-        event= kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
+        """overriding __init__ function -changing queryset for form's field - portal
+                field, this field should have only portals that were assigned to that event
+                not every portal in the database"""
+        event = kwargs.pop('event', None) #'event' -jest przekazany z widoku w form=Event(..)
         super(CooperationTermsForm, self).__init__(*args, **kwargs)
         self.fields['portal'].queryset = event.portals_cooperating.all() #queryset dla pola formularza
+
+
+
+
 
 
