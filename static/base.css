@@ -201,7 +201,7 @@ html, body {
 }
 
 .parent {
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -213,6 +213,3 @@ html, body {
   height: 200px;
 }
 
-.form-mailing h3 {
-
-}
