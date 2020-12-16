@@ -5,12 +5,13 @@
 </br>
 </br>
 
-<div class="form-mailing" xmlns="http://www.w3.org/1999/html">
-    <h3>Przygotuj mailing</h3>
+<br class="form-mailing" xmlns="http://www.w3.org/1999/html">
 
+</br>
 
     <form class="form-portal" method="post">
         {%csrf_token%}
+        <h3>Przygotuj mailing:</h3>
         <label>Dotyczy konferencji:</br>
             <select name="event">{%for event in events%}
                 <option>{{event.title}}</option>
@@ -38,6 +39,7 @@
         </label></br>
         <input type="submit" value="Wyślij">
     </form>
+</br>
 </div>
 
 <div class="msg">
