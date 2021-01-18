@@ -15,13 +15,33 @@
     <div class="topnav-centered">
         <h1>Patroni medialni - zarządzaj współpracą</h1>
 
+        <nav>
+
         <a href="{%url 'event_list'%}"><button class="btn-menu">Home</button></a>
         <a href="{%url 'portal_list'%}"><button class="btn-menu">Portale</button></a>
         <a href="{%url 'person_list'%}"><button class="btn-menu">Osoby do kontaktu</button></a>
         <a href="{%url 'article_list'%}"><button class="btn-menu">Artykuły</button></a>
         <a href="{%url 'search'%}"><button class="btn-menu">Wyszukaj</button></a>
         <a href="{%url 'mailing'%}"><button class="btn-menu">Przygotuj mailing</button></a>
+            <ul class="nav--actions">
+          {% block sidebar%}
+            {%if user.is_authenticated%}
+            <li class="logged-user">
+            Witaj {{user.username}}
+            <ul class="dropdown">
+              {%if request.user.is_superuser%}
+              <li><a href="/admin/">Panel administracyjny</a></li>
+                {%endif%}
+              <li><a href="{%url 'logout'%}">Wyloguj</a></li>
+            </ul>
+            {%else%}
+          </li>
+          <li><a href="{%url 'login'%}" class="btn btn--small btn--without-border">Zaloguj</a></li>
 
+            {%endif%}
+          {%endblock%}
+        </ul>
+        </nav>
     </div>
 </header>
 

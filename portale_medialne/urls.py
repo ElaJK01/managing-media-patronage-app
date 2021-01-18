@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import re_path
+from django.contrib.auth.views import LoginView, LogoutView
 
 from media_patronage.views import EventList, AddEvent, PortalList, PersonList, AddPortal, AddPerson, SearchFormView,\
                             PortalUpdateView, PortalDetailView, PortalDeleteView, PersonDetailView, PersonUpdateView,\
@@ -29,6 +30,8 @@ from media_patronage.views import EventList, AddEvent, PortalList, PersonList, A
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('', EventList.as_view(), name='event_list'),
     path('add_event/', AddEvent.as_view(), name='event_form'),
     path('portals/', PortalList.as_view(), name='portal_list'),
