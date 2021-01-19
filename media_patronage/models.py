@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 
@@ -89,7 +90,7 @@ class Email(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     message = models.TextField()
     to_who = models.ManyToManyField(Person, related_name='person_address')
-    send_from_email = models.EmailField()
+    send_from_email = User.email
     date = models.DateField()
 
     def __str__(self):
