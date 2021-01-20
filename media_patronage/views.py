@@ -14,6 +14,7 @@ from django.core.mail import send_mass_mail, BadHeaderError
 from .render import Render
 from django.utils import timezone
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class EventList(ListView):
@@ -371,19 +372,21 @@ class AddCooperationTerms(View):
             return render(request, "add_cooperation_terms.html", ctx)
 
 
-class MailingView(View):
+class MailingView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request):
         return render(request, 'mailing.html')
 
     def post(self, request):
+        who_send = self.request.user.email
         event_it_concernse_title = request.POST.get('event')
         event_it_concernse =Event.objects.get(title=event_it_concernse_title)
         message_title = request.POST.get('message_title')
-        who_send = request.POST.get('who_send')
         category = request.POST.getlist('category') #lista wybranych kategorii
         print(category)
         message = request.POST.get('message')
-        if message_title and who_send and category:
+        if message_title and category:
             try:
                 #wybranie z bazy portali należących do podanych kategorii
                 portals_c = []
@@ -406,7 +409,8 @@ class MailingView(View):
                     persons_addressee_emails.append(person.email)
                 print(persons_addressee_emails)
 
-                email = Email.objects.create(event=event_it_concernse, message=message, send_from_email=who_send)
+                email = Email.objects.create(event=event_it_concernse, message=message,
+                                             date=timezone.now())
                 persons=list(persons)
                 email.to_who.set(persons)
                 email.save()

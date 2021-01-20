@@ -4,6 +4,10 @@
 </br>
 </br>
 </br>
+
+</br>
+</br>
+</br>
 {%for person in object_list%}
 <ul><li>
 {{person.last_name}} {{person.first_name}} - {{person.portal}}
@@ -34,5 +38,5 @@ Nie ma osób w bazie
 
 
 </br>
-<a href="{% url 'person_form'%}"><button>Dodaj nową osobę</button></a>
+{% if user.is_authenticated %}<a href="{% url 'person_form'%}"><button>Dodaj nową osobę</button></a>{%endif%}
 {%endblock%}

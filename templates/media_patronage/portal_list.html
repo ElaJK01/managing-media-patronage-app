@@ -4,6 +4,12 @@
 </br>
 </br>
 </br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 
 <div class="parent">
     <table border="1">
@@ -23,7 +29,7 @@
                 {%endif%}</td>
                 <td>{{portal.name}}</td>
                 <td><a href="{{portal.get_absolute_url}}"><button>Więcej</button></a></td>
-                <td><a href="{{portal.logotype.url}}" target="_blank"><button>Pobierz logo</button></a> </td>
+                {%if portal.logotype%}<td><a href="{{portal.logotype.url}}" target="_blank"><button>Pobierz logo</button></a> </td>{%endif%}
             </tr>
         </tbody>
     {%empty%}
@@ -37,7 +43,7 @@
 
 </div>
 
-    <a href="{% url 'portal_form' %}"><button>Dodaj nowy portal</button></a>
+    {% if user.is_authenticated %}<a href="{% url 'portal_form' %}"><button>Dodaj nowy portal</button></a>{%endif%}
 
 </br>
 

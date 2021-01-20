@@ -27,7 +27,7 @@
             </tbody>
         </table>
         </br>
-        <a href="{% url 'article_form'%}"><button>Dodaj nowy artykuł</button></a>
+        {% if user.is_authenticated %}<a href="{% url 'article_form'%}"><button>Dodaj nowy artykuł</button></a>{% endif %}
 
 
     </div>

@@ -5,6 +5,9 @@
 </br>
 </br>
 </br>
+</br>
+</br>
+</br>
 <div class="parent">
     <div class="event-list">
 
@@ -13,16 +16,16 @@
             <tr>
                 <td nowrap style="text-align: center">{{event.date|date:"d-m-Y"}}</td>
                 <td nowrap style="text-align: center"><a href="{{event.get_absolute_url}}">{{event.title}}</a></td>
-                <td nowrap style="text-align: center"><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
-                <td nowrap style="text-align: center"><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>
+                {%if user.is_authenticated %}<td nowrap style="text-align: center"><a href="{%url 'event_add_portal' event.pk %}"><button>Dodaj patronów do wydarzenia</button></a></td>
+                <td nowrap style="text-align: center"><a href="{%url 'event_delete' event.pk%}"><button>Usuń</button></a></td>{% endif %}
             </tr>
         </table>
                {%empty%}
         <p style="color: steelblue">Nie ma jeszcze konferencji do wyświetlenia</p>
             {%endfor%}
-        <nav>
+        {% if user.is_authenticated %}<nav>
             <a href="{% url 'event_form'%}"><button>Dodaj nowe wydarzenie</button></a>
-        </nav>
+        </nav>{% endif %}
 
     </div>
 </div>
