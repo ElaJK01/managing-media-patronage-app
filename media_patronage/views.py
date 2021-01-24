@@ -23,7 +23,8 @@ class EventList(ListView):
     ordering = ['-date']
 
 
-class AddEvent(FormView):
+class AddEvent(LoginRequiredMixin, FormView):
+    login_url = 'login'
     template_name = "event_form.html"
     form_class = AddEventForm
     success_url = reverse_lazy("event_list")
@@ -33,7 +34,9 @@ class AddEvent(FormView):
         return super().form_valid(form)
 
 
-class EventDetailsView(View):
+class EventDetailsView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         tasks_after = TaskAfterEvent.objects.filter(event=event)
@@ -50,13 +53,15 @@ class EventDetailsView(View):
         return render(request, 'event_detail.html', context)
 
 
-class EventDeleteView(DeleteView):
+class EventDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = Event
     success_url = reverse_lazy('event_list')
     template_name = 'event_delete.html'
 
 
-class EventAddPortalView(View):
+class EventAddPortalView(LoginRequiredMixin, View):
+    login_url = 'login'
 
     """View is used to adding cooperting portals to event"""
     def get(self, request, pk):
@@ -87,7 +92,9 @@ class EventAddPortalView(View):
             return render(request, 'event_add_portal.html', {'msg': 'Błędnie wypełniony formularz'})
 
 
-class EventUpdateView(View):
+class EventUpdateView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         initial_data = {
@@ -113,7 +120,9 @@ class EventUpdateView(View):
             return render(request, 'event_update.html')
 
 
-class EventRemovePortalView(View):
+class EventRemovePortalView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
 
@@ -175,13 +184,15 @@ class PersonList(ListView):
     ordering = ['last_name']
 
 
-class AddPortal(CreateView):
+class AddPortal(LoginRequiredMixin, CreateView):
+    login_url = 'login'
     template_name = 'portal_form.html'
     form_class = AddPortalForm
     success_url = reverse_lazy("portal_list")
 
 
-class AddPerson(CreateView):
+class AddPerson(LoginRequiredMixin, CreateView):
+    login_url = 'login'
     template_name = 'person_form.html'
     model = Person
     fields = '__all__'
@@ -192,20 +203,23 @@ class PersonDetailView(DetailView):
     model = Person
 
 
-class PersonUpdateView(UpdateView):
+class PersonUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model = Person
     fields = '__all__'
     success_url = reverse_lazy('person_list')
     template_name = 'person_form.html'
 
 
-class PersonDeleteView(DeleteView):
+class PersonDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = Person
     success_url = reverse_lazy('person_list')
     template_name = 'person_delete.html'
 
 
-class PortalUpdateView(UpdateView):
+class PortalUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model = Portal
     fields = '__all__'
     success_url = reverse_lazy('portal_list')
@@ -216,13 +230,16 @@ class PortalDetailView(DetailView):
     model = Portal
 
 
-class PortalDeleteView(DeleteView):
+class PortalDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = Portal
     success_url = reverse_lazy('portal_list')
     template_name = 'portal_delete.html'
 
 
-class TaskAfterEventView(View):
+class TaskAfterEventView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         event_portals = event.portals_cooperating.all()
@@ -259,7 +276,8 @@ class TaskAfterEventView(View):
             return HttpResponse('Błędnie wypełniony formularz!')
 
 
-class TaskAfterEventUpdateView(UpdateView):
+class TaskAfterEventUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model= TaskAfterEvent
     fields = '__all__'
     template_name = 'tasks_after.html'
@@ -269,7 +287,9 @@ class TaskAfterEventUpdateView(UpdateView):
         return reverse_lazy('event_detail', kwargs={'pk': event.pk})
 
 
-class TaskBeforeEventView(View):
+class TaskBeforeEventView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         task_before = TaskBeforeEvent.objects.filter(event=event)
@@ -292,7 +312,8 @@ class TaskBeforeEventView(View):
             return render(request, 'tasks_before.html', msg)
 
 
-class TaskBeforeEventUpdateView(UpdateView):
+class TaskBeforeEventUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model = TaskBeforeEvent
     fields = ['comments']
     template_name = 'tasks_before.html'
@@ -302,7 +323,8 @@ class TaskBeforeEventUpdateView(UpdateView):
         return reverse_lazy('event_detail', kwargs={'pk': event.pk})
 
 
-class TaskBeforeDeleteView(DeleteView):
+class TaskBeforeDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = TaskBeforeEvent
     template_name = 'task_before_delete.html'
 
@@ -311,7 +333,9 @@ class TaskBeforeDeleteView(DeleteView):
         return reverse_lazy('event_detail', kwargs={'pk': event.pk})
 
 
-class PdfView(View):
+class PdfView(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         today = timezone.now()
@@ -331,7 +355,8 @@ class PdfView(View):
         return Render.render('pdf.html', params)
 
 
-class ArticleAddView(CreateView):
+class ArticleAddView(LoginRequiredMixin, CreateView):
+    login_url = 'login'
     model = Article
     template_name = 'article_form.html'
     fields = '__all__'
@@ -344,7 +369,9 @@ class ArticleList(ListView):
     ordering = ['title']
 
 
-class AddCooperationTerms(View):
+class AddCooperationTerms(LoginRequiredMixin, View):
+    login_url = 'login'
+
     def get(self, request, pk):
         event = get_object_or_404(Event, pk=pk)
         form = CooperationTermsForm(event=event)
@@ -372,13 +399,15 @@ class AddCooperationTerms(View):
             return render(request, "add_cooperation_terms.html", ctx)
 
 
-class DeleteCooperationTerms(DeleteView):
+class DeleteCooperationTerms(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
     model = CooperationTerms
     success_url = reverse_lazy('event_list')
     template_name = 'delete_terms.html'
 
 
-class UpdateCooperationTerms(UpdateView):
+class UpdateCooperationTerms(LoginRequiredMixin, UpdateView):
+    login_url = 'login'
     model = CooperationTerms
     fields = ['services_for_portal', 'services_provided_by_portal', 'comments']
     success_url = reverse_lazy('event_list')
