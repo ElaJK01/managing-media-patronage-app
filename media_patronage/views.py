@@ -248,13 +248,13 @@ class TaskAfterEventView(View):
                 return HttpResponse('Dla tego portalu już podano zadania po wydarzeniu! Jeśli chcesz poprawić dane wybierz "edytuj"')
             else:
                 if when_send_materials < event.date:
-                    return HttpResponse('Błędnie wypełniony formularz: data wysłania materiałów nie może być przed data konferencji!!!')
+                    return HttpResponse('Błędnie wypełniony formularz: data wysłania materiałów nie może być przed datą konferencji!')
                 else:
                     task = TaskAfterEvent.objects.create(event=event, portal=event_portal,
                                                  send_materials_after_event=send_materials_after,
                                           date_when_send=when_send_materials, comments=comments)
                     task.save()
-                    return redirect('event_list')
+                    return HttpResponseRedirect(reverse_lazy('event_detail', kwargs={'pk': event.pk}))
         else:
             return HttpResponse('Błędnie wypełniony formularz!')
 
