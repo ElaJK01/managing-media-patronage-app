@@ -40,6 +40,7 @@
                     <td>{{coo_terms.comments}}</td>
                     <td>{{coo_terms.date_update|date:"Y-m-d"}}</td>
                     <td><a href="{% url 'delete_terms' pk=coo_terms.pk %}">Usuń</a></td>
+                    <td><a href="{% url 'terms_update' pk=coo_terms.pk %}">Edytuj</a></td>
                 </tr>
             {%endfor%}
             </tbody>

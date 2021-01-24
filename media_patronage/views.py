@@ -378,6 +378,13 @@ class DeleteCooperationTerms(DeleteView):
     template_name = 'delete_terms.html'
 
 
+class UpdateCooperationTerms(UpdateView):
+    model = CooperationTerms
+    fields = ['services_for_portal', 'services_provided_by_portal', 'comments']
+    success_url = reverse_lazy('event_list')
+    template_name = 'add_cooperation_terms.html'
+
+
 class MailingView(LoginRequiredMixin, View):
     login_url = 'login'
 
