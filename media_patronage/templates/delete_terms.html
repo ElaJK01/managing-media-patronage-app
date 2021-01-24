@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+
+{%block content%}
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+<form method="post">{% csrf_token %}
+    <h3>Czy napewno usunąć podane warunki współpracy:</h3>
+       <table>
+        <tr>
+            <td>portal:</td>
+            <td>{{ object.portal }}</td>
+        </tr>
+        <tr>
+            <td>dotyczy wydarzenia:</td>
+            <td>{{object.event.title}}</td>
+        </tr>
+        <tr>
+            <td>usługi dla portalu:</td>
+            <td>{{object.services_for_portal}}</td>
+        <tr>
+           <td>usługi świadczone przez portal:</td>
+           <td>{{object.servces_provided_by_portal}}</td>
+       </table>
+    <input type="submit" value="Potwierdź">
+</form>
+
+{%endblock%}

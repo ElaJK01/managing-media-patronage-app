@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic.list import ListView
@@ -286,7 +286,7 @@ class TaskBeforeEventView(View):
             comments = form.cleaned_data['comments']
             event_task = TaskBeforeEvent.objects.create(event=event, comments=comments)
             event_task.save()
-            return reverse_lazy('event_detail', kwargs={'pk': event.pk})
+            return HttpResponseRedirect(reverse_lazy('event_detail', kwargs={'pk': event.pk}))
         else:
             msg = {'message': 'Popraw błędy'}
             return render(request, 'tasks_before.html', msg)
@@ -361,7 +361,7 @@ class AddCooperationTerms(View):
             portal = form.cleaned_data['portal']
             services_for_p = form.cleaned_data['services_for_portal']
             services_by_p = form.cleaned_data['services_provided_by_portal']
-            comments = request.POST.get('comments')
+            comments = form.cleaned_data['comments']
             terms = CooperationTerms.objects.create(event=event, portal=portal, services_for_portal=services_for_p,
                                             services_provided_by_portal=services_by_p, comments=comments)
             terms.save()
@@ -370,6 +370,12 @@ class AddCooperationTerms(View):
             ctx = {'msg': 'Niepoprawnie wypełniony formularz!',
                    'event': event}
             return render(request, "add_cooperation_terms.html", ctx)
+
+
+class DeleteCooperationTerms(DeleteView):
+    model = CooperationTerms
+    success_url = reverse_lazy('event_list')
+    template_name = 'delete_terms.html'
 
 
 class MailingView(LoginRequiredMixin, View):

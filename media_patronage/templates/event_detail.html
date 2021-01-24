@@ -20,7 +20,7 @@
     <div class="coop-div">
 
         <h4>Ustalone warunki współpracy z portalami:</h4>
-        {%if cooperatin_terms%}
+        {%if cooperation_terms%}
 
         <table>
             <thead>
@@ -39,6 +39,7 @@
                     <td>{{coo_terms.services_provided_by_portal}}</td>
                     <td>{{coo_terms.comments}}</td>
                     <td>{{coo_terms.date_update|date:"Y-m-d"}}</td>
+                    <td><a href="{% url 'delete_terms' pk=coo_terms.pk %}">Usuń</a></td>
                 </tr>
             {%endfor%}
             </tbody>

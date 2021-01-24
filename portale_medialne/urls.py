@@ -25,7 +25,7 @@ from media_patronage.views import EventList, AddEvent, PortalList, PersonList, A
                             PersonDeleteView, EventDetailsView, EventAddPortalView, EventRemovePortalView,\
                             EventDeleteView, TaskAfterEventView,TaskBeforeEventView, ArticleAddView, ArticleList, \
                             AddCooperationTerms, EventUpdateView, MailingView, PdfView, TaskBeforeEventUpdateView,\
-                            TaskBeforeDeleteView, TaskAfterEventUpdateView
+                            TaskBeforeDeleteView, TaskAfterEventUpdateView, DeleteCooperationTerms
 
 
 urlpatterns = [
@@ -60,6 +60,7 @@ urlpatterns = [
     path('tasks_before/<int:pk>/update/', TaskBeforeEventUpdateView.as_view(), name='task_before_update'),
     path('tasks_before/<int:pk>/delete/', TaskBeforeDeleteView.as_view(), name='task_before_delete'),
     path('tasks_after/<int:pk>/update/', TaskAfterEventUpdateView.as_view(), name='tasks_after_update'),
+    path('terms/<int:pk>/delete/', DeleteCooperationTerms.as_view(), name='delete_terms'),
 
 ]
 
