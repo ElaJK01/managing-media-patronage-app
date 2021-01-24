@@ -422,7 +422,7 @@ class MailingView(LoginRequiredMixin, View):
                     persons_addressee_emails.append(person.email)
                 print(persons_addressee_emails)
 
-                email = Email.objects.create(event=event_it_concernse, message=message,
+                email = Email.objects.create(event=event_it_concernse, message=message, who_send=who_send,
                                              date=timezone.now())
                 persons=list(persons)
                 email.to_who.set(persons)

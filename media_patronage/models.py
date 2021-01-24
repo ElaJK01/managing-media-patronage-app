@@ -90,6 +90,7 @@ class Email(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     message = models.TextField()
     to_who = models.ManyToManyField(Person, related_name='person_address')
+    who_send = models.EmailField()
     date = models.DateField()
 
     def __str__(self):
