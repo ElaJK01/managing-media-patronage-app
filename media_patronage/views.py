@@ -18,7 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class EventList(ListView):
-    paginate_by = 20
+    paginate_by = 12
     model = Event
     ordering = ['-date']
 

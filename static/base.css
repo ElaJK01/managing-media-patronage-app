@@ -1,44 +1,41 @@
 
-.footer {
-    background: lightsteelblue;
-    text-align: center;
-    font-size: medium;
-    justify-content: center;
-    font-family: "Chandas";
-    clear: both;
-    color: darkgrey;
-    position: relative;
 
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
 
-.header {
-    height: 50px;
-    background: lightsteelblue;
-    font-family: "Chilanka";
-}
 
-.btn-menu {
-    background: lightsteelblue;
-    font-family: "Chilanka";
-    font-optical-sizing: auto;
-    font-size: large;
-    padding-block: inherit;
-    border-radius: 5px;
-    font-size: 20px;
-    width: 300px;
-    height: max-content;
-}
+
+
+/*.btn-menu {*/
+/*    background: lightsteelblue;*/
+/*    font-family: "Chilanka";*/
+/*    font-optical-sizing: auto;*/
+/*    font-size: large;*/
+/*    padding-block: inherit;*/
+/*    border-radius: 5px;*/
+/*    font-size: 20px;*/
+/*    width: 300px;*/
+/*    height: max-content;*/
+/*}*/
 
 .btn-menu:hover {
     background-color: steelblue;
 
 }
 
-.content {
-    background: whitesmoke;
-    font-family: "Arial"
+/*.content {*/
+/*    background: whitesmoke;*/
+/*    font-family: "Arial"*/
 
-}
+/*}*/
 
  .topnav-centered {
      position: relative;
@@ -55,10 +52,10 @@
 
  }
 
-table {
+/*table {*/
 
-  border-color: black;
-}
+/*  border-color: black;*/
+/*}*/
 
 /*th, td {*/
 /*  padding: 10px;*/
@@ -66,10 +63,10 @@ table {
 /*}*/
 
 
-table.center {
-  margin-left: auto;
-  margin-right: auto;
-}
+/*table.center {*/
+/*  margin-left: auto;*/
+/*  margin-right: auto;*/
+/*}*/
 
 
 
@@ -126,16 +123,16 @@ table.center {
  }
 
 
- .table-list tr, td{
-    border-bottom: 1px solid #ddd;
-    padding: 20px;
-    text-align: left;
-    -webkit-text-size-adjust: 100%;
-             }
+ /*.table-list tr, td{*/
+ /*   border-bottom: 1px solid #ddd;*/
+ /*   padding: 20px;*/
+ /*   text-align: left;*/
+ /*   -webkit-text-size-adjust: 100%;*/
+ /*            }*/
 
- .table-list{
-     column-width: max-content;
- }
+ /*.table-list{*/
+ /*    column-width: max-content;*/
+ /*}*/
 
  .search {
      width: 600px;
@@ -208,8 +205,8 @@ html, body {
 
 }
 
-.event-list {
-  width: max-content;
-  height: 200px;
-}
+/*.event-list {*/
+/*  width: max-content;*/
+/*  height: 200px;*/
+/*}*/
 
