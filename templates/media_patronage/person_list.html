@@ -1,42 +1,54 @@
 {%extends 'base.html'%}
 {% load custom_tags %}
 {%block content%}
-</br>
-</br>
-</br>
-
-</br>
-</br>
-</br>
-{%for person in object_list%}
-<ul><li>
-{{person.last_name}} {{person.first_name}} - {{person.portal}}
-<a href="{{person.get_absolute_url}}"><button>Więcej</button></a></li></ul>
-{%empty%}
-Nie ma osób w bazie
-{%endfor%}
-
-<div class="parent">
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; pierwsza</a>
-                <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
-            {% endif %}
-
-            <span class="current">
-                Strona {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">następna</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-</div>
 
 
-</br>
-{% if user.is_authenticated %}<a href="{% url 'person_form'%}"><button>Dodaj nową osobę</button></a>{%endif%}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Imię i Nazwisko</th>
+            <th scope="col">Portal</th>
+            <th scope="col">Szczegóły</th>
+        </tr>
+    </thead>
+    <tbody>
+    {%for person in object_list%}
+        <tr>
+            <td class="align-middle">{{person.last_name}} {{person.first_name}}</td>
+            <td class="align-middle">{{person.portal}}</td>
+            <td class="align-middle"><a href="{{person.get_absolute_url}}"><button type="button" class="btn btn-outline-warning">Więcej</button></a></td>
+        </tr>
+    {%empty%}
+    <p>Nie ma osób w bazie</p>
+    {%endfor%}
+    </tbody>
+</table>
+
+
+        {%if is_paginated%}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+              {%if page_obj.has_previous%}
+            <li class="page-item">
+              <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+              {%endif%}
+              {%for i in paginator.page_range%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+             {%endfor%}
+              {%if page_obj.has_next%}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+              {%endif%}
+          </ul>
+        </nav>
+        {%endif%}
+
+
+{% if user.is_authenticated %}<a href="{% url 'person_form'%}"><button type="button" class="btn btn-outline-danger">Dodaj nową osobę</button></a>{%endif%}
 {%endblock%}

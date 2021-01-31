@@ -1,15 +1,15 @@
 
 
 /* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
+/*-------------------------------------------------- *!*/
+/*html {*/
+/*  position: relative;*/
+/*  min-height: 100%;*/
+/*}*/
+/*body {*/
+/*  !* Margin bottom by footer height *!*/
+/*  margin-bottom: 60px;*/
+/*}*/
 
 
 
@@ -26,10 +26,7 @@ body {
 /*    height: max-content;*/
 /*}*/
 
-.btn-menu:hover {
-    background-color: steelblue;
 
-}
 
 /*.content {*/
 /*    background: whitesmoke;*/
@@ -134,22 +131,22 @@ body {
  /*    column-width: max-content;*/
  /*}*/
 
- .search {
-     width: 600px;
-}
+/* search {*/
+/*     width: 600px;*/
+/*}*/
 
-.form {
-  margin: auto;
-  width: 50%;
-  border: 3px solid steelblue;
-  padding: 10px;
+/*.form {*/
+/*  margin: auto;*/
+/*  width: 50%;*/
+/*  border: 3px solid steelblue;*/
+/*  padding: 10px;*/
 
-}
+/*}*/
 
-.form input {
-    width: 800px;
+/*.form input {*/
+/*    width: 800px;*/
 
-}
+/*}*/
 
 .phone-field-ext { display: none; }
 #id_phone_number_1 {display: none;}
@@ -193,9 +190,9 @@ body {
     width: 50px;
 }
 
-html, body {
-  height: 100%;
-}
+/*html, body {*/
+/*  height: 100%;*/
+/*}*/
 
 .parent {
   height: auto;
@@ -210,3 +207,11 @@ html, body {
 /*  height: 200px;*/
 /*}*/
 
+
+.ConfInfo {
+    background-color: #ff86e5;
+}
+
+.ConfDate {
+    background-color: #ffef88;
+}

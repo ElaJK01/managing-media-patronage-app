@@ -1,72 +1,69 @@
 {%extends 'base.html'%}
 
 {%block content%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 
-<div class="parent">
-    <table border="1">
+<div>
+    <table class="table">
         <thead>
         <tr>
-            <td>Logo</td>
-            <td>Nazwa</td>
-            <td>Szczegóły</td>
-            <td>Pobierz logo</td>
+            <th scope="col">Logo</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Szczegóły</th>
+            <th scope="col">Pobierz logo</th>
         </tr>
         </thead>
-        <tbody>
-            <tr>{%for portal in object_list%}
-                <td>{%if portal.logotype%}
+        <tbody>{%for portal in object_list%}
+            <tr>
+                <td class="align-middle">{%if portal.logotype%}
                     <img src="{{portal.logotype.url}}" alt="logo portalu" style="width: 80px">
-                {%else%} <span text="muted"> Brak logotypu</span>
+                {%else%} <span class="text-muted fst-italic"> Brak logotypu</span>
                 {%endif%}</td>
-                <td>{{portal.name}}</td>
-                <td><a href="{{portal.get_absolute_url}}"><button>Więcej</button></a></td>
-                {%if portal.logotype%}<td><a href="{{portal.logotype.url}}" target="_blank"><button>Pobierz logo</button></a> </td>{%endif%}
+                <td class="align-middle">{{portal.name}}</td>
+                <td class="align-middle"><a href="{{portal.get_absolute_url}}"><button type="button" class="btn btn-outline-warning">Więcej</button></a></td>
+                {%if portal.logotype%}<td><a href="{{portal.logotype.url}}" target="_blank"><button type="button" class="btn btn-outline-warning">Pobierz logo</button></a> </td>
+                {%else%}
+                <td class="align-middle text-muted"></td>
+                {%endif%}
             </tr>
+        {%empty%}
+        <p>Nie ma Portali do wyświetlenia</p>
+        {%endfor%}
         </tbody>
-    {%empty%}
-    Nie ma Portali do wyświetlenia
-    {%endfor%}
 
     </table>
-
-
-
-
 </div>
 
-    {% if user.is_authenticated %}<a href="{% url 'portal_form' %}"><button>Dodaj nowy portal</button></a>{%endif%}
 
-</br>
 
-<div class="parent">
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; pierwsza</a>
-                <a href="?page={{ page_obj.previous_page_number }}">poprzednia</a>
-            {% endif %}
+{% if user.is_authenticated %}<a href="{% url 'portal_form' %}"><button  type="button" class="btn btn-outline-danger">Dodaj nowy portal</button></a>{%endif%}
 
-            <span class="current">
-                Strona {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}.
-            </span>
 
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">następna</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">ostatnia &raquo;</a>
-            {% endif %}
-        </span>
-    </div>
-</div>
-</br>
+
+        {%if is_paginated%}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+              {%if page_obj.has_previous%}
+            <li class="page-item">
+              <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+              {%endif%}
+              {%for i in paginator.page_range%}
+            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+             {%endfor%}
+              {%if page_obj.has_next%}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+              {%endif%}
+          </ul>
+        </nav>
+        {%endif%}
+
+
 
 
 {%endblock%}

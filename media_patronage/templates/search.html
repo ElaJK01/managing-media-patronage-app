@@ -1,35 +1,44 @@
 {%extends 'base.html'%}
 
+
 {%block content%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<center>
-    <div class="topnav">
-        <form class="example">
-            {%csrf_token%}
-            <input type="text" class="search" name="search">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col">
+            <div class="input-group">
+                    <div class="form-outline">
+                        <form class="example">
+                            {%csrf_token%}
+                            <label class="form-label">
+                             {{form}}
+                            </label>
+                              <button class="btn btn-warning" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+            </div>
+        </div>
     </div>
-</center>
+
+    <div class="row">
+        <div class="col">
+            {%if result is not None%}
+            <h4>Wyniki wyszukiwania:</h4>
+                {%for r in result%}
+                <ul>
+                    <li>{{r}}</li>
+                </ul>
+                {%empty%}
+            Brak wyników wyszukiwania
+            {%endfor%}
+            {%endif%}
+        </div>
+    </div>
+</div>
 
 
-{%if result is not None%}
-Wyniki wyszukiwania:
-{%for r in result%}
-<ul>{{r}}</ul></br>
-{%empty%}
-</br>
-Brak wyników wyszukiwania
-{%endfor%}
-{%endif%}
+
+
 
 {%endblock%}

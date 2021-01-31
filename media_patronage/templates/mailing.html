@@ -2,53 +2,65 @@
 
 {%block content%}
 {%load crispy_forms_tags%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 
-<br class="form-mailing" xmlns="http://www.w3.org/1999/html">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post">
+                {%csrf_token%}
+                <div class="mb-3">
+                    <h3>Przygotuj mailing:</h3>
+                </div>
 
-</br>
+                <div class="mb-3">
+                    <label for="event-consernce" class="form-label">Dotyczy konferencji</label>
+                    <select name="event" class="form-select" id="event-consernce">
+                        {%for event in events%}
+                        <option>{{event.title}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
 
-    <form class="form-portal" method="post">
-        {%csrf_token%}
-        <h3>Przygotuj mailing:</h3>
-        <label>Dotyczy konferencji:</br>
-            <select name="event">{%for event in events%}
-                <option>{{event.title}}</option>
-                {%endfor%}
-            </select>
-        </label></br>
-        </br>
-        <label>Tytuł wiadomości:</br>
-            <input type="text" name="message_title">
-        </label></br>
-        </br>
-        <label>Kategoria portalu:</br>
-            {%for category in categories%}
-        <input id="checkbox" type="checkbox" name="category" value="{{category}}">{{category}}
-            {%endfor%}</label>
-        </br>
-        </br>
+                <div class="mb-3">
+                    <label for="mail-title" class="form-label">Tytuł wiadomości</label>
+                    <input type="text" name="message_title" class="form-control" id="mail-title">
+                </div>
 
-        <label>Treść wiadomości:</br>
-            <textarea name="message"></textarea></br>
-        </label></br>
-        <input type="submit" value="Wyślij">
-    </form>
-</br>
+                <div class="mb-3">
+                    <label class="form-label">Kategoria tematyczna portalu:</label>
+                    {%for category in categories%}
+                        <div class="form-check">
+                            <label class="form-check-label" for="flexCheckChecked">
+                            <input name="category" class="form-check-input" type="checkbox" value="{{category}}" id="flexCheckChecked">
+                            {{category}}
+                            </label>
+                        </div>
+                    {%endfor%}
+                </div>
+
+                <div class="mb-3">
+                    <label for="mail-text" class="form-label">Treść wiadomości:</label>
+                    <textarea name="message" class="form-control" id="mail-text"></textarea>
+                </div>
+                <input class="btn btn-outline-danger" type="submit" value="Wyślij">
+            </form>
+        </div>
+    </div>
 </div>
 
-<div class="msg">
-{%if msg%}
-{{msg}}
-{%for email in emails%}
-{{email}},
-{%endfor%}
-{%endif%}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="msg">
+            {%if msg%}
+            {{msg}}
+            {%for email in emails%}
+            {{email}},
+            {%endfor%}
+            {%endif%}
+            </div>
+        </div>
+    </div>
 </div>
 
 {%endblock%}

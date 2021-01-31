@@ -30,7 +30,7 @@ class AddPersonForm(ModelForm):
 
 
 class SearchForm(forms.Form):
-    search = forms.CharField(label='Szukaj')
+    search = forms.CharField(label= "", widget=forms.TextInput(attrs={'placeholder': 'Wyszukaj', 'class': 'form-control' }))
 
 
 class TaskBeforeForm(ModelForm):

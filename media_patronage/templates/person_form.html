@@ -1,24 +1,21 @@
 {%extends 'base.html'%}
 {%load crispy_forms_tags%}
 {%block content%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 
-<div class="form">
-    <h3>Zaktualizuj dane o osobie:</h3>
-    <form method="post">
-        {%csrf_token%}
-        {{form|crispy}}
-        <input type="submit" value="Dodaj osobę">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form">
+                <h3>Dane o osobie:</h3>
+                <form method="post">
+                    {%csrf_token%}
+                    {{form|crispy}}
+                    <input type="submit" class="btn btn-outline-danger" value="Dodaj/Zaktualizuj">
 
-    </form>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-</br>
+
 {%endblock%}

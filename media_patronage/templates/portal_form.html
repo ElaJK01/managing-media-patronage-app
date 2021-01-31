@@ -2,17 +2,19 @@
 {%load crispy_forms_tags%}
 {%block content%}
 
-</br>
-</br>
-</br>
-
-<div class="form">
-    <h3>Dodaj Portal:</h3>
-    <form method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form|crispy}}
-        <button type="submit">Dodaj/Zaktualizuj</button>
-    </form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form">
+                <h3>Dane Portalu:</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{form|crispy}}
+                    <button type="submit" class="btn btn-outline-danger">Dodaj/Zaktualizuj</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-</br>
+
 {%endblock%}
