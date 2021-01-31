@@ -1,31 +1,22 @@
 {%extends 'base.html'%}
 {%load crispy_forms_tags%}
 {%block content%}
+
 {%if msg%}
 {{msg}}
 {%endif%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+
 
 <h2>{{event}}</h2>
 
 {%if message%}
 {{message}}
-{%endif%}
 
+{%else%}
 <form method="post">
-
     {%csrf_token%}
      {{form|crispy}}
     <input type="submit" value="Zapisz">
-
 </form>
-
+{%endif%}
 {%endblock%}

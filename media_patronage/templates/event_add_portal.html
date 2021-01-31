@@ -1,27 +1,23 @@
 {%extends 'base.html'%}
 {%load crispy_forms_tags%}
 {%block content%}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
 
 
-
-<div class="form-portal">
-    <h3>Dodaj portal do: "{{event.title}}" - {{event.date|date:'d-m-Y'}}</h3>
-    <form method="POST">
-        {%csrf_token%}
-        {{form|crispy}}
-        <input id="submit" type="submit" value="Zaktualizuj">
-    </form>
-
-    <p style="color: red">{%if msg%}{{msg}}{%endif%}</p>
+<div class="container">
+    <p style="color: red">{%if msg%}{{msg}}</p>
+    {%else%}
+    <div class="row">
+        <div class="col">
+            <h5>Dodaj portal do: <b>"{{event.title}}" - {{event.date|date:'d-m-Y'}}</b></h5>
+            <form method="POST">
+                {%csrf_token%}
+                {{form|crispy}}
+                <input class="btn btn-outline-danger" id="submit" type="submit" value="Zaktualizuj">
+            </form>
+        </div>
+    </div>
 </div>
-</br>
+
+{%endif%}
+
 {%endblock%}

@@ -1,16 +1,21 @@
 {%extends 'base.html'%}
-
+{%load crispy_forms_tags%}
 {%block content%}
-</br>
-</br>
-</br>
-Zmień informacje o: <b>{{event}}</b>
 
-<form method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" value="Zaktualizuj">
 
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h5>Zmień informacje o: <b>{{event}}</b></h5>
+             <div class="form">
+                <form method="post">
+                    {%csrf_token%}
+                    {{form|crispy}}
+                    <input class="btn btn-outline-danger" type="submit" value="Zaktualizuj">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {%endblock%}

@@ -1,23 +1,21 @@
 {%extends 'base.html'%}
-
+{%load crispy_forms_tags%}
 {%block content%}
-</br>
-</br>
 
-<h4>Usuń portal z konfrencji</h4>
-
-{{event.title}} - {{event.date}}
-
-{%if msg%}
-<b style="color: red">{{msg}}</b>
-{%endif%}
-
-<form method="post">
-    {%csrf_token%}
-    {{form.as_p}}
-    <input type="submit" value="Usuń">
-
-</form>
-
-
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            {%if msg%}
+            <b style="color: red">{{msg}}</b>
+            {%else%}
+            <h5>Usuń portal z konfrencji: <b>{{event.title}} - {{event.date}}</b></h5>
+            <form method="post">
+                {%csrf_token%}
+                {{form|crispy}}
+                <input class="btn btn-outline-danger" type="submit" value="Usuń">
+            </form>
+            {%endif%}
+        </div>
+    </div>
+</div>
 {%endblock%}
