@@ -8,7 +8,7 @@
             {%if msg%}
             <b style="color: red">{{msg}}</b>
             {%else%}
-            <h5>Usuń portal z konfrencji: <b>{{event.title}} - {{event.date}}</b></h5>
+            <h5>Usuń portal z konfrencji: </br><b>{{event.title}}</b></br> <b>{{event.date|date:'d-m-Y'}}</b></h5>
             <form method="post">
                 {%csrf_token%}
                 {{form|crispy}}

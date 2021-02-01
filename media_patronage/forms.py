@@ -41,7 +41,7 @@ class TaskBeforeForm(ModelForm):
 
 class TaskAfterForm(ModelForm):
     portal = forms.ModelChoiceField(queryset=None)
-    date_when_send = forms.DateField(widget=forms.DateInput)
+    date_when_send = forms.DateField(widget=forms.DateInput, label='Data wysłania')
 
     class Meta:
         model = TaskAfterEvent

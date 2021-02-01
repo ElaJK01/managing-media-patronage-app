@@ -9,7 +9,7 @@
             <p style="color: red">{{msg}}</p>
             {%else%}
             <div class="form">
-                <h5>Warunki współpracy przy konferencji: <b>{{event.title}}</b>></h5>
+                <h5>Warunki współpracy przy konferencji: </br><b>{{event.title}}</br>{{event.date|date:'d-m-Y'}}</b></h5>
                 <form method="post">
                     {%csrf_token%}
                     {{form|crispy}}

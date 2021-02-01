@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <h5>Zmień informacje o: <b>{{event}}</b></h5>
+            <h5>Zmień informacje o:</br> <b>{{event.title}}</b> </br>{{event.date|date:'d-m-Y'}}</h5>
              <div class="form">
                 <form method="post">
                     {%csrf_token%}

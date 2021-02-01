@@ -2,21 +2,30 @@
 {%load crispy_forms_tags%}
 {%block content%}
 
-{%if msg%}
-{{msg}}
-{%endif%}
 
 
-<h2>{{event}}</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+        {%if msg%}
+        {{msg}}
+        {%endif%}
 
-{%if message%}
-{{message}}
+        <h5>{{event.title}}</h5>
+        <h6>{{event.date|date:'d-m-Y'}}</h6>
 
-{%else%}
-<form method="post">
-    {%csrf_token%}
-     {{form|crispy}}
-    <input type="submit" value="Zapisz">
-</form>
-{%endif%}
-{%endblock%}
+
+        {%if message%}
+        {{message}}
+
+        {%else%}
+        <form method="post">
+            {%csrf_token%}
+             {{form|crispy}}
+            <input class="btn btn-outline-danger" type="submit" value="Zapisz">
+        </form>
+        {%endif%}
+        {%endblock%}
+        </div>
+    </div>
+</div>
