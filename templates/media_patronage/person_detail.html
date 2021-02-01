@@ -2,17 +2,20 @@
 
 
 {%block content%}
-</br>
-</br>
-</br>
-<h2>Informacje o: {{object.first_name}} {{object.last_name}}</h2>
 
-<table class="table-big">
+<h5>Informacje o: <b>{{object.first_name}} {{object.last_name}}</b></h5>
+
+<table class="table">
     <thead>
         <tr>
-            <td>Numer telefonu</td>
-            <td>email</td>
-            <td>Portal</td>
+            <th scope="col">Numer telefonu</th>
+            <th scope="col">Email</th>
+            <th scope="col">Portal</th>
+            <th scope="col">Uwagi</th>
+            {% if user.is_authenticated %}
+            <th scope="col">Zaktualizuj</th>
+            <th scope="col">Usuń</th>
+            {%endif%}
         </tr>
     </thead>
     <tbody>
@@ -21,8 +24,8 @@
             <td>{{object.email}}</td>
             <td>{{object.portal}}</td>
             <td>{{object.comments}}</td>
-            {% if user.is_authenticated %}<td><a href="{%url 'person_update' pk=object.pk %}"><button>Zaktualizuj</button></a></td>
-            <td><a href="{%url 'person_delete' pk=object.pk%}"><button>Usuń</button></a></td>{% endif %}
+            {% if user.is_authenticated %}<td><a href="{%url 'person_update' pk=object.pk %}"><button class="btn btn-outline-warning">Zaktualizuj</button></a></td>
+            <td><a href="{%url 'person_delete' pk=object.pk%}"><button class="btn btn-outline-warning">Usuń</button></a></td>{% endif %}
         </tr>
     </tbody>
 </table>

@@ -1,19 +1,21 @@
 {%extends 'base.html'%}
 
 {%block content%}
-</br>
-</br>
 
-<h2>Informacje o portalu: {{object.name}}</h2>
-<table class="table-big" border="1">
+
+<h5>Informacje o portalu: <b>{{object.name}}</b></h5>
+
+<table class="table">
     <thead>
         <tr>
-            <td>nazwa</td>
-            <td>kategoria</td>
-            <td>Adres do korespondencji</td>
-            <td>email</td>
-            <td>logo</td>
-            <td>Komentarze</td>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Kategoria</th>
+            <th scope="col">Adres do korespondencji</th>
+            <th scope="col">Email</th>
+            <th scope="col">Logo</th>
+            <th scope="col">Komentarze</th>
+            <th scoope="col">Zaktualizuj</th>
+            <th scope="col">Usuń</th>
         </tr>
     </thead>
     <tbody>
@@ -27,9 +29,10 @@
             {%else%} <span text="muted"> Brak logotypu</span>
             {%endif%}</td>
             <td>{{object.comments}}</td>
-            {% if user.is_authenticated %}<td><a href="{%url 'portal_update' pk=object.pk %}"><button>Zaktualizuj</button></a></td>
-            <td><a href="{%url 'portal_delete' pk=object.pk%}"><button>Usuń</button></a></td>{% endif %}
+            {% if user.is_authenticated %}<td><a href="{%url 'portal_update' pk=object.pk %}"><button class="btn btn-outline-warning">Zaktualizuj</button></a></td>
+            <td><a href="{%url 'portal_delete' pk=object.pk%}"><button class="btn btn-outline-warning">Usuń</button></a></td>{% endif %}
         </tr>
     </tbody>
 </table>
+
 {%endblock%}

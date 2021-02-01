@@ -2,11 +2,23 @@
 {% load custom_tags %}
 
 {%block content%}
-    <div class="row">
-        <div class="col">
 
-             {%for event in object_list%}
-           <table class="table-warning">
+
+           <table class="table">
+               <thead>
+                   <tr>
+                       <th scope="col">Data</th>
+                       <th scope="col">Tytuł</th>
+                       {%if user.is_authenticated%}
+                       <th scope="col">Dodaj patronów</th>
+                       <th scope="col">Usuń</th>
+                       {%endif%}
+
+                   </tr>
+
+               </thead>
+               <tbody>
+               {%for event in object_list%}
                <tr>
                    <td>{{event.date|date:"d-m-Y"}}</td>
                    <td><a href="{{event.get_absolute_url}}" class="link-danger">{{event.title}}</a></td>
@@ -15,11 +27,13 @@
                    <td><a href="{%url 'event_delete' event.pk%}"><button type="button" class="btn btn-outline-warning">Usuń</button></a></td>
                    {% endif %}
                </tr>
-           </table>
-
-            {%empty%}
+               {%empty%}
             <p style="color: steelblue">Nie ma jeszcze konferencji do wyświetlenia</p>
                         {%endfor%}
+               </tbody>
+           </table>
+
+
 
             {% if user.is_authenticated %}
         <div>
@@ -50,11 +64,6 @@
           </ul>
         </nav>
         {%endif%}
-
-
-
-       </div>
-    </div>
 
 
 

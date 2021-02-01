@@ -1,19 +1,33 @@
 {%extends 'base.html'%}
 
-
-
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label>Nazwa użytkownika:</label>
-    {{form.username}}</br>
-    <label>Hasło:</label>
-    {{form.password}}</br>
-    <button type="submit">Login</button>
-  </form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="post">
+                {%csrf_token%}
+                <div class="mb-3">
+                    <h3>Logowanie:</h3>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Nazwa użytkownika</label>
+                    {{form.username}}
+                </div>
+
+                <div class="mb-3">
+                    <label for="mail-title" class="form-label">Hasło</label>
+                    {{form.password}}
+                </div>
+
+                <input class="btn btn-outline-danger" type="submit" value="Zaloguj">
+            </form>
+        </div>
+    </div>
+</div>
 
 {{form.errors}}
 {% endblock %}
