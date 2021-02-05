@@ -2,7 +2,9 @@ This is application for managing PR activities during process of organizing conf
 It is used to manage contacts of various thematic portals (media patronages).
 It also allows you to generate short reports on PR activities at a given conference
 (what was done before and after the conference, what rules of cooperation were agreed with the portal).
-Storing information about portals, contact persons and about published articles. It also enable to send mass emails to contact persons from databesa. The form is constructed that you choose the thematic categories of portal which coresponde with the event's theme. 
+Storing information about portals, contact persons and about published articles.
+It also enable to send mass emails to contact persons from databesa. The form is constructed that you choose 
+the thematic categories of portal which coresponde with the event's theme. 
 
 It aims to facilitate the work on the overall process of acquiring media patrons and their service,
 by eliminating "keeping" contact details, information about the terms of cooperation in various xls tables
