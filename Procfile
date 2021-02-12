@@ -1,1 +1,1 @@
-web: gunicorne portale_medialne.wsgi
+web: gunicorn portale_medialne.wsgi
