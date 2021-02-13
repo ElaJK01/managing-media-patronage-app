@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'portale_medialne.wsgi.application'
 
 DATABASES = {
     'default': {
-        'HOST': config('DB_HOST'),
+        'HOST': '127.0.0.1',
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
