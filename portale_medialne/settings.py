@@ -19,7 +19,6 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-MODE=config("MODE", default="dev")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -90,8 +89,7 @@ WSGI_APPLICATION = 'portale_medialne.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# development
-if config('MODE')=="dev":
+
     DATABASES = {
         'default': {
             'HOST': config('DB_HOST'),
@@ -101,16 +99,6 @@ if config('MODE')=="dev":
             'PASSWORD': config('DB_PASSWORD'),
         }
     }
-# production
-else:
-   DATABASES = {
-       'default': dj_database_url.config(
-           default=config('DATABASE_URL')
-       )
-   }
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 
 
 # Password validation
