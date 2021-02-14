@@ -2,6 +2,7 @@
 {% load custom_tags %}
 {%block content%}
 
+{%if object_list%}
 
 <table class="table">
     <thead>
@@ -18,8 +19,7 @@
             <td class="align-middle">{{person.portal}}</td>
             <td class="align-middle"><a href="{{person.get_absolute_url}}"><button type="button" class="btn btn-outline-warning">Więcej</button></a></td>
         </tr>
-    {%empty%}
-    <p>Nie ma osób w bazie</p>
+
     {%endfor%}
     </tbody>
 </table>
@@ -48,7 +48,11 @@
           </ul>
         </nav>
         {%endif%}
-
+{%else%}
+    <p style="color: steelblue">Nie ma osób w bazie</p>
+{%endif%}
 
 {% if user.is_authenticated %}<a href="{% url 'person_form'%}"><button type="button" class="btn btn-outline-danger">Dodaj nową osobę</button></a>{%endif%}
+
+
 {%endblock%}

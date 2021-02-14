@@ -2,6 +2,8 @@
 
 {%block content%}
 
+{%if object_list%}
+
         <table class="table">
             <thead>
                 <tr>
@@ -22,6 +24,10 @@
                 {%endfor%}
             </tbody>
         </table>
+
+{%else%}
+            <p style="color: steelblue">Nie ma jeszcze artykułów</p>
+{%endif%}
 
 
 <div>

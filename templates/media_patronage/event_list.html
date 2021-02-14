@@ -33,7 +33,9 @@
                </tbody>
            </table>
 
-
+{%else%}
+            <p style="color: steelblue">Nie ma jeszcze konferencji do wyświetlenia</p>
+{%endif%}
 
 
             {% if user.is_authenticated %}
@@ -66,8 +68,6 @@
         </nav>
         {%endif%}
 
-{%else%}
-            <p style="color: steelblue">Nie ma jeszcze konferencji do wyświetlenia</p>
-{%endif%}
+
 
 {%endblock%}

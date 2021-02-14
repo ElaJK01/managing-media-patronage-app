@@ -2,6 +2,7 @@
 
 {%block content%}
 
+{%if object_list%}
 <div>
     <table class="table">
         <thead>
@@ -25,13 +26,17 @@
                 <td class="align-middle text-muted"></td>
                 {%endif%}
             </tr>
-        {%empty%}
-        <p>Nie ma Portali do wyświetlenia</p>
+
         {%endfor%}
         </tbody>
 
     </table>
 </div>
+
+{%else%}
+        <p style="color: steelblue">Nie ma Portali do wyświetlenia</p>
+
+{%endif%}
 
 {% if user.is_authenticated %}<a href="{% url 'portal_form' %}"><button  type="button" class="btn btn-outline-danger">Dodaj nowy portal</button></a>{%endif%}
 
@@ -58,5 +63,7 @@
           </ul>
         </nav>
         {%endif%}
+
+
 
 {%endblock%}
