@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
-
 class Portal(models.Model):
     name = models.CharField(max_length=100, verbose_name='Nazwa')
     category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')
@@ -56,7 +55,7 @@ class Article(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie', help_text='Wydarzenie, którego dotyczy')
     portal = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Na jakim portalu opublikowane')
     published_date = models.DateField(verbose_name='Data publikacji')
-    pdf_article = CloudinaryField(null=True, verbose_name='PDF')
+    pdf_article = CloudinaryField('pdf', null=True, format="jpg",)
 
     def __str__(self):
         return f'{self.title}'
