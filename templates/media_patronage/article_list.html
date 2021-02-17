@@ -14,15 +14,17 @@
                     <th scope="col">PDF</th>
                 </tr>
             </thead>
+            {%for article in object_list%}
             <tbody>
-                {%for article in object_list%}
+
                 <td>{{article.title}}</td>
                 <td>{{article.portal}}</td>
                 <td>{{article.event}}</td>
                 <td>{{article.published_date|date:"d-m-Y"}}</td>
                 <td><a href="{{article.pdf_article.url}}" target="_blank"><button type="button" class="btn btn-outline-warning">Pobierz artykuł</button></a></td>
-                {%endfor%}
+
             </tbody>
+            {%endfor%}
         </table>
 
 {%else%}

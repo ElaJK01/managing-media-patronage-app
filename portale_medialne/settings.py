@@ -15,6 +15,9 @@ import os
 from decouple import config, Csv
 import django_heroku
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     'phone_field',
     'crispy_forms',
     'bootstrap4',
+    'cloudinary',
 
 ]
 
@@ -166,5 +170,12 @@ EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = 'event_list'
 LOGOUT_REDIRECT_URL = 'event_list'
+
+cloudinary.config(
+  cloud_name = config('CLOUD_NAME'),
+  api_key = config('API_KEY'),
+  api_secret = config('API_SECRET')
+)
+
 
 django_heroku.settings(locals())

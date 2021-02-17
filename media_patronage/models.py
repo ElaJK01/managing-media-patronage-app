@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 
 
@@ -13,7 +14,7 @@ class Portal(models.Model):
     category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')
     address = models.CharField(max_length=250, verbose_name='Adres redakcji')
     email = models.EmailField()
-    logotype = models.ImageField(upload_to='logo/', verbose_name='Logo', null=True, blank=True)
+    logotype = CloudinaryField('logotype', null=True)
     comments = models.TextField(verbose_name='Inne informacje', blank=True)
 
     def __str__(self):
@@ -55,10 +56,10 @@ class Article(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, verbose_name='Wydarzenie', help_text='Wydarzenie, którego dotyczy')
     portal = models.ForeignKey(Portal, on_delete=models.CASCADE, verbose_name='Na jakim portalu opublikowane')
     published_date = models.DateField(verbose_name='Data publikacji')
-    pdf_article = models.FileField(upload_to='articles/', null=True, verbose_name='PDF')
+    pdf_article = CloudinaryField(null=True, verbose_name='PDF')
 
     def __str__(self):
-        return {self.title}
+        return f'{self.title}'
 
 
 class TaskBeforeEvent(models.Model):
