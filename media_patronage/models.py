@@ -13,7 +13,7 @@ class Portal(models.Model):
     category = models.CharField(max_length=60, verbose_name='Kategoria', help_text='Tematyka portalu')
     address = models.CharField(max_length=250, verbose_name='Adres redakcji')
     email = models.EmailField()
-    logotype = CloudinaryField('logotype', null=True)
+    logotype = CloudinaryField('logotype', null=True, blank=True)
     comments = models.TextField(verbose_name='Inne informacje', blank=True)
 
     def __str__(self):
