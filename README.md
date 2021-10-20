@@ -62,9 +62,8 @@ To see all functionalities you can **log as:** User1, **password:** testtesttest
 
 
 ### Screen Shots:
-<img src="/screens_app/Home_login.png" width=250 height=200/>
-![Event details](screens_app/Event_details.png)
-![Contacts list after login](screens_app/Contacts_login.png) [!Contact details](screens_app/Contact_details.png) 
+**Home page for logged user:** <img src="/screens_app/Home_login.png" width=400 height=250/> **Event details:** <img src="screens_app/Event_details.png" width=400 height=250/>
+**Contacts list:** <img src="screens_app/Contacts_login.png" width=400 height=250/> **Contact details:** <img src="screens_app/Contact_details.png width=400 height=250/> 
 
 
 
