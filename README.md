@@ -1,4 +1,4 @@
-<img src="./static/logo_patroni.png" align="left" width=150 height=150/> 
+<img src="./static/logo_patroni.png" align="left" width=100 height=100/> 
 
 
 
