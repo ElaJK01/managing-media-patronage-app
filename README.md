@@ -24,7 +24,7 @@ Keeping all information in one place will also allow you to quickly prepare a re
 without digging through hundreds of emails and creating separate txt documents.
 
 ### How the application is built:
-##### The application consists of six pages:
+**The application consists of six pages:**
 
 #### "Home" 
 It is the main page of the application, where you see the list of all conferences. They are ordered by date.
@@ -56,7 +56,8 @@ Only logged user can use this page. It contains mailing form wich enables sendin
 
 ### Live version: 
 On Heroku: http://media-patronage.herokuapp.com/
-to see all functionalities you can log as: User1, password: testtesttest
+
+To see all functionalities you can **log as:** User1, **password:** testtesttest
 
 
 
