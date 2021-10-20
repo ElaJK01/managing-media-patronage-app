@@ -64,12 +64,15 @@ To see all functionalities you can **log as:** User1, **password:** testtesttest
 ### Screen Shots:
 **Home page for logged user:** 
 <img src="/screens_app/Home_login.png" width=400 height=250/> 
+
 **Event details:** 
 <img src="screens_app/Event_details.png" width=400 height=250/>
+
 **Contacts list:** 
 <img src="screens_app/Contacts_login.png" width=400 height=250/> 
+
 **Contact details:**
-<img src="screens_app/Contact_details.png width=400 height=250/> 
+<img src="screens_app/Contact_details.png" width=400 height=250/> 
 
 
 
