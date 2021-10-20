@@ -1,4 +1,5 @@
-<img src="./static/logo_patroni.png" width=400 height=400/> ## Managing media patronage app.
+<img src="./static/logo_patroni.png" width=200 height=200/> 
+## Managing media patronage app.
 
 Simple app for facilitate media patronage cooperation. It organizes contacts in transparent manner.
 
@@ -80,11 +81,11 @@ To see all functionalities you can **log as:** User1, **password:** testtesttest
 
 **Mailing form:**
 
-<img src="screens_app/Mailing_form.png" width=500 height=300/>
+<img src="screens_app/Mailing_form.png" width=400 height=250/>
 
 **Article list:**
 
-<img src="screens_app/Articles_list.png" width=500 height=300/>
+<img src="screens_app/Articles_list.png" width=400 height=250/>
 
 
 Check out other screen shots in "screens_app" folder!
