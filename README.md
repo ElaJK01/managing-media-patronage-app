@@ -7,6 +7,7 @@ Simple app for facilitate media patronage cooperation. It organizes contacts in 
 * [How the application is built](#how-the-application-is-built)
 * [Technologies](#technologies)
 * [Live version](#live-version)
+* [Screen Shots](#screen-shots)
 
 ### General info:
 
@@ -58,6 +59,12 @@ Only logged user can use this page. It contains mailing form wich enables sendin
 On Heroku: http://media-patronage.herokuapp.com/
 
 To see all functionalities you can **log as:** User1, **password:** testtesttest
+
+
+### Screen Shots:
+[!Home page after login](screens_app/Home_login.png)
+[!Event details](screens_app/Event_details.png)
+[!Contacts list after login](screens_app/Contacts_login.png) [!Contact details](screens_app/Contact_details.png) 
 
 
 
