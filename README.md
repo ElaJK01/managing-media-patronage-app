@@ -24,7 +24,7 @@ Keeping all information in one place will also allow you to quickly prepare a re
 without digging through hundreds of emails and creating separate txt documents.
 
 ### How the application is built:
-**The application consists of six pages:**
+The application consists of six pages:
 
 #### "Home" 
 It is the main page of the application, where you see the list of all conferences. They are ordered by date.
