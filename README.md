@@ -1,4 +1,4 @@
-![logo](./static/logo_patroni.png) ## Managing media patronage app.
+<img src="./static/logo_patroni.png" width=400 height=400/> ## Managing media patronage app.
 
 Simple app for facilitate media patronage cooperation. It organizes contacts in transparent manner.
 
