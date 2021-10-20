@@ -78,6 +78,17 @@ To see all functionalities you can **log as:** User1, **password:** testtesttest
 
 <img src="screens_app/Contact_details.png" width=400 height=250/> 
 
+**Mailing form:**
+
+<img src="screens_app/Mailing_form.png" width=500 height=300/>
+
+**Article list:**
+
+<img src="screens_app/Articles_list.png" width=500 height=300/>
+
+
+Check out other screen shots in "screens_app" folder!
+
 
 
 
