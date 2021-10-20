@@ -62,7 +62,7 @@ To see all functionalities you can **log as:** User1, **password:** testtesttest
 
 
 ### Screen Shots:
-![Home page after login](/screens_app/Home_login.png)
+![Home page after login](/screens_app/Home_login.png =250X250)
 ![Event details](screens_app/Event_details.png)
 ![Contacts list after login](screens_app/Contacts_login.png) [!Contact details](screens_app/Contact_details.png) 
 
