@@ -1,4 +1,5 @@
 <img src="./static/logo_patroni.png" align="left" width=150 height=150/> 
+
 ## Managing media patronage app.
 
 Simple app for facilitate media patronage cooperation. It organizes contacts in transparent manner.
